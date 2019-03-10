@@ -1,0 +1,15 @@
+server:
+    port: 8000
+eureka:
+    client:
+        fetch-registry: true
+        register-with-eureka: false
+        serviceUrl:
+            defaultZone: http://fulln:fulln@localhost:${server.port}/eureka
+spring:
+    application:
+        name: eureka-server
+    security:
+        user:
+            name: fulln
+            password: fulln
