@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fulln.me</groupId>
-    <artifactId>eureka</artifactId>
+    <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eureka</name>
+    <name>api</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

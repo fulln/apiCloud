@@ -1,0 +1,71 @@
+com:
+    fulln:
+        api:
+            mail:
+                account: 245193247
+                host: smtp.qq.com
+                is-auth: true
+                img-path: ''
+                out-time: 25000
+logging:
+    path: CONSOLE,debug,FILE
+management:
+    endpoint:
+        shutdown:
+            enabled: true
+mapper:
+    identity: MYSQL
+    mappers: com.fulln.api.common.base.method.MyMapper
+    not-empty: false
+mybatis:
+    configuration:
+        default-fetch-size: 100
+        default-statement-timeout: 30
+        map-underscore-to-camel-case: true
+    mapper-locations: classpath:mapper/*/*Mapper.xml
+    type-aliases-package: com.fulln.api.model
+    type-handlers-package: com.fulln.api.config.handle
+pagehelper:
+    helperDialect: mysql
+    params: count=countSql
+    reasonable: true
+    supportMethodsArguments: true
+server:
+    port: 8080
+    servlet:
+        context-path: /api
+
+spring:
+    application:
+        name: service
+    datasource:
+        hikari:
+            max-active: 20
+            max-wait: 60000
+            min-evictable-idle-time-millis: 300000
+            min-idle: 5
+            testWhileIdle: true
+            time-between-eviction-runs-millis: 60000
+            validationQuery: SELECT 1 FROM DUAL
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+    jpa:
+        show-sql: true
+    messages:
+        basename: Language.messages
+    redis:
+        lettuce:
+            pool:
+                max-active: 8
+                max-idle: 8
+                max-wait: -1
+                min-idle: 0
+    thymeleaf:
+        cache: false
+        mode: HTML
+        prefix: classpath:/templates/page/
+    profiles:
+        active: dev
+token:
+    platform:
+        pass: jmpt2451

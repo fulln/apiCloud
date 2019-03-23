@@ -1,0 +1,26 @@
+com:
+    fulln:
+        api:
+            defaultDownFile: /opt/source/_posts
+            mail:
+                send-adder: 245193247@qq.com
+                password:
+logging:
+    file: /opt/logs/spring-boot-logging.log
+    level:
+        com:
+            fulln:
+                api:
+                    dao: info
+spring:
+    datasource:
+        url: jdbc:mysql://mysql:3306/api?useSSL=false
+        password:
+    redis:
+        host: localhost
+        password:
+        port: 6379
+        timeout: 5000
+#    data:
+#        elasticsearch:
+#            cluster-nodes: 192.168.246.138:9300

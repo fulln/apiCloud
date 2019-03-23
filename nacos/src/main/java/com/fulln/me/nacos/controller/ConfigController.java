@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController
 @RequestMapping("config")
 public class ConfigController {
@@ -15,5 +17,11 @@ public class ConfigController {
     @GetMapping(value = "/get")
     public String get() {
         return useLocalCache;
+    }
+
+
+    public static void main(String[] args) {
+
+        System.out.println(Long.getLong("com.zaxxer.hikari.aliveBypassWindowMs", TimeUnit.MILLISECONDS.toMillis(500L)));
     }
 }
