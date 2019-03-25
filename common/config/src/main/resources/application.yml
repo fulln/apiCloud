@@ -1,0 +1,19 @@
+server:
+  port: 7000
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://fulln:fulln@localhost:8000/eureka
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github:com/fulln/apiCloud.git
+          search-paths: common/config
+          password:
+          username:

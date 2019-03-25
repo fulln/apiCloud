@@ -13,3 +13,4 @@ spring:
     user:
       name: fulln
       password: fulln
+
