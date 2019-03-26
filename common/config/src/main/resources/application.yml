@@ -2,10 +2,11 @@ server:
   port: 7000
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: false
+#    fetch-registry: true
     serviceUrl:
       defaultZone: http://fulln:fulln@localhost:8000/eureka
+  instance:
+    hostname: localhost
 spring:
   application:
     name: config-server
@@ -13,7 +14,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github:com/fulln/apiCloud.git
-          search-paths: common/config
-          password:
-          username:
+          uri: https://github:com/fulln/config.git
+          search-paths: springCloud/config
+          password: fulln
+          username: qq1203943228
