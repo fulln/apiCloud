@@ -16,5 +16,5 @@ spring:
         git:
           uri: https://github:com/fulln/config.git
           search-paths: springCloud/config
-          password: fulln
-          username: qq1203943228
+          password: 
+          username: 
