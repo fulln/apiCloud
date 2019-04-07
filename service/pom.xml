@@ -113,7 +113,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!--common-->
+        <!--com.fulln.me.api.common-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>

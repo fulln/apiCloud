@@ -2,11 +2,17 @@ package com.fulln.me.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
+/**
+ * @author: fulln
+ * @Project com.fulln.me.config
+ * @description:
+ * @date : Created in 2019/4/7 21:13.
+ */
 @EnableConfigServer
-@EnableDiscoveryClient
+@EnableEurekaClient
 @SpringBootApplication
 public class ConfigApplication {
 

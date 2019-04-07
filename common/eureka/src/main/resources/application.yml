@@ -1,16 +1,18 @@
 server:
-  port: 8000
+    port: 8001
 eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: false
-    serviceUrl:
-      defaultZone: http://fulln:fulln@localhost:${server.port}/eureka
+    instance:
+        hostname: 192.168.0.108
+    client:
+        fetch-registry: false
+        register-with-eureka: true
+        serviceUrl:
+            defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8002/eureka/
 spring:
-  application:
-    name: eureka-server
-  security:
-    user:
-      name: fulln
-      password: fulln
+    application:
+        name: eurekaMaster
+    security:
+        user:
+            name: fulln
+            password: fulln
 

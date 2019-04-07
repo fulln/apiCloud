@@ -15,7 +15,7 @@ management:
             enabled: true
 mapper:
     identity: MYSQL
-    mappers: com.fulln.api.common.base.method.MyMapper
+    mappers: com.fulln.api.com.fulln.me.api.common.base.method.MyMapper
     not-empty: false
 mybatis:
     configuration:

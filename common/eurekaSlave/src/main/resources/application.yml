@@ -1,0 +1,18 @@
+server:
+    port: 8002
+eureka:
+    instance:
+        hostname: 192.168.0.108
+    client:
+        fetch-registry: false
+        register-with-eureka: true
+        serviceUrl:
+            defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8001/eureka/
+spring:
+    application:
+        name: eurekaSalve
+    security:
+        user:
+            name: fulln
+            password: fulln
+
