@@ -15,7 +15,7 @@ management:
             enabled: true
 mapper:
     identity: MYSQL
-    mappers: com.fulln.api.com.fulln.me.api.common.base.method.MyMapper
+    mappers: com.fulln.me.config.basic.MyMapper
     not-empty: false
 mybatis:
     configuration:
@@ -34,21 +34,8 @@ server:
     port: 8080
     servlet:
         context-path: /api
-
 spring:
-    application:
-        name: service
-    datasource:
-        hikari:
-            max-active: 20
-            max-wait: 60000
-            min-evictable-idle-time-millis: 300000
-            min-idle: 5
-            testWhileIdle: true
-            time-between-eviction-runs-millis: 60000
-            validationQuery: SELECT 1 FROM DUAL
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+
     jpa:
         show-sql: true
     messages:
@@ -60,12 +47,8 @@ spring:
                 max-idle: 8
                 max-wait: -1
                 min-idle: 0
-    thymeleaf:
-        cache: false
-        mode: HTML
-        prefix: classpath:/templates/page/
     profiles:
         active: dev
-token:
-    platform:
-        pass: jmpt2451
+
+
+

@@ -1,6 +1,7 @@
 package com.fulln.me.api.common.utils;
 
-import com.fulln.api.config.properties.OrderdProperties;
+
+import com.fulln.me.api.common.properties.OrderdProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ByteArrayResource;
@@ -13,7 +14,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import static com.fulln.api.common.constant.FileExtensionConfig.*;
+import static com.fulln.me.api.common.constant.FileExtensionConfig.*;
+
 
 @Slf4j
 public class FileUtil {

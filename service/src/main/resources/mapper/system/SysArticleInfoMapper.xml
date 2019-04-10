@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fulln.me.dao.system.SysArticleInfoDao">
+    <insert id="insertOrUpdate">
+      INSERT INTO  sys_article_info (
+                                     article_name,
+                                     article_tag,
+                                     article_type,
+                                     article_file_name,
+                                     article_file_path,
+                                     article_content,
+                                     create_time,
+                                     update_time,
+                                     remarks,
+                                     cust_no,
+                                     article_push_status)
+      VALUES (
+      #{articleName},
+      #{articleTag},
+      #{articleType},
+      #{articleFileName},
+      #{articleFilePath},
+      #{articleContent},
+      #{createTime},
+      #{updateTime},
+      #{remarks},
+      #{custNo},
+      #{articlePushStatus}
+       )
+      ON DUPLICATE KEY UPDATE
+      article_name =VALUES(article_name),
+      article_tag=VALUES(article_tag),
+      article_type=VALUES(article_type),
+      update_time=VALUES(update_time),
+      article_push_status = VALUES(article_push_status)
+    </insert>
+
+    <update id="updateById">
+        update sys_article_info sai set
+        update_time = #{updateTime}
+        <if test="articleName != null and articleName != ''">
+            ,sai.article_name = #{articleName}
+        </if>
+        <if test="articleTag != null and articleTag != ''">
+            , sai.article_tag = #{articleTag}
+        </if>
+        <if test="articleType != null and articleType != ''">
+            , sai.article_type = #{articleType}
+        </if>
+        <if test="articleFileName != null and articleFileName != ''">
+            , sai.article_file_name = #{articleFileName}
+        </if>
+        <if test="articlePushStatus != null">
+            , sai.article_push_status = #{articlePushStatus}
+        </if>
+        <if test="articleContent != null and articleContent != ''">
+            , sai.article_content= #{articlePushStatus}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="findAll" resultType="com.fulln.me.api.model.system.SysArticleInfo">
+        SELECT * FROM
+        sys_article_info sai
+        <where>
+            sai.article_push_status != 2
+            <if test="articleName != null and articleName != ''">
+                and sai.article_name like CONCAT('%',#{articleName},'%')
+            </if>
+            <if test="articleTag != null and articleTag != ''">
+                and sai.article_tag = #{articleTag}
+            </if>
+            <if test="articleType != null and articleType != ''">
+                and sai.article_type = #{articleType}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and sai.create_time <![CDATA[ > ]]>  #{startTime}
+            </if>
+            <if test="articlePushStatus != null">
+                and sai.article_push_status = #{articlePushStatus}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and sai.create_time  <![CDATA[ < ]]>  #{endTime}
+            </if>
+            <if test="custNo != null and custNo != ''">
+                and (sai.cust_no = #{custNo} or sai.cust_no like concat(#{custNo},"_%"))
+            </if>
+        </where>
+        order by sai.create_time desc
+    </select>
+</mapper>

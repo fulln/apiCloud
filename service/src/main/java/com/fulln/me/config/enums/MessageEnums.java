@@ -1,4 +1,4 @@
-package com.fulln.me.web.config.enums;
+package com.fulln.me.config.enums;
 
 
 import com.fulln.me.api.service.basic.ILanguageCloumService;

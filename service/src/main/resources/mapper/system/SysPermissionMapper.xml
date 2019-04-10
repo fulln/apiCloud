@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fulln.me.dao.system.SysPermissionDao">
+
+
+    <select id="queryAll" resultType="com.fulln.me.api.model.system.SysPermission">
+      select  s.* from  sys_permission s where s.permission_state=1
+    </select>
+
+    <select id="findByRole" resultType="com.fulln.me.api.model.system.SysPermission">
+      select  sp.*
+      from  sys_permission sp
+      left join sys_role_permission srp on
+      sp.permission_id = srp.permission_id
+      left join sys_role  sr on
+      sr.role_id =srp.role_id
+      where
+      sr.role_id = #{roleId}
+      and sp.permission_state=1
+    </select>
+</mapper>
