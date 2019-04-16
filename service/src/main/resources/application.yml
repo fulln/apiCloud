@@ -1,12 +1,3 @@
-com:
-    fulln:
-        api:
-            mail:
-                account: 245193247
-                host: smtp.qq.com
-                is-auth: true
-                img-path: ''
-                out-time: 25000
 logging:
     path: CONSOLE,debug,FILE
 management:
@@ -22,6 +13,7 @@ mybatis:
         default-fetch-size: 100
         default-statement-timeout: 30
         map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     mapper-locations: classpath:mapper/*/*Mapper.xml
     type-aliases-package: com.fulln.api.model
     type-handlers-package: com.fulln.api.config.handle
@@ -33,9 +25,8 @@ pagehelper:
 server:
     port: 8080
     servlet:
-        context-path: /api
+        context-path: /service
 spring:
-
     jpa:
         show-sql: true
     messages:

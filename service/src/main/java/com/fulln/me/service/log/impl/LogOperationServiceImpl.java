@@ -28,12 +28,13 @@ public class LogOperationServiceImpl implements ILogOperationService {
     private LogOperationDao operationDao;
 
     @Override
-    public void save(LogOperationInfo info) {
+    public Boolean save(LogOperationInfo info) {
         try {
             info.setOperationDate(DateUtil.getNowTimeStamp());
-            operationDao.insertSelective(info);
+            return operationDao.insertSelective(info)>0;
         } catch (Exception e) {
             log.error("用户操作存入", e);
+            return false;
         }
     }
 

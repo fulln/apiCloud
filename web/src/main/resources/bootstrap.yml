@@ -5,4 +5,14 @@ spring:
         config:
             label: master
             profile: dev
-            uri: http://localhost:7000
+            uri: http://${eureka.instance.hostname}:7000
+            password: fulln
+            username: fulln
+eureka:
+    instance:
+        hostname: 192.168.0.108
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        serviceUrl:
+            defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8002/eureka/,http://fulln:fulln@${eureka.instance.hostname}:8001/eureka/

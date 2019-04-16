@@ -12,6 +12,6 @@ import com.fulln.me.api.model.log.LogOperationInfo;
  **/
 public interface ILogOperationService {
 
-    void save(LogOperationInfo info);
+    Boolean save(LogOperationInfo info);
 
 }

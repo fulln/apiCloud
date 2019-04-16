@@ -4,6 +4,7 @@ package com.fulln.me.service.system.impl;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.api.service.system.ISysUserService;
+import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.system.SysUserDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return
      */
     @Override
-    public Void updateLoginFail(String name, int count) {
-        return null;
+    public boolean updateLoginFail(String name, int count) {
+        return userDao.updateLoginFail(name,count)>0;
     }
 
     /**
@@ -64,6 +65,12 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public GlobalResult Update(SysUserBasic currentUser) {
-        return null;
+        try {
+            userDao.updateByPrimaryKeySelective(currentUser);
+            return GlobalEnums.UPDATE_SUCCESS.results();
+        } catch (Exception e) {
+            log.error("根据用户名更新", e);
+            return GlobalEnums.UPDATE_ERROR.results();
+        }
     }
 }

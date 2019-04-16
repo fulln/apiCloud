@@ -26,7 +26,7 @@ public enum  SourceDownloadEnums implements EnumsConfig {
     }
 
     public static SourceDownloadEnums getEnmus(String code){
-        
+
         for (SourceDownloadEnums set :
                 EnumSet.allOf(SourceDownloadEnums.class)) {
             if( !StringUtils.isEmpty(code) && code.equals(set.code)){

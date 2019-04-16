@@ -21,7 +21,7 @@ public interface SysUserDao extends MyMapper<SysUserBasic> {
      * @param count
      */
     @Update("update sys_user_basic set LOGIN_FAIL_COUNTS = #{loginFailCount} where user_name = #{userName}")
-    void updateLoginFail(@Param("userName") String name, @Param("loginFailCount") Integer count);
+    int updateLoginFail(@Param("userName") String name, @Param("loginFailCount") Integer count);
 
 
 
