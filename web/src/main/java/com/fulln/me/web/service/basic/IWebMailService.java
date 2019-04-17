@@ -4,6 +4,7 @@ package com.fulln.me.web.service.basic;
 import com.fulln.me.api.model.email.EmailEntity;
 import com.fulln.me.api.service.basic.IMailService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @program: springcloud
@@ -21,6 +22,7 @@ public interface IWebMailService extends IMailService {
      * @retun: a
      * @Date: 2018/7/6 0006-13:32
      */
+    @GetMapping("/mail/send")
     void sendHtmlMail(EmailEntity email);
 
 

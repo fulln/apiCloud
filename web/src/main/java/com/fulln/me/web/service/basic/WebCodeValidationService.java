@@ -22,7 +22,7 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
-    @GetMapping("/getPhoneCode")
+    @GetMapping("/CodeValidate/getPhoneCode")
     GlobalResult getPhoneCode(String token, String phone);
 
     /**
@@ -30,6 +30,7 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
+    @GetMapping("/CodeValidate/tokenLogin")
     GlobalResult tokenLogin();
 
     /**
@@ -37,10 +38,12 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
+    @GetMapping("/CodeValidate/tokenPhone")
     GlobalResult tokenPhone(String code);
 
     /**
      * 接码平台注销号码
      */
+    @GetMapping("/CodeValidate/resume")
     GlobalResult resume(String token, String phoneNo);
 }

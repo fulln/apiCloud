@@ -4,6 +4,7 @@ package com.fulln.me.web.service.log;
 import com.fulln.me.api.model.log.LogOperationInfo;
 import com.fulln.me.api.service.log.ILogOperationService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author fulln
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 @FeignClient("${feign.url}")
 public interface IWebLogOperationService extends ILogOperationService {
 
+    @PostMapping("/logOperate/save")
     Boolean save(LogOperationInfo info);
 
 }

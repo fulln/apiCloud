@@ -4,6 +4,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.log.LogLoginInfo;
 import com.fulln.me.api.service.log.ILogLoginService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author fulln
@@ -20,11 +21,13 @@ public interface IWebLogLoginService extends ILogLoginService {
      * @param loginInfo
      * @return
      */
+    @PostMapping("/logLogin/update")
     GlobalResult update(LogLoginInfo loginInfo);
 
     /**
      * 新增
      */
+    @PostMapping("/logLogin/insert")
     GlobalResult insert(LogLoginInfo loginInfo);
 
 }

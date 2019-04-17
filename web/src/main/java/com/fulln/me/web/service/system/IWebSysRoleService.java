@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("${feign.url}")
 public interface IWebSysRoleService extends ISysRoleService {
 
-    @GetMapping("/{id}")
+    @GetMapping("/role/{id}")
     SysRole findById(@PathVariable Integer id);
     
 }

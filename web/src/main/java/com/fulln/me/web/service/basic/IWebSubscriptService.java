@@ -2,6 +2,8 @@ package com.fulln.me.web.service.basic;
 
 import com.fulln.me.api.service.basic.ISubscriptService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,5 +22,6 @@ public interface IWebSubscriptService extends ISubscriptService {
       * @param mine
      * @param response
      */
-    void downloads(String mine, HttpServletResponse response);
+    @GetMapping("/download/{mine}")
+    void downloads(@PathVariable String mine, HttpServletResponse response);
 }

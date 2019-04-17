@@ -5,6 +5,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.email.EmailEntity;
 import com.fulln.me.api.service.basic.IThreadStartService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.File;
 
@@ -21,9 +22,10 @@ public interface IWebThreadStartService extends IThreadStartService {
     /**
      * 线程池全部关闭
      */
+    @GetMapping("/threadStart/destroy")
     void destroy();
 
-
+    @GetMapping("/threadStart/text")
     GlobalResult dispatch(String text);
 
     /**
@@ -31,15 +33,18 @@ public interface IWebThreadStartService extends IThreadStartService {
      * @param path 地址
      * @param context 文章内容
      */
+    @GetMapping("/threadStart/fileCreate")
     void fileCreate(String path, String context);
 
     /**
      * 读取file文件
      */
+    @GetMapping("/threadStart/fileReader")
     GlobalResult fileReader(File path);
 
     /**
      *  发送邮件
      */
+    @GetMapping("/threadStart/sendEmail")
     void sendEmail(EmailEntity emailEntity);
 }

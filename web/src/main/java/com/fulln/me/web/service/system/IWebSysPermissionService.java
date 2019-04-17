@@ -5,6 +5,8 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysPermission;
 import com.fulln.me.api.service.system.ISysPermissionService;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public interface IWebSysPermissionService extends ISysPermissionService {
      * @param id
      * @return
      */
+    @GetMapping("/permission/findByUser")
     List<SysPermission> loadUserResources(Integer id);
 
     /**
@@ -29,11 +32,13 @@ public interface IWebSysPermissionService extends ISysPermissionService {
      *
      * @return
      */
+    @GetMapping("/permission/list")
     List<SysPermission> queryAll();
     /**
      * 新增
      * @return
      */
+    @PostMapping("/permission/save")
     GlobalResult save(SysPermission permission);
 
 }
