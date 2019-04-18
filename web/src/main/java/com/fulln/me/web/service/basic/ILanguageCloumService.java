@@ -1,6 +1,5 @@
 package com.fulln.me.web.service.basic;
 
-import com.fulln.me.api.service.basic.ILanguageCloumService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @date 2019/4/8 21:43
  **/
 @FeignClient(value = "${feign.url}")
-public interface IWebLanguageCloumService extends ILanguageCloumService {
+public interface ILanguageCloumService {
 
     @GetMapping("/languageCloum/code")
     String getCloums(String code);

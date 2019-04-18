@@ -3,10 +3,10 @@ package com.fulln.me.web.service.system;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysUserBasic;
-import com.fulln.me.api.service.system.ISysUserService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @program: api
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @Version： 0.0.1
  **/
 @FeignClient("${feign.url}")
-public interface IWebSysUserService  extends ISysUserService {
+public interface  ISysUserService {
 
     /**
      * 根据用户名查找用户
@@ -24,7 +24,7 @@ public interface IWebSysUserService  extends ISysUserService {
      * @return
      */
     @GetMapping("/user/findByName")
-    SysUserBasic selectByUsername(String name);
+    SysUserBasic selectByUsername(@RequestParam("name") String name);
 
     /**
      * 根据名称更新
@@ -33,7 +33,7 @@ public interface IWebSysUserService  extends ISysUserService {
      * @return
      */
     @PostMapping("/user/updateLoginFail")
-    boolean updateLoginFail(String name, int count);
+    boolean updateLoginFail(@RequestParam("name") String name, @RequestParam("count") int count);
 
     /**
      * 更新
@@ -41,7 +41,7 @@ public interface IWebSysUserService  extends ISysUserService {
      * @return
      */
     @PostMapping("/user/update")
-    GlobalResult Update(SysUserBasic currentUser);
+    GlobalResult Update( @RequestParam("currentUser") SysUserBasic currentUser);
 
 
 }

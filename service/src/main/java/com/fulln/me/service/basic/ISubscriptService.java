@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.basic;
+package com.fulln.me.service.basic;
 
 import javax.servlet.http.HttpServletResponse;
 

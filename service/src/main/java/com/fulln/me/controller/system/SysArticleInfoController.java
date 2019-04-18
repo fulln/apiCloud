@@ -4,7 +4,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
 import com.fulln.me.api.model.system.SysUserBasic;
-import com.fulln.me.api.service.system.ISysArticleInfoService;
+import com.fulln.me.service.system.ISysArticleInfoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

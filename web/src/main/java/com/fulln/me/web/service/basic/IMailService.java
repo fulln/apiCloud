@@ -2,7 +2,6 @@ package com.fulln.me.web.service.basic;
 
 
 import com.fulln.me.api.model.email.EmailEntity;
-import com.fulln.me.api.service.basic.IMailService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @create: 2018-06-29 11:32
  **/
 @FeignClient("${feign.url}")
-public interface IWebMailService extends IMailService {
+public interface IMailService {
 
     /**
      * @Author: fulln

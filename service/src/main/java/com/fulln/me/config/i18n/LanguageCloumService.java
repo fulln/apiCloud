@@ -1,6 +1,7 @@
 package com.fulln.me.config.i18n;
 
-import com.fulln.me.api.service.basic.ILanguageCloumService;
+
+import com.fulln.me.service.basic.ILanguageCloumService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

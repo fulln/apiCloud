@@ -1,0 +1,37 @@
+com:
+    fulln:
+        api:
+            defaultDownFile: /opt/source/_posts
+            mail:
+                send-adder: 245193247@qq.com
+                password:
+logging:
+    file: /opt/logs/spring-boot-logging.log
+    level:
+        com:
+            fulln:
+                api:
+                    dao: info
+spring:
+    datasource:
+        hikari:
+            second:
+                jdbc-url: jdbc:mysql://localhost:3306/api?useSSL=false
+                password: 123456
+                username: root
+                maximum-pool-size: 20
+                max-lifetime: 1800000
+            primary:
+                jdbc-url: jdbc:mysql://localhost:3306/api?useSSL=false
+                password: 123456
+                username: root
+                maximum-pool-size: 20
+                max-lifetime: 1800000
+    redis:
+        host: localhost
+        password:
+        port: 6379
+        timeout: 5000
+#    data:
+#        elasticsearch:
+#            cluster-nodes: 192.168.246.138:9300

@@ -1,7 +1,7 @@
 package com.fulln.me.controller.system;
 
 import com.fulln.me.api.model.system.SysRole;
-import com.fulln.me.api.service.system.ISysRoleService;
+import com.fulln.me.service.system.ISysRoleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,8 +2,8 @@ package com.fulln.me.service.system.impl;
 
 
 import com.fulln.me.api.model.system.SysRole;
-import com.fulln.me.api.service.system.ISysRoleService;
 import com.fulln.me.dao.system.SysRoleDao;
+import com.fulln.me.service.system.ISysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

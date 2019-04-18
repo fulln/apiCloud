@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.system;
+package com.fulln.me.service.system;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
@@ -33,7 +33,7 @@ public interface ISysUserService {
      * @param currentUser
      * @return
      */
-    GlobalResult Update( SysUserBasic currentUser);
+    GlobalResult Update(SysUserBasic currentUser);
 
 
 }

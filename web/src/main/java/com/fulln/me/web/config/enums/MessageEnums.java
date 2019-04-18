@@ -1,7 +1,7 @@
 package com.fulln.me.web.config.enums;
 
 
-import com.fulln.me.api.service.basic.ILanguageCloumService;
+import com.fulln.me.web.service.basic.ILanguageCloumService;
 
 public enum MessageEnums {
 

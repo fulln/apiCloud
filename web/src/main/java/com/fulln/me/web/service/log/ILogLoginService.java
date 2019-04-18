@@ -2,7 +2,6 @@ package com.fulln.me.web.service.log;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.log.LogLoginInfo;
-import com.fulln.me.api.service.log.ILogLoginService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @date 2019/4/7 23:18
  **/
 @FeignClient("${feign.url}")
-public interface IWebLogLoginService extends ILogLoginService {
+public interface ILogLoginService {
 
     /**
      * 修改

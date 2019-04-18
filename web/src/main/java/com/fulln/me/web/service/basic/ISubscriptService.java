@@ -1,6 +1,5 @@
 package com.fulln.me.web.service.basic;
 
-import com.fulln.me.api.service.basic.ISubscriptService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Version 0.0.1
  **/
 @FeignClient("${feign.url}")
-public interface IWebSubscriptService extends ISubscriptService {
+public interface  ISubscriptService {
 
     /**
      *

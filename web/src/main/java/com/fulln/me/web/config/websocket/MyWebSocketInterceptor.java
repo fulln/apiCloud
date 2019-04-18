@@ -1,6 +1,7 @@
 package com.fulln.me.web.config.websocket;
 
-import com.fulln.me.api.service.log.ILogOperationService;
+
+import com.fulln.me.web.service.log.ILogOperationService;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;

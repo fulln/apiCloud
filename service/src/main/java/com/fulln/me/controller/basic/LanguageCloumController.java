@@ -1,6 +1,7 @@
 package com.fulln.me.controller.basic;
 
-import com.fulln.me.api.service.basic.ILanguageCloumService;
+
+import com.fulln.me.service.basic.ILanguageCloumService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

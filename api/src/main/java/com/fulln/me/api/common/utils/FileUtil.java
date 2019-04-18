@@ -33,11 +33,20 @@ public class FileUtil {
      * 读取数组的方法还是用yaml
      */
     synchronized static private void loadProps(String name) {
+        loadProps(FileUtil.class,name);
+    }
+
+    /**
+     * 读取配置文件
+     * 只支持单个读取,不能读取数组与list
+     * 读取数组的方法还是用yaml
+     */
+    synchronized static private void loadProps(Class clazz,String name) {
         String extension = name.substring(name.lastIndexOf(FILE_DOT) + 1);
         if (extension.equals(FILE_PROPERTIES)) {
             //按顺序加载properties
             props = new OrderdProperties();
-            try (InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(name)) {
+            try (InputStream in = clazz.getClassLoader().getResourceAsStream(name)) {
                 props.load(in);
             } catch (FileNotFoundException e) {
                 log.error("配置文件未找到");
@@ -64,7 +73,6 @@ public class FileUtil {
             }
         }
     }
-
 
     //写入配置文件
     synchronized static public void writeProps(Properties ps, String path) {
@@ -145,6 +153,14 @@ public class FileUtil {
      */
     public static Properties getProps(String name) {
         loadProps(name);
+        return props;
+    }
+
+    /**
+     * 获取全部的键值对
+     */
+    public static Properties getProps(String name,Class clazz) {
+        loadProps(clazz, name);
         return props;
     }
 

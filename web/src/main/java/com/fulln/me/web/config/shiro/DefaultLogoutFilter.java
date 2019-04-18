@@ -3,7 +3,7 @@ package com.fulln.me.web.config.shiro;
 
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.log.LogLoginInfo;
-import com.fulln.me.api.service.log.ILogLoginService;
+import com.fulln.me.web.service.log.ILogLoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;

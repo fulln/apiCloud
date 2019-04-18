@@ -1,10 +1,7 @@
-package com.fulln.me.web.service.basic;
+package com.fulln.me.service.basic;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.service.basic.CodeValidationService;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @program: api
@@ -13,8 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @create: 2018-09-21 10:50
  * @Version： 0.0.1
  **/
-@FeignClient("${feign.url}")
-public interface WebCodeValidationService  extends CodeValidationService {
+public interface CodeValidationService {
 
 
     /**
@@ -22,7 +18,6 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
-    @GetMapping("/CodeValidate/getPhoneCode")
     GlobalResult getPhoneCode(String token, String phone);
 
     /**
@@ -30,7 +25,6 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
-    @GetMapping("/CodeValidate/tokenLogin")
     GlobalResult tokenLogin();
 
     /**
@@ -38,12 +32,10 @@ public interface WebCodeValidationService  extends CodeValidationService {
      *
      * @return
      */
-    @GetMapping("/CodeValidate/tokenPhone")
     GlobalResult tokenPhone(String code);
 
     /**
      * 接码平台注销号码
      */
-    @GetMapping("/CodeValidate/resume")
     GlobalResult resume(String token, String phoneNo);
 }

@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.log;
+package com.fulln.me.service.log;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.log.LogLoginInfo;

@@ -2,7 +2,7 @@ package com.fulln.me.web.controller.search;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.service.basic.IThreadStartService;
+import com.fulln.me.web.service.basic.IThreadStartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;

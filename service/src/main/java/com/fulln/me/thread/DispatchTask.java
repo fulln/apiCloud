@@ -3,8 +3,8 @@ package com.fulln.me.thread;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.threadconfig.AbstractThreadStartFactory;
-import com.fulln.me.api.service.search.SearchService;
 import com.fulln.me.config.enums.GlobalEnums;
+import com.fulln.me.service.search.SearchService;
 
 import static com.fulln.me.api.common.threadconfig.ThreadQueue.setTask;
 

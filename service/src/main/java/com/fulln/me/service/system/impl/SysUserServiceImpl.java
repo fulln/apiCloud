@@ -3,9 +3,9 @@ package com.fulln.me.service.system.impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysUserBasic;
-import com.fulln.me.api.service.system.ISysUserService;
 import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.system.SysUserDao;
+import com.fulln.me.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

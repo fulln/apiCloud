@@ -2,8 +2,8 @@ package com.fulln.me.service.basic.impl;
 
 
 import com.fulln.me.api.model.email.EmailEntity;
-import com.fulln.me.api.service.basic.IMailService;
 import com.fulln.me.constant.MailConfig;
+import com.fulln.me.service.basic.IMailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

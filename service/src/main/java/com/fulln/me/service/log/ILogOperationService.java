@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.log;
+package com.fulln.me.service.log;
 
 
 import com.fulln.me.api.model.log.LogOperationInfo;

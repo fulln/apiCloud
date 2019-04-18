@@ -2,7 +2,7 @@ package com.fulln.me.web.controller.msg;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.service.basic.CodeValidationService;
+import com.fulln.me.web.service.basic.CodeValidationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

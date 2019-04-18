@@ -3,8 +3,8 @@ package com.fulln.me.service.system.impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysPermission;
-import com.fulln.me.api.service.system.ISysPermissionService;
 import com.fulln.me.dao.system.SysPermissionDao;
+import com.fulln.me.service.system.ISysPermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

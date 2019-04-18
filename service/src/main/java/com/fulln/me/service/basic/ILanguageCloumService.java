@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.basic;
+package com.fulln.me.service.basic;
 
 /**
  * @author fulln

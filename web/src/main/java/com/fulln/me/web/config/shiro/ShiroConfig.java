@@ -4,8 +4,8 @@ package com.fulln.me.web.config.shiro;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.fulln.me.api.common.utils.FileUtil;
 import com.fulln.me.api.model.system.SysPermission;
-import com.fulln.me.api.service.system.ISysPermissionService;
 import com.fulln.me.web.config.constant.NonBlockingUrlConfig;
+import com.fulln.me.web.service.system.ISysPermissionService;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -230,8 +230,7 @@ public class ShiroConfig {
      */
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
-        String platform = FileUtil.getProperty("spring.profiles.active");
-        Properties props = FileUtil.getProps("application-" + platform + ".yml");
+        Properties props = FileUtil.getProps("application-dev.yml");
 
         //propertise的配置
         redisManager.setHost(props.getProperty("spring.redis.host"));

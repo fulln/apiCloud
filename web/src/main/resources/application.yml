@@ -1,0 +1,87 @@
+com:
+    fulln:
+        api:
+            urls:
+                loginUrl: /login
+                logoutUrl: /logout
+                successUrl: /view
+                unauthorizedUrl: /403
+                nonBlockingUrl:
+                    # 获取图片验证码
+                    - /code
+                    # 首页
+                    - /
+                    # 项目性能监控模块
+                    - /actuator/**
+                    - /druid/**
+                    # swaggerUi
+                    - /static/**
+                    - /webjars/**
+                    - /swagger/**
+                    - /swagger-resources/**
+                    - /swagger-ui.html/**
+                    - /v2/**
+                    # 静态文件
+                    - /css/**
+                    - /font/**
+                    - /img/**
+                    - /js/**
+            defaulthead:
+                userName: fulln
+                token: 6nKifRTHVYIZf5p+rFdGNg==
+                sessionOutTime: 86400
+            mail:
+                account: 245193247
+                host: smtp.qq.com
+                is-auth: true
+                img-path: ''
+                out-time: 25000
+logging:
+    path: CONSOLE,debug,FILE
+management:
+    endpoint:
+        shutdown:
+            enabled: true
+mapper:
+    identity: MYSQL
+    mappers: com.fulln.me.config.basic.MyMapper
+    not-empty: false
+mybatis:
+    configuration:
+        default-fetch-size: 100
+        default-statement-timeout: 30
+        map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    mapper-locations: classpath:mapper/*/*Mapper.xml
+    type-aliases-package: com.fulln.api.model
+    type-handlers-package: com.fulln.api.config.handle
+pagehelper:
+    helperDialect: mysql
+    params: count=countSql
+    reasonable: true
+    supportMethodsArguments: true
+server:
+    port: 8080
+    servlet:
+        context-path: /service
+spring:
+    jpa:
+        show-sql: true
+    messages:
+        basename: Language.messages
+    redis:
+        lettuce:
+            pool:
+                max-active: 8
+                max-idle: 8
+                max-wait: -1
+                min-idle: 0
+    profiles:
+        active: dev
+
+    main:
+        allow-bean-definition-overriding: true
+feign:
+    url: server
+
+

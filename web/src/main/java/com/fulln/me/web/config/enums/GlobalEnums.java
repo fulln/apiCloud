@@ -2,7 +2,8 @@ package com.fulln.me.web.config.enums;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.config.EnumsConfig;
-import com.fulln.me.api.service.basic.ILanguageCloumService;
+import com.fulln.me.web.service.basic.ILanguageCloumService;
+
 
 /**
  * @AUthor: fulln

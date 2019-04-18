@@ -2,7 +2,7 @@ package com.fulln.me.controller.log;
 
 
 import com.fulln.me.api.model.log.LogOperationInfo;
-import com.fulln.me.api.service.log.ILogOperationService;
+import com.fulln.me.service.log.ILogOperationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

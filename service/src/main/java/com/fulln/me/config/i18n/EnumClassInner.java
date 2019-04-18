@@ -1,9 +1,9 @@
 package com.fulln.me.config.i18n;
 
 
-import com.fulln.me.api.service.basic.ILanguageCloumService;
 import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.config.enums.MessageEnums;
+import com.fulln.me.service.basic.ILanguageCloumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

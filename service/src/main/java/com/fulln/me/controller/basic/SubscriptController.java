@@ -1,6 +1,7 @@
 package com.fulln.me.controller.basic;
 
-import com.fulln.me.api.service.basic.ISubscriptService;
+
+import com.fulln.me.service.basic.ISubscriptService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

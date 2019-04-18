@@ -1,7 +1,7 @@
 package com.fulln.me.web.controller.download;
 
 
-import com.fulln.me.api.service.basic.ISubscriptService;
+import com.fulln.me.web.service.basic.ISubscriptService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

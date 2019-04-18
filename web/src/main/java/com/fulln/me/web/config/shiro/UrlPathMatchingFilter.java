@@ -3,7 +3,7 @@ package com.fulln.me.web.config.shiro;
 
 import com.fulln.me.api.model.system.SysPermission;
 import com.fulln.me.api.model.system.SysUserBasic;
-import com.fulln.me.api.service.system.ISysPermissionService;
+import com.fulln.me.web.service.system.ISysPermissionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;

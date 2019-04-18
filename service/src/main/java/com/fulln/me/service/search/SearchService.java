@@ -1,4 +1,4 @@
-package com.fulln.me.api.service.search;
+package com.fulln.me.service.search;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
