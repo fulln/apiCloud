@@ -5,6 +5,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.email.EmailEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
 
@@ -34,7 +35,7 @@ public interface IThreadStartService {
      * @param context 文章内容
      */
     @GetMapping("/threadStart/fileCreate")
-    void fileCreate(String path, String context);
+    void fileCreate(@RequestParam("path")String path, @RequestParam("context")String context);
 
     /**
      * 读取file文件

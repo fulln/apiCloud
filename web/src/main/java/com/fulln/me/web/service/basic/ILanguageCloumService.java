@@ -2,6 +2,7 @@ package com.fulln.me.web.service.basic;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author fulln
@@ -18,5 +19,5 @@ public interface ILanguageCloumService {
 
 
     @GetMapping("/languageCloum/codeAndText")
-    String getCloums(String code, String text);
+    String getCloums(@RequestParam("code") String code, @RequestParam("text") String text);
 }

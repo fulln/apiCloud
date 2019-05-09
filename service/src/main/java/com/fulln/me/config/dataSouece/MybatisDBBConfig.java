@@ -7,13 +7,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -21,10 +19,10 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * 数据源2的配置
+ * 数据源2的配置(选)
  */
-@Configuration
-@MapperScan(basePackages = {"com.fulln.me.dao.system","com.fulln.me.dao.search"},sqlSessionFactoryRef = "sqlSessionFactory2")
+//@Configuration
+//@MapperScan(basePackages = {"com.fulln.me.dao.system","com.fulln.me.dao.search"},sqlSessionFactoryRef = "sqlSessionFactory2")
 public class MybatisDBBConfig {
 
     @Autowired

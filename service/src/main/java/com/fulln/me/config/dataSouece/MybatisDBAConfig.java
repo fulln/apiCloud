@@ -3,20 +3,18 @@ package com.fulln.me.config.dataSouece;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
 /**
- * 数据源1的配置
+ * 数据源1的配置(不使用对应插件的话是没有问题的)
  */
-@Configuration
-@MapperScan(basePackages = {"com.fulln.me.dao.log","com.fulln.me.dao.es"},sqlSessionFactoryRef = "sqlSessionFactory1")
+//@Configuration
+//@MapperScan(basePackages = {"com.fulln.me.dao.log","com.fulln.me.dao.es"},sqlSessionFactoryRef = "sqlSessionFactory1")
 public class MybatisDBAConfig {
 
     @Bean(name = "db1")

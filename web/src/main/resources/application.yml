@@ -42,31 +42,11 @@ management:
     endpoint:
         shutdown:
             enabled: true
-mapper:
-    identity: MYSQL
-    mappers: com.fulln.me.config.basic.MyMapper
-    not-empty: false
-mybatis:
-    configuration:
-        default-fetch-size: 100
-        default-statement-timeout: 30
-        map-underscore-to-camel-case: true
-        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-    mapper-locations: classpath:mapper/*/*Mapper.xml
-    type-aliases-package: com.fulln.api.model
-    type-handlers-package: com.fulln.api.config.handle
-pagehelper:
-    helperDialect: mysql
-    params: count=countSql
-    reasonable: true
-    supportMethodsArguments: true
 server:
-    port: 8080
+    port: 8082
     servlet:
         context-path: /service
 spring:
-    jpa:
-        show-sql: true
     messages:
         basename: Language.messages
     redis:
@@ -78,7 +58,6 @@ spring:
                 min-idle: 0
     profiles:
         active: dev
-
     main:
         allow-bean-definition-overriding: true
 feign:

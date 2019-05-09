@@ -7,6 +7,7 @@ import com.fulln.me.api.model.system.SysUserBasic;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @program: api
@@ -24,7 +25,7 @@ public interface ISysArticleInfoService {
      * @return
      */
     @GetMapping("/article/list")
-    GlobalResult findAll(SysArticleInfoDTO info, SysUserBasic user);
+    GlobalResult findAll(@RequestParam("info") SysArticleInfoDTO info, @RequestParam("user")SysUserBasic user);
 
     /**
      * 单个查询
@@ -42,7 +43,7 @@ public interface ISysArticleInfoService {
      * @return
      */
     @PostMapping("/article/insertOne")
-    GlobalResult insertOne(SysArticleInfo info, SysUserBasic basic);
+    GlobalResult insertOne(@RequestParam("info")SysArticleInfo info, @RequestParam("basic")SysUserBasic basic);
 
     /**
      * 更新
@@ -50,6 +51,6 @@ public interface ISysArticleInfoService {
      * @return
      */
     @PostMapping("/article/update")
-    GlobalResult updateOne(SysArticleInfo info, SysUserBasic basic);
+    GlobalResult updateOne(@RequestParam("info")SysArticleInfo info, @RequestParam("basic")SysUserBasic basic);
 
 }

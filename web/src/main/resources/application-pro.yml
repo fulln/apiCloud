@@ -13,20 +13,6 @@ logging:
                 api:
                     dao: info
 spring:
-    datasource:
-        hikari:
-            second:
-                jdbc-url: jdbc:mysql://localhost:3306/api?useSSL=false
-                password: 123456
-                username: root
-                maximum-pool-size: 20
-                max-lifetime: 1800000
-            primary:
-                jdbc-url: jdbc:mysql://localhost:3306/api?useSSL=false
-                password: 123456
-                username: root
-                maximum-pool-size: 20
-                max-lifetime: 1800000
     redis:
         host: localhost
         password:

@@ -39,11 +39,11 @@ public interface CodeValidationService {
      * @return
      */
     @GetMapping("/CodeValidate/tokenPhone")
-    GlobalResult tokenPhone(@RequestParam String code);
+    GlobalResult tokenPhone(@RequestParam("code") String code);
 
     /**
      * 接码平台注销号码
      */
     @GetMapping("/CodeValidate/resume")
-    GlobalResult resume(@RequestParam String token, @RequestParam String phoneNo);
+    GlobalResult resume(@RequestParam("token") String token, @RequestParam("phoneNo") String phoneNo);
 }

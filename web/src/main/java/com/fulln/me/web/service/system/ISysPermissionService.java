@@ -14,7 +14,7 @@ import java.util.List;
  * @Description: 权限表
  * @Date : Created in  0:25  2018/10/12.
  */
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}" ,path = "/service")
 public interface  ISysPermissionService {
 
     /**
