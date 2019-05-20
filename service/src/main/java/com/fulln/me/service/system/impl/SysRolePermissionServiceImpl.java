@@ -1,8 +1,8 @@
 package com.fulln.me.service.system.impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.model.system.SysRolePermission;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.system.SysRolePermissionDao;
 import com.fulln.me.service.system.ISysRolePermissionService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService {
     public GlobalResult save(SysRolePermission rolePermission) {
         try {
             int b =  sysRolePermissionDao.insertUseGeneratedKeys(rolePermission);
-            return b>0?GlobalEnums.INSERT_SUCCESS.results():GlobalEnums.INSERT_ERROR.results();
+            return b>0? GlobalEnums.INSERT_SUCCESS.results(): GlobalEnums.INSERT_ERROR.results();
         }catch (Exception e){
             log.error("权限角色表-新增",e);
             return GlobalEnums.INSERT_ERROR.results();

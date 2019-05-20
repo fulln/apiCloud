@@ -2,11 +2,11 @@ package com.fulln.me.web.config.shiro;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.AesUtil;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
-import com.fulln.me.web.config.enums.GlobalEnums;
 import com.fulln.me.web.config.redis.RedisUtil;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;

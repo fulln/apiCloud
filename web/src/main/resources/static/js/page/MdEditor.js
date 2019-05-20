@@ -1,0 +1,294 @@
+let testEditormd,
+    articleParams = {
+        url: 'article/find',
+        responseHandler: function (res) {
+            return {
+                "count": res.datas[0].total, //解析数据长度
+                "data": res.datas[0].list  //解析数据列表
+            };
+        },
+        queryParams: function () {
+            return {
+                articleName: $('#searchInput').val(),
+                startTime: $('#searchStart').val(),
+                endTime: $('#searchEnd').val(),
+                articlePushStatus: $("#articlePushStatus").val()
+            }
+        }
+    }, colums = [{
+        type: 'checkbox'
+    },
+        {
+            field: 'articleName',
+            title: '文章名称',
+            align: 'center',
+            sort: true
+        }, {
+            field: 'articlePushStatus',
+            title: '文章发布状态',
+            align: 'center',
+            sort: true,
+            templet: function (data) {
+                let condition = data.articlePushStatus;
+                if (condition == 0) {
+                    return '<div><label> 未发布</label></div>'
+                } else if (condition == 1) {
+                    return '<div><label>已发布</label></div>'
+                } else {
+                    return '<div><label>未知</label></div>'
+                }
+            }
+        },
+        {
+            field: 'articleTag',
+            title: '标签',
+            align: 'center',
+            sort: true
+        },
+        {
+            field: 'articleType',
+            title: '类型',
+            align: 'center',
+            sort: true
+        }, {
+            field: 'articleFileName',
+            title: '文件名',
+            align: 'center',
+            sort: true
+        }, {
+            field: 'createTime',
+            title: '创建时间',
+            align: 'center',
+            sort: true,
+            templet: function (data) {
+                return '<div><label>' + tableDateFormat(data.createTime) + '</label></div>'
+            }
+        }, {
+            field: 'updateTime',
+            title: '修改时间',
+            align: 'center',
+            sort: true,
+            templet: function (data) {
+                return tableDateFormat(data.updateTime);
+            }
+        }, {
+            field: 'operation',
+            title: '操作',
+            align: 'center',
+            toolbar: toolsOperatio()
+        }
+    ], veriParams = {
+        articleName: function (value, item) {
+            return regexCommon.textLength(value, 6, 100,item);
+        },
+        articleTag: regexCommon.textReq,
+        articleCategory: function (value, item) {
+            return regexCommon.textLength(value, 3, 100, item);
+        },
+        articleFileName: regexCommon.textReq
+    };
+
+function toolsOperatio(){
+    return '<div><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>\n' +
+        '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></div>'
+}
+
+
+
+$(function () {
+
+    layCommon.initDate("#searchStart", "#searchEnd");
+    layCommon.initTable("#table", articleParams, colums);
+    layCommon.ListenTools("table", function (obj) {
+        let data = obj.data; //获得当前行数据
+        let layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        let tr = obj.tr; //获得当前行 tr 的DOM对象
+
+        if (layEvent === 'del') { //删除
+            layer.confirm('真的删除行么', function (index) {
+                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                layer.close(index);
+                //向服务端发送删除指令
+                requestBack("PUT", "article/" + data.id, "name="+data.articleFileName, function (data) {
+                    alertAuto(data.message);
+                    layCommon.reloadTable("table");
+                });
+            });
+        } else if (layEvent === 'edit') { //编辑
+
+            $("#article-table").hide();
+            let params={
+                articleName: data.articleName,
+                articleTag: data.articleTag,
+                articleCategory: data.articleType,
+                articleFileName: data.articleFileName,
+            };
+
+            // //弹出层赋值
+            // layCommon.formInit('paneForm',params);
+            //$("#myModal").model('show')
+
+            $("#myModal").attr("data-article", JSON.stringify(params));
+            $("#myModal").attr('data-id',data.id);
+
+            mdEditor(data.articleContent);
+        }
+    });
+
+    $("#scan").on('click',function () {
+        requestBack("POST","article/read","",function (data) {
+                alertInfo("提示",data.message,['ok']);
+                layCommon.reloadTable('table');
+        })
+    });
+
+    $("#remove-btn").on('click',function () {
+        alertInfo("关闭当前", "文章关闭后不会保存,确定关闭?", ['done', 'cancel'], function (data) {
+            if (NotEmpty(testEditormd)) {
+                $(".tools").html('');
+                testEditormd.editor.remove();
+                $("#remove-btn").hide();
+                $("#article-table").show();
+            }
+        });
+    });
+
+
+    $("#toc-menu-btn").click(function () {
+        testEditormd.config({
+            tocDropdown: true,
+            tocTitle: "目录 Table of Contents"
+        });
+    });
+
+    $("#toc-default-btn").click(function () {
+        testEditormd.config("tocDropdown", false);
+    });
+});
+
+/**
+ * 上传md文档
+ */
+function pushMD(status) {
+    let params = {};
+    let datas = JSON.parse($('#myModal').attr("data-article"));
+    params.articleName = datas.articleName;
+    params.articlePushStatus = status;
+    params.articleFileName = datas.articleFileName;
+    params.id=$("#myModal").attr("data-id");
+    params.articleTag = datas.articleTag;
+    params.articleType = datas.articleCategory;
+    params.articleContent = testEditormd.getMarkdown();
+    requestBack("POST","article/insert", params, function (data) {
+        alertAuto(data.message);
+        //隐藏关闭全部
+        $("#remove-btn").hide();
+        //显示查询table
+        $("#article-table").show();
+        //清空文章编辑
+        $(".tools").html('');
+        //移除md编辑
+        testEditormd.editor.remove();
+        //移除数据
+        $("#myModal").attr('data-id','');
+        $("#myModal").attr('data-article','');
+        if( params.articlePushStatus !== 1){
+            //清空form表单
+            $('.layui-form-pane').reset();
+        }
+
+        //重新查询table
+        layCommon.reloadTable("table");
+    })
+}
+
+function mdEditor(md) {
+
+    $("#layout").append(" <div class=\"btns  tools\">\n" +
+        "                <button id=\"get-md-btn\" onclick='pushMD()'>保存至本地</button>\n" +
+        "                <button onclick='pushMD()'>发布文章</button>\n" +
+        "                <button onclick='testEditormd.showToolbar()'>打开工具栏</button>\n" +
+        "                <button onclick='testEditormd.hideToolbar()'>关闭工具栏</button>\n" +
+        "            </div>\n" +
+        "            <div id=\"test-editormd\"></div>");
+
+    $("#remove-btn").show();
+
+    $.getScript("js/editor/editormd.js", function () {
+
+        testEditormd = editormd("test-editormd", {
+            width: "90%",
+            height: 740,
+            path: 'js/editor/lib/',
+            theme: "dark",
+            previewTheme: "dark",
+            editorTheme: "pastel-on-dark",
+            markdown: md,
+            codeFold: true,
+            //syncScrolling : false,
+            saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+            searchReplace: true,
+            //watch : false,                // 关闭实时预览
+            htmlDecode: "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
+            //toolbar  : false,             //关闭工具栏
+            //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+            emoji: true,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+            //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+            //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+            //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+            //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            // imageUploadURL : "./php/upload.php",
+            onload: function () {
+                console.log('onload', this);
+                //this.fullscreen();
+                //this.unwatch();
+                //this.watch().fullscreen();
+                //this.setMarkdown("#PHP");
+                //this.width("100%");
+                //this.height(480);
+                //this.resize("100%", 640);
+            }
+        });
+    });
+}
+
+/**
+ * 模态框弹出
+ */
+$('#myModal').on('show.bs.modal', function () {
+
+    let modal = $(this);
+    layCommon.varidator('articleForm', veriParams, function (data) {
+        let datas = data.field,
+            tags = datas.articleTag.split(","),
+            tagMd = '';
+
+        modal.attr("data-article", JSON.stringify(datas));
+
+        for (let i = 0; i < tags.length; i++) {
+            tagMd += ' - ' + tags[i] + '\n'
+        }
+        let md = '---\n' +
+            'title: ' + datas.articleName + '\n' +
+            'date: ' + new Date().format("yyyy-MM-dd HH:mm:ss") + '\n' +
+            'comments: true\n' +
+            'tags:\n' +
+            tagMd +
+            'categories: ' + datas.articleCategory + '\n' +
+            'photos:\n' +
+            ' - https://source.unsplash.com/random/1920x1080\n' +
+            '---\n'
+        ;
+        $("#article-table").hide();
+        modal.modal('hide');
+        mdEditor(md);
+    });
+});

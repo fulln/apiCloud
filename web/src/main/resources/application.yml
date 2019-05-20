@@ -45,7 +45,7 @@ management:
 server:
     port: 8082
     servlet:
-        context-path: /service
+        context-path: /web
 spring:
     messages:
         basename: Language.messages
@@ -56,11 +56,15 @@ spring:
                 max-idle: 8
                 max-wait: -1
                 min-idle: 0
+    thymeleaf:
+        cache: false
+        mode: HTML
+        prefix: classpath:/templates/page/
     profiles:
         active: dev
     main:
         allow-bean-definition-overriding: true
 feign:
     url: server
-
+    path: /service
 

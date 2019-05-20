@@ -1,12 +1,12 @@
 package com.fulln.me.web.config.intecepter;
 
 
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.AesUtil;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.constant.NonBlockingUrlConfig;
-import com.fulln.me.web.config.enums.GlobalEnums;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.config.shiro.SimpleWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;

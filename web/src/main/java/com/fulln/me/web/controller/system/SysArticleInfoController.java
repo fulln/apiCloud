@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * @author fulln
@@ -30,7 +31,10 @@ public class SysArticleInfoController extends BaseController {
     @GetMapping("/find")
     @ApiOperation(value = "查询文章列表")
     public GlobalResult findAll(SysArticleInfoDTO info) {
-        return infoService.findAll(info, getUser());
+        HashMap<String,Object> map = new HashMap<>(2);
+        map.put("info",info);
+        map.put("user", getUser());
+        return infoService.findAll(map);
     }
 
     @PostMapping("/insert")

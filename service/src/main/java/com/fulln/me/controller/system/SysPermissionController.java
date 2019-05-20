@@ -4,10 +4,7 @@ package com.fulln.me.controller.system;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysPermission;
 import com.fulln.me.service.system.ISysPermissionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,8 +27,8 @@ public class SysPermissionController {
      * @param id
      * @return
      */
-    @GetMapping("/findByUser")
-    public List<SysPermission> loadUserResources(Integer id) {
+    @PostMapping("/findByUser")
+    public List<SysPermission> loadUserResources(@RequestParam("id") Integer id) {
         return sysPermissionService.loadUserResources(id);
     }
 

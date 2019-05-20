@@ -20,4 +20,5 @@ public class BaseEntity implements Serializable {
     private String startTime;
     private String endTime;
 
+
 }

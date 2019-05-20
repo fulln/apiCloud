@@ -1,13 +1,13 @@
 package com.fulln.me.thread;
 
 
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.RegixEnums;
 import com.fulln.me.api.common.threadconfig.AbstractThreadStartFactory;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.FileUtil;
 import com.fulln.me.api.model.system.SysArticleInfo;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,6 +79,6 @@ public class FileReadTask extends AbstractThreadStartFactory {
 
         info.setRemarks("AutoScan");
             sysArticleInfoDao.insertOrUpdate(info);
-        return GlobalEnums.READ_SUCCESS.results();
+        return  GlobalEnums.READ_SUCCESS.results();
     }
 }

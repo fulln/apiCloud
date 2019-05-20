@@ -32,7 +32,8 @@ public class DefaultLogoutFilter extends LogoutFilter {
         try {
             LogLoginInfo loginInfo = new LogLoginInfo();
             loginInfo.setLogUserLogoutTime(DateUtil.getNowTimeStamp());
-            loginInfo.setLogId(Long.parseLong(se.getAttribute("userLogId")+""));
+
+            loginInfo.setLogId(Long.parseLong(se.getAttribute("currentUserId")+""));
             logLoginService.update(loginInfo);
         } catch (Exception ise) {
             ise.printStackTrace();
@@ -50,6 +51,7 @@ public class DefaultLogoutFilter extends LogoutFilter {
     public ILogLoginService getLogLoginService() {
         return logLoginService;
     }
+
     @Autowired
     public void setLogLoginService(ILogLoginService logLoginService) {
         this.logLoginService = logLoginService;

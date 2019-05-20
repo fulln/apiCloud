@@ -2,9 +2,9 @@ package com.fulln.me.service.search.impl;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.pythonEnums;
 import com.fulln.me.api.model.search.UserTorrents;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.search.SearchDao;
 import com.fulln.me.service.search.SearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class SearchServiceImpl implements SearchService {
                 //启动脚本去查询
                 List<String> list = usePython(pythonEnums.SEARCH_TORRENT.getAll(text));
                 if (list.size() == 0) {
-                    return GlobalEnums.QUERY_EMPTY.results();
+                    return  GlobalEnums.QUERY_EMPTY.results();
                 }
                 list.forEach(torrent -> {
                     UserTorrents user = new UserTorrents();
@@ -58,13 +58,13 @@ public class SearchServiceImpl implements SearchService {
                     li.add(user);
                 });
                 searchDao.insertAll(li);
-                return GlobalEnums.QUERY_SUCCESS.results(li);
+                return  GlobalEnums.QUERY_SUCCESS.results(li);
             } else {
-                return GlobalEnums.QUERY_SUCCESS.results(li);
+                return  GlobalEnums.QUERY_SUCCESS.results(li);
             }
         } catch (Exception e) {
             log.error("查询失败", e);
-            return GlobalEnums.QUERY_FAIL.results();
+            return  GlobalEnums.QUERY_FAIL.results();
         }
     }
 

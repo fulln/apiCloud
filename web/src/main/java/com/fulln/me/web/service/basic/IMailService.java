@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author: fulln
  * @create: 2018-06-29 11:32
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface IMailService {
 
     /**

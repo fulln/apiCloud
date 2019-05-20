@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2019-01-08 11:47
  * @Version 0.0.1
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface  ISubscriptService {
 
     /**

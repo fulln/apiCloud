@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <div th:replace="common/link::header"></div>
+</head>
+<body>
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <div th:include="common/head"></div>
+        <div class="login-info-form login-pc">
+            <div style="color:red" th:text="${message}">[...]</div>
+            <form class="navbar-form navbar-left" id="loginForm" action="login" method="post">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="username" th:text="#{system.username}"></label>
+                        <input type="text" class="form-control" id="username" th:placeholder="#{system.username}"
+                               name="username"/>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <label for="password" th:text="#{system.password}"></label>
+                        <input type="password" class="form-control" id="password" th:placeholder="#{system.password}"
+                               name="password"/>
+                    </div>
+                </div>
+                <div class="form-group verifyCode" style="display:none">
+                    <div class="col-sm-5">
+                        <p class='code'>
+                            <img id="randImage" th:alt="#{system.loginCode.refresh}" src="">
+                        </p>
+                    </div>
+                    <div class="col-sm-7">
+                        <i class="fa fa-barcode fa-lg faLeft"></i>
+                        <input type="text" class="form-control" id="code" name="code"
+                               th:placeholder="#{system.loginCode.verifyCode}">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-12">
+                        <input type="submit" id="login" class="btn btn-default" th:value="#{system.login}"/>
+                    </div>
+                </div>
+            </form>
+            <input id='loadNum' type="hidden" th:value="${session.loadNum}">
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="common/script::js"></div>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var veriCode = null20($("#loadNum").val());
+
+        if (veriCode * 1 > 2) {
+            $('#randImage').attr("src", "code");
+            $('.verifyCode').attr('style', 'display:block');
+        } else {
+            $('.verifyCode').attr('style', 'display:none');
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @Description: 权限-角色表
  * @Date : Created in  0:22018/10/12.
  */
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface  ISysRolePermissionService {
 
 

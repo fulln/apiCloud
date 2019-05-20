@@ -3,13 +3,13 @@ package com.fulln.me.service.system.impl;
 
 import com.fulln.me.api.common.constant.FileExtensionConfig;
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.LinuxSystemUtil;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
 import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import com.fulln.me.service.basic.IThreadStartService;
 import com.fulln.me.service.system.ISysArticleInfoService;
@@ -37,7 +37,7 @@ import java.util.List;
  **/
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
+
 public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
 
     @Value("${com.fulln.api.defaultDownFile}")
@@ -58,7 +58,7 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
         info.setCustNo(user.getCustNo());
         List<SysArticleInfo> li = sysArticleInfoDao.findAll(info);
         PageInfo<SysArticleInfo> pageInfo = new PageInfo<>(li);
-        return GlobalEnums.QUERY_SUCCESS.results(pageInfo);
+        return  GlobalEnums.QUERY_SUCCESS.results(pageInfo);
     }
 
     @Override
@@ -89,18 +89,19 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
                 );
             }
         } else {
-            return GlobalEnums.QUERY_EMPTY.results();
+            return  GlobalEnums.QUERY_EMPTY.results();
         }
 
         if (list.size() == 0) {
-            return GlobalEnums.READ_SUCCESS.results();
+            return  GlobalEnums.READ_SUCCESS.results();
         } else {
-            return GlobalEnums.READ_ERROR.results(list);
+            return  GlobalEnums.READ_ERROR.results(list);
         }
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public GlobalResult insertOne(SysArticleInfo info, SysUserBasic basic) {
         try {
             String paths = path + File.separator + info.getArticleFileName() + FileExtensionConfig.FILE_DOT + FileExtensionConfig.FILE_MD;
@@ -109,22 +110,23 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
             info.setUpdateTime(DateUtil.getNowTimeStamp());
             info.setArticleFilePath(paths);
             if (info.getArticlePushStatus() == ArticleStatusEnums.PUSHED || info.getArticlePushStatus() == ArticleStatusEnums.SAVED) {
-                return GlobalEnums.FILE_EXIST.results();
+                return  GlobalEnums.FILE_EXIST.results();
             } else {
                 sysArticleInfoDao.insertSelective(info);
                 LinuxSystemUtil.runTask("docker exec -itd blog /bin/bash  hexo new " + info.getArticleFileName());
                 threadService.fileCreate(info.getArticleFilePath(), info.getArticleContent());
-                return GlobalEnums.INSERT_SUCCESS.results();
+                return  GlobalEnums.INSERT_SUCCESS.results();
             }
         } catch (Exception e) {
             log.error("文章插入异常", e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return GlobalEnums.INSERT_ERROR.results();
+            return  GlobalEnums.INSERT_ERROR.results();
         }
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public GlobalResult updateOne(SysArticleInfo info, SysUserBasic basic) {
         try {
             String paths = path + File.separator + info.getArticleFileName() + FileExtensionConfig.FILE_DOT + FileExtensionConfig.FILE_MD;
@@ -133,25 +135,25 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
             if (info.getArticlePushStatus() == ArticleStatusEnums.DELETED) {
                 log.error(paths);
                 LinuxSystemUtil.runTask("rm -rf  " + paths);
-                return GlobalEnums.DELETE_SUCCESS.results();
+                return  GlobalEnums.DELETE_SUCCESS.results();
             } else {
                 if (!StringUtils.isEmpty(info.getArticleContent())) {
                     File file = new File(paths);
                     if (file.exists()) {
                         threadService.fileCreate(file.getAbsolutePath(), info.getArticleContent());
                     } else {
-                        return GlobalEnums.FILE_NOT_EXIST.results();
+                        return  GlobalEnums.FILE_NOT_EXIST.results();
                     }
                 }
-                return GlobalEnums.UPDATE_SUCCESS.results();
+                return  GlobalEnums.UPDATE_SUCCESS.results();
             }
         } catch (Exception e) {
             log.error("文章更新异常", e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             if (info.getArticlePushStatus() == ArticleStatusEnums.DELETED) {
-                return GlobalEnums.DELETE_ERROR.results();
+                return  GlobalEnums.DELETE_ERROR.results();
             } else {
-                return GlobalEnums.UPDATE_ERROR.results();
+                return  GlobalEnums.UPDATE_ERROR.results();
             }
         }
     }

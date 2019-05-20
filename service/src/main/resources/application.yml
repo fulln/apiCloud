@@ -15,8 +15,8 @@ mybatis:
         map-underscore-to-camel-case: true
         log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     mapper-locations: classpath:mapper/*/*Mapper.xml
-    type-aliases-package: com.fulln.api.model
-    type-handlers-package: com.fulln.api.config.handle
+    type-aliases-package: com.fulln.me.api.model
+    type-handlers-package: com.fulln.me.config.handle
 pagehelper:
     helperDialect: mysql
     params: count=countSql

@@ -121,7 +121,6 @@ public class FileUtil {
         try (PrintStream ps = new PrintStream(new FileOutputStream(f), true)) {
             ps.println(sb);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             log.error("未找到文件", e);
         }
     }

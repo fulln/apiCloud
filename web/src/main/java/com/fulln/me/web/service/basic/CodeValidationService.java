@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create: 2018-09-21 10:50
  * @Version： 0.0.1
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface CodeValidationService {
 
 

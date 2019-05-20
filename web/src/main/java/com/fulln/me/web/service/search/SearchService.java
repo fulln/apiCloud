@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Description: 公共搜索业务逻辑层
  * @Date : Created in  21:10  2018/9/1.
  */
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface  SearchService{
 
     @GetMapping("/search/{text}")

@@ -2,9 +2,9 @@ package com.fulln.me.service.basic.impl;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.QueryHttpsEnums;
 import com.fulln.me.api.common.utils.httpUtil;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.service.basic.CodeValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,14 +39,14 @@ public class CodeValidationServiceImpl implements CodeValidationService {
             String code = httpUtil.ClientGetRequest(QueryHttpsEnums.TOKEN_PLATFORM_TOKEN.geturls());
             if (code == null) {
 
-                return GlobalEnums.TIME_OUT_ERROR.results();
+                return  GlobalEnums.TIME_OUT_ERROR.results();
             } else if (code.length() < 4) {
-                return GlobalEnums.PLATFORM_ERROR.results();
+                return  GlobalEnums.PLATFORM_ERROR.results();
             }
-            return GlobalEnums.QUERY_SUCCESS.results(code);
+            return  GlobalEnums.QUERY_SUCCESS.results(code);
         } catch (Exception e) {
             log.error("接码平台登录" + e);
-            return GlobalEnums.QUERY_FAIL.results();
+            return  GlobalEnums.QUERY_FAIL.results();
         }
     }
 
@@ -61,12 +61,12 @@ public class CodeValidationServiceImpl implements CodeValidationService {
             String code = httpUtil.ClientGetRequest(QueryHttpsEnums.TOKEN_PLATFORM_LOGIN.geturls(map));
 
             if (code == null) {
-                return GlobalEnums.QUERY_EMPTY.results();
+                return  GlobalEnums.QUERY_EMPTY.results();
             }
-            return GlobalEnums.QUERY_SUCCESS.results(code);
+            return  GlobalEnums.QUERY_SUCCESS.results(code);
         } catch (Exception e) {
             log.error("接码平台登录" + e);
-            return GlobalEnums.QUERY_FAIL.results();
+            return  GlobalEnums.QUERY_FAIL.results();
         }
     }
 
@@ -76,9 +76,9 @@ public class CodeValidationServiceImpl implements CodeValidationService {
             Map<String, String> map = new HashMap<>(2);
             map.put("token", code);
             String phone = httpUtil.ClientGetRequest(QueryHttpsEnums.TOKEN_PLATFORM_PHONE.geturls(map));
-            return GlobalEnums.QUERY_SUCCESS.results(phone);
+            return  GlobalEnums.QUERY_SUCCESS.results(phone);
         } catch (Exception e) {
-            return GlobalEnums.QUERY_FAIL.results();
+            return  GlobalEnums.QUERY_FAIL.results();
         }
     }
 
@@ -88,6 +88,6 @@ public class CodeValidationServiceImpl implements CodeValidationService {
         map.put("token", token);
         map.put("hm ", phoneNo);
         httpUtil.ClientGetRequest(QueryHttpsEnums.TOKEN_PLATFORM_RELEASE.geturls(map));
-        return GlobalEnums.QUERY_SUCCESS.results();
+        return  GlobalEnums.QUERY_SUCCESS.results();
     }
 }

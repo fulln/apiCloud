@@ -2,13 +2,13 @@ package com.fulln.me.web.config.aop;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.view.ViewActiveEnmus;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.common.utils.RequestIpUtil;
 import com.fulln.me.api.model.log.LogOperationInfo;
 import com.fulln.me.web.config.base.method.BaseController;
-import com.fulln.me.web.config.enums.GlobalEnums;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import com.fulln.me.web.service.log.ILogOperationService;
 import lombok.extern.slf4j.Slf4j;
@@ -49,17 +49,17 @@ public class AspectScan extends BaseController {
     private IThreadStartService startService;
 
 
-    @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.api.service.*.*(..))")
+    @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.me.web.service.*.*(..))")
     public void servicehandle() {
 
     }
 
-    @Pointcut("@within(org.springframework.web.bind.annotation.RestController) && execution(* com.fulln.api.controller.*.*.*(..))")
+    @Pointcut("@within(org.springframework.web.bind.annotation.RestController) && execution(* com.fulln.me.web.controller.*.*.*(..))")
     public void controllerhandle() {
 
     }
 
-    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.api.controller.guideview.*.*(..))")
+    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..))")
     public void viewcontrollerhandle() {
 
     }

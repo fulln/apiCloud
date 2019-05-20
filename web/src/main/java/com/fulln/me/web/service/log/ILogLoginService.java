@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @description 登陆日志记录
  * @date 2019/4/7 23:18
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface ILogLoginService {
 
     /**

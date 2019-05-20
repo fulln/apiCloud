@@ -24,10 +24,10 @@ spring:
             max-lifetime: 1800000
             connection-test-query: SELECT 1
             connection-timeout: 30000
-    cloud:
-        nacos:
-            discovery:
-                server-addr: 127.0.0.1:8848
+#    cloud:
+#        nacos:
+#            discovery:
+#                server-addr: 127.0.0.1:8848
     redis:
         host: localhost
         password:

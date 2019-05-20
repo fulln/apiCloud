@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @Date 2019-01-23 15:27
  * @Version 0.0.1
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface ILogOperationService {
 
     @PostMapping("/logOperate/save")

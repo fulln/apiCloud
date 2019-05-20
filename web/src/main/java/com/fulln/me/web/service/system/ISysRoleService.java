@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @description 系统权限业务层
  * @date 2019/4/7 230
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface  ISysRoleService {
 
     @GetMapping("/role/{id}")

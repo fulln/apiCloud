@@ -31,7 +31,7 @@ public enum RegixEnums {
     /**
      * classpath的匹配
      */
-    CLASSPATH_PATTERN("com.fulln.api.controller.*"),
+    CLASSPATH_PATTERN("com.fulln.me.web.controller.*"),
     /**
      * 文章标题匹配
      */

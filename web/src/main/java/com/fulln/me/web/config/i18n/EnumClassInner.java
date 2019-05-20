@@ -1,13 +1,13 @@
 package com.fulln.me.web.config.i18n;
 
 
-import com.fulln.me.web.config.enums.GlobalEnums;
-import com.fulln.me.web.config.enums.MessageEnums;
-import com.fulln.me.web.service.basic.ILanguageCloumService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.i18n.LanguageFieldService;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.EnumSet;
 
 /**
@@ -18,16 +18,16 @@ import java.util.EnumSet;
 @Component
 public class EnumClassInner {
 
-    @Autowired
-    private ILanguageCloumService cloumService;
+    @Resource
+    private MessageSource messageSources;
+
 
     @PostConstruct
     public void postConstruct() {
-        for (MessageEnums messages : EnumSet.allOf(MessageEnums.class)) {
-            messages.setCloumService(cloumService);
-        }
+        LanguageFieldService languageFieldService = new LanguageFieldService();
+        languageFieldService.setMessageSources(messageSources);
         for (GlobalEnums messages : EnumSet.allOf(GlobalEnums.class)) {
-            messages.setCloumService(cloumService);
+            messages.setFieldService(languageFieldService);
         }
     }
 }

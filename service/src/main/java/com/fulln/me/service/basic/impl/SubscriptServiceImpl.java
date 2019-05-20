@@ -1,8 +1,8 @@
 package com.fulln.me.service.basic.impl;
 
 
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.downloads.SourceDownloadEnums;
-import com.fulln.me.config.enums.GlobalEnums;
 import com.fulln.me.service.basic.ISubscriptService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -59,7 +59,7 @@ public class SubscriptServiceImpl implements ISubscriptService {
             }
         } else {
             try {
-                response.getOutputStream().write(GlobalEnums.QUERY_EMPTY.results().toString().getBytes());
+                response.getOutputStream().write( GlobalEnums.QUERY_EMPTY.results().toString().getBytes());
                 log.error("未找到对应的文件{}", mine);
                 response.flushBuffer();
             } catch (IOException e) {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create: 2018-09-27 17:58
  * @Version： 0.0.1
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface  ISysUserService {
 
     /**
@@ -42,6 +42,5 @@ public interface  ISysUserService {
      */
     @PostMapping("/user/update")
     GlobalResult Update( @RequestParam("currentUser") SysUserBasic currentUser);
-
 
 }

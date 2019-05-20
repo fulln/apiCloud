@@ -1,0 +1,50 @@
+<div class="modal fade" id="myModal" data-id="" data-article="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">文章设置</h4>
+            </div>
+            <form class="layui-form layui-form-pane" lay-filter="paneForm">
+                <div class="modal-body">
+                    <div class="layui-form-item layui-col-md-offset2">
+                        <label class="layui-form-label">文章名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="articleName" lay-verify="articleName" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*6个字符以上</div>
+                    </div>
+                    <div class="layui-form-item layui-col-md-offset2">
+                        <label class="layui-form-label">文章tag</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="articleTag" lay-verify="articleTag" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*多个以','分开</div>
+                    </div>
+                    <div class="layui-form-item layui-col-md-offset2">
+                        <label class="layui-form-label">文章分类</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="articleCategory" lay-verify="articleCategory" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*3-20个字符</div>
+                    </div>
+                    <div class="layui-form-item layui-col-md-offset2">
+                        <label class="layui-form-label">文章文件名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="articleFileName" lay-verify="articleFileName" placeholder="请输入" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">*</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="layui-btn btn-default" data-dismiss="modal" id="closeThis">关闭</button>
+                    <button type="button" lay-submit  lay-filter="articleForm" class="layui-btn layui-btn-primary">编辑文章</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

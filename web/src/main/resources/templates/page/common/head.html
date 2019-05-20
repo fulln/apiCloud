@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default " role="navigation" xmlns:th="http://www.thymeleaf.org">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span><span
+                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        <a class="navbar-brand" href="https://fulln.me" th:text="#{system.main.page}" ></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav ">
+            <li th:class="${session.active == 0 || session.active == null } ? 'active' : '' " >
+                <a href="/web/view" th:text="#{system.main.play}" ></a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav" >
+            <li th:class="${session.active == 1} ? 'active' : '' " >
+                <a href="/web/editor" th:text="#{system.main.editor}" ></a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav" >
+            <li th:class="${session.active == 2} ? 'active' : '' " >
+                <a href="/web/websocket" th:text="#{system.main.socket}" ></a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" th:if="${session.currentUser == null || session.currentUser == ''}">
+            <li class="nologin"><a  href="#" ><span class="glyphicon glyphicon-user"></span>&nbsp;<B th:text="#{system.regist}"></B></a></li>
+            <li class="nologin"><a  href="/login" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;<B th:text="#{system.login}"></B></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" th:unless="${session.currentUser == null || session.currentUser == '' }">
+            <li class="logined" > <a  href="#" id="currentUser" ><span class="glyphicon glyphicon-user login"></span>&nbsp;<B th:text="${session.currentUser.userName}"></B></a></li>
+            <li ><a  href="#" ><span class="glyphicon glyphicon-info-sign"></span>&nbsp; <B th:text="#{system.help}"></B></a></li>
+            <li class="logined"><a  href="/web/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;<B  th:text="#{system.logout}"></B></a></li>
+        </ul>
+    </div>
+</nav>

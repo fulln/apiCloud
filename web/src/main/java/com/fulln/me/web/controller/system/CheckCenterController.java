@@ -2,7 +2,7 @@ package com.fulln.me.web.controller.system;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.web.config.enums.GlobalEnums;
+import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.web.config.websocket.WebSocketServer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

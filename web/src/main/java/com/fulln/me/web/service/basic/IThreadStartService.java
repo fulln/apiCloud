@@ -16,7 +16,7 @@ import java.io.File;
  * @create: 2018-10-09 15:32
  * @Version： 0.0.1
  **/
-@FeignClient("${feign.url}")
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface IThreadStartService {
 
     /**

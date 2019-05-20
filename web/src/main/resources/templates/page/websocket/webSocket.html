@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+    <div th:replace="common/link::header"></div>
+</head>
+<body>
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        <div th:include="common/head"></div>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-10 col-md-offset-1">
+        准备连接当前！
+    </div>
+</div>
+
+<div th:replace="common/script::js"></div>
+<script type="text/javascript">
+
+    let socket;
+
+    if (!NotEmpty(WebSocket)) {
+        console.log("您的浏览器不支持WebSocket");
+    } else {
+        console.log("您的浏览器支持WebSocket");
+
+        socket = new WebSocket("ws://localhost:8080/websocket/1");
+        //打开事件
+        socket.onopen = function () {
+            console.log("Socket 已打开");
+            // socket.send("这是来自客户端的消息" + location.href + new Date());
+        };
+        //获得消息事件
+        socket.onmessage = function (msg) {
+            console.log(msg.data);
+        };
+        //关闭事件
+        socket.onclose = function () {
+            console.log("Socket已关闭");
+        };
+        //发生了错误事件
+        socket.onerror = function () {
+            alert("Socket发生了错误");
+
+        }
+    }
+
+</script>
+</body>
+</html>

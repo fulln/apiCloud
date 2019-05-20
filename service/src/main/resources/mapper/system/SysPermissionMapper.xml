@@ -10,12 +10,13 @@
     <select id="findByRole" resultType="com.fulln.me.api.model.system.SysPermission">
       select  sp.*
       from  sys_permission sp
-      left join sys_role_permission srp on
+      inner join sys_role_permission srp on
       sp.permission_id = srp.permission_id
-      left join sys_role  sr on
+      inner join sys_role  sr on
       sr.role_id =srp.role_id
       where
       sr.role_id = #{roleId}
-      and sp.permission_state=1
+      and sp.permission_state = 1
+      and role_status = 0
     </select>
 </mapper>

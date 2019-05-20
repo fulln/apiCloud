@@ -7,7 +7,6 @@ import com.fulln.me.dao.system.SysPermissionDao;
 import com.fulln.me.service.system.ISysPermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
  * 只实现查询部分(关联mysql 实现读写分离)
  * @date : Created in  0:29  2018/10/12.
  */
-@Transactional(rollbackFor = Exception.class)
+
 @Slf4j
 @Service
 public class SysPermissionServiceImpl implements ISysPermissionService {

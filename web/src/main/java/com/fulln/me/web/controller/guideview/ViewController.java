@@ -65,6 +65,7 @@ public class ViewController {
 
 
 
+
     /**
      *
      * 自动添加url到权限表最高权限

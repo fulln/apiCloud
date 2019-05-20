@@ -2,8 +2,10 @@ package com.fulln.me.api.model.system.DTO;
 
 import com.fulln.me.api.common.entity.BaseEntity;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * @program: api
@@ -12,9 +14,10 @@ import lombok.EqualsAndHashCode;
  * @create: 2018-11-13 17:05
  * @Version： 0.0.1
  **/
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SysArticleInfoDTO extends BaseEntity {
 
 
@@ -31,6 +34,5 @@ public class SysArticleInfoDTO extends BaseEntity {
     private Long createTime;
     private Long updateTime;
     private String custNo;
-
 
 }
