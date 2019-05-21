@@ -13,9 +13,21 @@
         <div th:include="common/head"></div>
     </div>
 </div>
-<div class="row clearfix">
+<div class="row clearfix" >
     <div class="col-md-10 col-md-offset-1">
-        准备连接当前！
+        <blockquote class="layui-elem-quote layui-quote-nm">
+            猿强，则国强。国强，则猿更强！
+            <br>——孟子（好囖。。其实这特喵的是我说的）
+        </blockquote>
+        <blockquote class="layui-elem-quote layui-quote-nm">
+            猿强，则国强。国强，则猿更强！
+            <br>——孟子（好囖。。其实这特喵的是我说的）
+        </blockquote>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
     </div>
 </div>
 
@@ -29,7 +41,7 @@
     } else {
         console.log("您的浏览器支持WebSocket");
 
-        socket = new WebSocket("ws://localhost:8080/websocket/1");
+        socket = new WebSocket("ws://localhost:8082/web/websocket/1");
         //打开事件
         socket.onopen = function () {
             console.log("Socket 已打开");
@@ -48,6 +60,7 @@
             alert("Socket发生了错误");
 
         }
+        socket.send("1234");
     }
 
 </script>

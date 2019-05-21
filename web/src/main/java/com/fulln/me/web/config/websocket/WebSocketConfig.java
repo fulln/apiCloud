@@ -3,7 +3,7 @@ package com.fulln.me.web.config.websocket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
  * @author fulln
@@ -21,25 +21,30 @@ public class WebSocketConfig  {
      * @return
      */
 
-    @Bean
-    public ServletServerContainerFactoryBean createWebSocketContainer() {
-        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-        container.setMaxTextMessageBufferSize(8192);
-        container.setMaxBinaryMessageBufferSize(8192);
-        return container;
-    }
+//    @Bean
+//    public ServletServerContainerFactoryBean createWebSocketContainer() {
+//        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+//        container.setMaxTextMessageBufferSize(8192);
+//        container.setMaxBinaryMessageBufferSize(8192);
+//        return container;
+//    }
 
 
 //    @Override
 //    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
 //        webSocketHandlerRegistry.addHandler(myHandler(), "/websocket").addInterceptors(new MyWebSocketInterceptor()).setAllowedOrigins("*");
 //    }
-//
+
 //    @Bean
 //    public WebSocketHandler myHandler() {
 //        return new MyHandler();
 //    }
 
+
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
 
 }
 

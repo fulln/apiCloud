@@ -2,6 +2,7 @@ package com.fulln.me.web.config.websocket;
 
 
 import com.fulln.me.web.service.log.ILogOperationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @description ws拦截处理
  * @date 2019-01-23 11:56
  **/
+@Slf4j
 public class MyWebSocketInterceptor implements HandshakeInterceptor {
 
 
@@ -26,11 +28,14 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
+      log.info("在处理前执行");
         return true;
     }
 
     @Override
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
+
+        log.info("在处理后执行");
 //        if (serverHttpRequest instanceof ServletServerHttpRequest) {
 //            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) serverHttpRequest;
 //            HttpServletRequest httpRequest = servletRequest.getServletRequest();
