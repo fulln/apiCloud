@@ -1,7 +1,6 @@
 package com.fulln.me.controller.system;
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
 import com.fulln.me.api.model.system.SysUserBasic;
@@ -9,7 +8,6 @@ import com.fulln.me.service.system.ISysArticleInfoService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 
 /**
  * @program: api
@@ -31,12 +29,8 @@ public class SysArticleInfoController {
      * @return
      */
     @PostMapping("/list")
-    public GlobalResult findAll(@RequestParam HashMap<String, Object> map) {
-        SysArticleInfoDTO info=  GsonUtil.gsonToBean(map.get("info").toString(), SysArticleInfoDTO.class);
-
-        SysUserBasic user = GsonUtil.gsonToBean(map.get("user").toString(),SysUserBasic.class);
-
-        return sysArticleInfoService.findAll(info, user);
+    public GlobalResult findAll(@RequestBody SysArticleInfoDTO info ) {
+        return sysArticleInfoService.findAll(info, info.getUser());
     }
 
     /**

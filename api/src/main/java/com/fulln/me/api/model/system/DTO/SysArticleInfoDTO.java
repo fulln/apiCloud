@@ -1,11 +1,14 @@
 package com.fulln.me.api.model.system.DTO;
 
 import com.fulln.me.api.common.entity.BaseEntity;
+import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @program: api
@@ -18,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysArticleInfoDTO extends BaseEntity {
+public class SysArticleInfoDTO extends BaseEntity implements Serializable {
 
 
     private static final long serialVersionUID = -3071742448558303333L;
@@ -34,5 +37,6 @@ public class SysArticleInfoDTO extends BaseEntity {
     private Long createTime;
     private Long updateTime;
     private String custNo;
+    private SysUserBasic user;
 
 }

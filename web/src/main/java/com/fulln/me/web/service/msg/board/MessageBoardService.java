@@ -1,0 +1,24 @@
+package com.fulln.me.web.service.msg.board;
+
+import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.model.msg.board.MessageBoard;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/**
+ * @author fulln
+ * @version 0.0.1
+ * @program apiCloud
+ * @description 留言板业务接口
+ * @date 2019/5/22 23:14
+ **/
+@FeignClient(value = "${feign.url}",path = "${feign.path}")
+public interface MessageBoardService {
+
+    @PostMapping("/message/list")
+    GlobalResult allList(@RequestBody  MessageBoard info);
+
+    @PostMapping("/message/add")
+    GlobalResult insert(@RequestBody  MessageBoard info);
+}
