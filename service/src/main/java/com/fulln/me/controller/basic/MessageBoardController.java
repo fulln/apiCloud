@@ -28,7 +28,8 @@ public class MessageBoardController {
     }
 
     @PostMapping("/add")
-    public GlobalResult saveOrUpdate(@RequestBody MessageBoard board){
+    public GlobalResult saveOrUpdateByUser(@RequestBody MessageBoard board){
+
         return messageBoardService.insertOrUpdate(board);
     }
 

@@ -2,6 +2,8 @@ package com.fulln.me.web.controller.msg.board;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.msg.board.MessageBoard;
+import com.fulln.me.web.config.annotation.userMessage;
+import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/message")
 @Api(tags = "留言板api")
-public class messageBoardController {
+public class messageBoardController extends BaseController {
 
     @Resource
     private MessageBoardService messageBoardService;
@@ -33,6 +35,7 @@ public class messageBoardController {
     }
 
     @PostMapping("/insert")
+    @userMessage("board")
     public GlobalResult Insert(MessageBoard board){
         return messageBoardService.insert(board);
     }

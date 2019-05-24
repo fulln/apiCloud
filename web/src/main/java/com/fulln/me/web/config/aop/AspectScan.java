@@ -8,6 +8,8 @@ import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.common.utils.RequestIpUtil;
 import com.fulln.me.api.model.log.LogOperationInfo;
+import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.web.config.annotation.userMessage;
 import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import com.fulln.me.web.service.log.ILogOperationService;
@@ -16,20 +18,19 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 
 /**
@@ -47,6 +48,7 @@ public class AspectScan extends BaseController {
 
     @Resource
     private IThreadStartService startService;
+    private Parameter parameter;
 
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.me.web.service.*.*(..))")
@@ -61,6 +63,11 @@ public class AspectScan extends BaseController {
 
     @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..))")
     public void viewcontrollerhandle() {
+
+    }
+
+    @Pointcut("@annotation(com.fulln.me.web.config.annotation.userMessage)")
+    public void getUserInfo() {
 
     }
 
@@ -170,6 +177,39 @@ public class AspectScan extends BaseController {
             return getfaultResult("系统异常！");
         }
     }*/
+
+    /**
+     * 手动添加用户信息到公共实体类中
+     * @param joinPoint
+     */
+    @Before("getUserInfo()")
+    public void insertUserInfo(JoinPoint joinPoint) {
+
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        Method method = methodSignature.getMethod();
+
+        if (method != null) {
+            userMessage annotation = method.getAnnotation(userMessage.class);
+            try {
+                Method userMethod = method.getDeclaringClass().getMethod(annotation.methodName());
+                SysUserBasic userBasic = (SysUserBasic) userMethod.invoke(method.getDeclaringClass());
+                Parameter[] parameters = method.getParameters();
+                Arrays.stream(parameters)
+                        .filter(parameter ->parameter.getName().equals(annotation.value()))
+                        .forEach(param -> {
+                            try {
+                                Method setUserBasic = param.getClass().getSuperclass().getDeclaredMethod("setUserBasic", SysUserBasic.class);
+                                setUserBasic.invoke(param.getClass().getSuperclass(),userBasic);
+                            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        });
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

@@ -20,6 +20,6 @@ public interface MessageBoardService {
     GlobalResult allList();
 
     @PostMapping("/msg/board/add")
-    GlobalResult insert(@RequestBody  MessageBoard info);
+    GlobalResult insert(@RequestBody MessageBoard info);
 
 }
