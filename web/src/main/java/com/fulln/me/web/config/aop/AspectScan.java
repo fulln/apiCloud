@@ -202,11 +202,11 @@ public class AspectScan extends BaseController {
                                 Method setUserBasic = param.getClass().getSuperclass().getDeclaredMethod("setUserBasic", SysUserBasic.class);
                                 setUserBasic.invoke(param.getClass().getSuperclass(),userBasic);
                             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                                e.printStackTrace();
+                                log.error("插入用户信息失败",e);
                             }
                         });
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
+                log.error("查询用户信息失败",e);
             }
         }
     }
