@@ -70,6 +70,14 @@
         if(!NotEmpty(name)){
             name = "GUEST"+new Date().getTime();
         }
+        let params = {};
+
+        requestBack("POST","/message/insert",params,function (data) {
+
+
+        })
+
+
 
     }
 

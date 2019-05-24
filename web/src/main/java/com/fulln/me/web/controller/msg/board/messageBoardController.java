@@ -28,8 +28,8 @@ public class messageBoardController {
     private MessageBoardService messageBoardService;
 
     @PostMapping("/list")
-    public GlobalResult findAll(MessageBoard board){
-        return messageBoardService.allList(board);
+    public GlobalResult findAll(){
+        return messageBoardService.allList();
     }
 
     @PostMapping("/insert")

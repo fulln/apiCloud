@@ -24,6 +24,4 @@ public class MessageBoard implements Serializable {
     private String createBy;
     private String updateBy;
 
-
-
 }

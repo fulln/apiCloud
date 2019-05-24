@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(value = "${feign.url}",path = "${feign.path}")
 public interface MessageBoardService {
 
-    @PostMapping("/message/list")
-    GlobalResult allList(@RequestBody  MessageBoard info);
+    @PostMapping("/msg/board/findAll")
+    GlobalResult allList();
 
-    @PostMapping("/message/add")
+    @PostMapping("/msg/board/add")
     GlobalResult insert(@RequestBody  MessageBoard info);
+
 }
