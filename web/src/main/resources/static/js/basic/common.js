@@ -150,6 +150,13 @@ function NotEmpty(value) {
     }
 }
 
+/**
+ * @return {boolean}
+ */
+function IsEmpty(value) {
+    return !NotEmpty(value)
+}
+
 function null20(value) {
     if (value == null || value == "" || value == "0") {
         return 0;

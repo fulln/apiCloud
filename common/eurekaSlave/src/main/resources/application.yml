@@ -2,10 +2,11 @@ server:
     port: 8002
 eureka:
     instance:
+        prefer-ip-address: true
         hostname: 192.168.0.108
     client:
         fetch-registry: false
-        register-with-eureka: true
+        register-with-eureka: false
         serviceUrl:
             defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8001/eureka/
 spring:

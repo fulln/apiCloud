@@ -19,8 +19,7 @@ import java.io.Serializable;
 public class MessageBoard extends BaseEntity implements Serializable {
 
     @Id
-    private Integer userId;
-    private String userName;
+    private Integer messageId;
     private String messageContent;
     private Long createTime;
     private Long updateTime;

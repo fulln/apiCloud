@@ -1,4 +1,4 @@
-package com.fulln.me.web.config.annotation;
+package com.fulln.me.api.common.annotation;
 
 import java.lang.annotation.*;
 
@@ -12,9 +12,14 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface userMessage {
+public @interface UserMessage {
 
-    String value() ;
+    /**
+     * this value can focus on which params you want to added to
+     * when you dont put anything in  ,it will use the first param
+     * @return
+     */
+    String value() default "";
 
     String methodName() default "getUser";
 

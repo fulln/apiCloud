@@ -1,17 +1,21 @@
 package com.fulln.me.web.controller.msg.board;
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
-import com.fulln.me.web.config.annotation.userMessage;
 import com.fulln.me.web.config.base.method.BaseController;
+import com.fulln.me.web.config.websocket.WebSocketServer;
 import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 /**
  * @author fulln
@@ -27,17 +31,31 @@ import javax.annotation.Resource;
 public class messageBoardController extends BaseController {
 
     @Resource
-    private MessageBoardService messageBoardService;
+    private MessageBoardService messageBoarService;
+
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     @PostMapping("/list")
-    public GlobalResult findAll(){
-        return messageBoardService.allList();
+    public GlobalResult findAll() {
+        return messageBoarService.allList();
     }
 
     @PostMapping("/insert")
-    @userMessage("board")
-    public GlobalResult Insert(MessageBoard board){
-        return messageBoardService.insert(board);
+    public GlobalResult Insert(MessageBoard board) {
+        try {
+            GlobalResult result = messageBoarService.insert(board);
+            if (result.getCode() > 0) {
+                GlobalResult  allResult =  findAll();
+                if(allResult.getCode()>0){
+
+                    WebSocketServer.sendInfo(GsonUtil.gsonString(allResult.getDatas()),null);
+                }
+            }
+            return result;
+        } catch (IOException e) {
+            return GlobalEnums.SYS_ERROR.results();
+        }
     }
 
 }

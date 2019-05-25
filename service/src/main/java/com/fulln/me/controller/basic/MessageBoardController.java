@@ -22,14 +22,13 @@ public class MessageBoardController {
     @Autowired
     private IMessageBoardService messageBoardService;
 
-    @GetMapping("/findAll")
+    @PostMapping("/findAll")
     public GlobalResult getAll(){
         return messageBoardService.findAll();
     }
 
     @PostMapping("/add")
     public GlobalResult saveOrUpdateByUser(@RequestBody MessageBoard board){
-
         return messageBoardService.insertOrUpdate(board);
     }
 

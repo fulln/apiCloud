@@ -3,12 +3,12 @@ package com.fulln.me.web.config.websocket;
 
 import com.fulln.me.web.service.log.ILogOperationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 
@@ -62,7 +62,7 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
         return operationService;
     }
 
-    @Resource
+    @Autowired
     public void setOperationService(ILogOperationService operationService) {
         this.operationService = operationService;
     }

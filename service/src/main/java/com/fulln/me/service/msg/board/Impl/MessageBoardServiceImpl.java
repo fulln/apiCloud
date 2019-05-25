@@ -2,6 +2,7 @@ package com.fulln.me.service.msg.board.Impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
 import com.fulln.me.dao.msg.board.MessageBoardDao;
 import com.fulln.me.service.msg.board.IMessageBoardService;
@@ -48,6 +49,8 @@ public class MessageBoardServiceImpl implements IMessageBoardService {
     @Override
     public GlobalResult insertOrUpdate(MessageBoard messageBoard) {
         try {
+            messageBoard.setCreateTime(DateUtil.getNowTimeStamp());
+            messageBoard.setUpdateTime(DateUtil.getNowTimeStamp());
             messageBoardDao.add(messageBoard);
             return GlobalEnums.INSERT_SUCCESS.results();
         } catch (Exception e) {
