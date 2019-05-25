@@ -6,7 +6,6 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
     <div th:replace="common/link::header"></div>
-    <link rel="stylesheet" href="css/editor/editormd.css"/>
 </head>
 <body>
 
@@ -86,14 +85,12 @@
 <!-- 文章弹出层 -->
 <div th:include="article/editorShow"></div>
 <div th:replace="common/script::js"></div>
-<script src="js/editor/editormd.js"></script>
 <script type="text/javascript">
 
     let testEditormd,
         articleParams = {
             url: 'article/find',
             responseHandler: function (res) {
-                debugger
                 return {
                     "count": res.datas[0].total, //解析数据长度
                     "data": res.datas[0].list  //解析数据列表
@@ -309,12 +306,12 @@
         $.getScript("js/editor/editormd.js", function () {
 
             testEditormd = editormd("test-editormd", {
-                width: "90%",
-                height: 740,
+                // width: "90%",
+                // height: 740,
                 path: 'js/editor/lib/',
-                theme: "dark",
-                previewTheme: "dark",
-                editorTheme: "pastel-on-dark",
+                theme: "default",
+                previewTheme: "default",
+                editorTheme: "default",
                 markdown: md,
                 codeFold: true,
                 //syncScrolling : false,

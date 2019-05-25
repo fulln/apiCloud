@@ -30,13 +30,10 @@ public class GsonUtil {
      * @return
      */
     public static String gsonString(Object object) {
-
-        String gsonString = null;
         if (gson == null) {
             new GsonUtil();
         }
-        gsonString = gson.toJson(object);
-        return gsonString;
+        return gson.toJson(object);
     }
 
     /**

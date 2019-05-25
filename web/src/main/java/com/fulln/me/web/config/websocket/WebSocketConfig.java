@@ -30,7 +30,7 @@ public class WebSocketConfig  {
 //    }
 
 
-//    @Override
+//    @Bean
 //    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
 //        webSocketHandlerRegistry.addHandler(myHandler(), "/websocket").addInterceptors(new MyWebSocketInterceptor()).setAllowedOrigins("*");
 //    }

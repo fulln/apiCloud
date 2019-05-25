@@ -67,4 +67,6 @@ spring:
 feign:
     url: server
     path: /service
-
+ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000

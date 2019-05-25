@@ -1,13 +1,16 @@
 package com.fulln.me.web.config.aop;
 
 
+import com.fulln.me.api.common.annotation.UserMessage;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.view.ViewActiveEnmus;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.common.utils.RequestIpUtil;
+import com.fulln.me.api.common.utils.SpringContextsUtil;
 import com.fulln.me.api.model.log.LogOperationInfo;
+import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import com.fulln.me.web.service.log.ILogOperationService;
@@ -16,20 +19,20 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 
 /**
@@ -47,20 +50,26 @@ public class AspectScan extends BaseController {
 
     @Resource
     private IThreadStartService startService;
+    private Parameter parameter;
 
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution(* com.fulln.me.web.service.*.*(..))")
-    public void servicehandle() {
+    public void serviceHandle() {
 
     }
 
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController) && execution(* com.fulln.me.web.controller.*.*.*(..))")
-    public void controllerhandle() {
+    public void controllerHandle() {
 
     }
 
     @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..))")
-    public void viewcontrollerhandle() {
+    public void viewcontrollerHandle() {
+
+    }
+
+    @Pointcut("@annotation(com.fulln.me.api.common.annotation.UserMessage)")
+    public void getUserInfoHandle() {
 
     }
 
@@ -69,7 +78,7 @@ public class AspectScan extends BaseController {
      *
      * @param joinPoint
      */
-    @After("controllerhandle()")
+    @After("controllerHandle()")
     public void after(JoinPoint joinPoint) throws NoSuchMethodException {
 
         String methodName = joinPoint.getSignature().getName();
@@ -122,7 +131,7 @@ public class AspectScan extends BaseController {
      *
      * @param joinPoint
      */
-    @After("viewcontrollerhandle()")
+    @After("viewcontrollerHandle()")
     public void viewController(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         Session session = SecurityUtils.getSubject().getSession();
@@ -130,7 +139,7 @@ public class AspectScan extends BaseController {
     }
 
 
-    @Around("servicehandle()")
+    @Around("serviceHandle()")
     public GlobalResult aroundService(ProceedingJoinPoint pJoinPoint) {
         return resultHandle(pJoinPoint);
     }
@@ -170,6 +179,55 @@ public class AspectScan extends BaseController {
             return getfaultResult("系统异常！");
         }
     }*/
+
+    /**
+     * 注解添加用户信息到公共实体类中
+     *
+     * @param joinPoint
+     */
+    @Before("getUserInfoHandle()")
+    public void insertUserInfo(JoinPoint joinPoint) {
+        // 参数值
+        Object[] args = joinPoint.getArgs();
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        Method method = methodSignature.getMethod();
+
+        if (method != null) {
+            UserMessage annotation = method.getAnnotation(UserMessage.class);
+            try {
+                Method userMethod = method.getDeclaringClass().getSuperclass().getDeclaredMethod(annotation.methodName());
+                userMethod.setAccessible(true);
+                SysUserBasic userBasic = (SysUserBasic) userMethod.invoke(SpringContextsUtil.getBean(method.getDeclaringClass()));
+
+                Parameter[] parameters = method.getParameters();
+                Arrays.stream(parameters)
+                        .filter(parameter -> {
+                            if (StringUtils.isEmpty(annotation.value())) {
+                                return parameters[0].equals(parameter);
+                            } else {
+                                return parameter.getName().equals(annotation.value());
+                            }
+                        })
+                        .forEach(param -> {
+                            try {
+                                Class<?> superclass = param.getType().getSuperclass();
+                                Method setUserBasic = superclass.getDeclaredMethod("setUserBasic", SysUserBasic.class);
+                                if (StringUtils.isEmpty(annotation.value())) {
+                                    setUserBasic.invoke(args[0], userBasic);
+                                }else{
+                                    int i = Arrays.binarySearch(parameters, param);
+                                    setUserBasic.invoke(args[i], userBasic);
+                                }
+                            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                                log.error("插入用户信息失败", e);
+                            }
+                        });
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                log.error("查询用户信息失败", e);
+            }
+        }
+    }
 
 
 }
