@@ -14,9 +14,10 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import sun.rmi.runtime.Log;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -42,9 +43,11 @@ public class MongoHelper {
      * java.lang.Class, java.util.function.Function, java.lang.Integer, java.lang.Integer,
      * java.lang.String)
      */
-    public <T> PageResult<T> pageQuery(Query query, Class<T> entityClass, Integer pageSize,
+    public <T> PageResult<T> pageQuery(T t, Integer pageSize,
                                        Integer pageNum) {
-        return pageQuery(query, entityClass, Function.identity(), pageSize, pageNum, null);
+        Query query = buildBaseQuery(t);
+
+        return pageQuery(query, getEntityClass(), Function.identity(), pageSize, pageNum, null);
     }
 
     /**
@@ -150,12 +153,16 @@ public class MongoHelper {
         mongoTemplate.remove(query, getEntityClass());
     }
 
-    // 通过条件查询更新数据
+    /**
+     * 通过条件查询更新数据
+     */
     public void update(Query query, Update update) {
         mongoTemplate.updateMulti(query, update, this.getEntityClass());
     }
 
-    // 根据id进行更新
+    /**
+     * 根据id进行更新
+     */
     public <T> void updateById(String id, T t) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
@@ -163,24 +170,87 @@ public class MongoHelper {
         update(query, update);
     }
 
-    // 根据vo构建查询条件Query
+
+    public <T> List<T> findByCondition(T t) {
+        Query query = buildBaseQuery(t);
+        return mongoTemplate.find(query, getEntityClass());
+    }
+
+    /**
+     * 通过一定的条件查询一个实体
+     */
+    public <T> T findOne(Query query) {
+        return mongoTemplate.findOne(query, getEntityClass());
+    }
+
+
+    /**
+     * 通过ID获取记录
+     */
+    public <T> T get(String id) {
+        return mongoTemplate.findById(id, this.getEntityClass());
+    }
+
+    /**
+     * 通过ID获取记录,并且指定了集合名(表的意思)
+     */
+    public <T> T get(String id, String collectionName) {
+        return mongoTemplate.findById(id, this.getEntityClass(), collectionName);
+    }
+
+    /**
+     * 根据vo构建查询条件Query
+     */
     private <T> Query buildBaseQuery(T t) {
-        Query query = new Query();
+        final Query query = new Query();
+        Field[] fields = t.getClass().getDeclaredFields();
+        Arrays.stream(fields).forEach(
+                field -> {
+                    field.setAccessible(true);
+                    try {
+                        Object value = field.get(t);
+                        if (value != null) {
+                            MongoField queryField = field.getAnnotation(MongoField.class);
+                            if (queryField != null) {
+                                query.addCriteria(queryField.type().buildCriteria(queryField, field, value));
+                            }
+                        }
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
+                        log.error("当前构建Query出现问题", e);
+                    }
+                }
+        );
+        return query;
+    }
+
+    /**
+     * 根据vo设置更新的条件
+     *
+     * @param t
+     * @param <T>
+     * @return
+     */
+    private <T> Update buildBaseUpdate(T t) {
+        Update update = new Update();
+
         Field[] fields = t.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
             try {
                 Object value = field.get(t);
                 if (value != null) {
-                    MongoField queryField = field.getAnnotation(MongoField.class);
-                    if (queryField != null) {
-                        query.addCriteria(queryField.type().buildCriteria(queryField, field, value));
-                    }
+                    update.set(field.getName(), value);
                 }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        return query;
+        return update;
     }
+
+    @SuppressWarnings("unchecked")
+    public <T> Class<T> getEntityClass() {
+        return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+    }
+
 }
