@@ -10,6 +10,7 @@ import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +57,12 @@ public class messageBoardController extends BaseController {
         } catch (IOException e) {
             return GlobalEnums.SYS_ERROR.results();
         }
+    }
+
+    @GetMapping("/find")
+    public GlobalResult findByCondition(MessageBoard board){
+        return messageBoarService.findByCondition(board);
+
     }
 
 }

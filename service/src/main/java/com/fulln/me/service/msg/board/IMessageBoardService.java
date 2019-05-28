@@ -26,4 +26,5 @@ public interface IMessageBoardService {
      */
     GlobalResult insertOrUpdate(MessageBoard messageBoard);
 
+    GlobalResult findByCondition(MessageBoard messageBoard);
 }

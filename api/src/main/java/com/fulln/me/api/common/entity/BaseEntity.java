@@ -21,5 +21,8 @@ public class BaseEntity implements Serializable {
     private String startTime;
     private String endTime;
     private SysUserBasic userBasic;
-
+    /**
+     *   Mongodb的最后一个数值(分页使用)
+     */
+    private String lastId;
 }

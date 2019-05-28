@@ -1,10 +1,10 @@
 package com.fulln.me.api.model.msg.board;
 
+import com.fulln.me.api.common.annotation.MongoField;
 import com.fulln.me.api.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -18,11 +18,13 @@ import java.io.Serializable;
 @Data
 public class MessageBoard extends BaseEntity implements Serializable {
 
-    @Id
+    @MongoField( attribute = "_id")
     private Integer messageId;
     private String messageContent;
+    @MongoField
     private Long createTime;
     private Long updateTime;
+    @MongoField
     private String createBy;
     private String updateBy;
 

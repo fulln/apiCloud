@@ -9,7 +9,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableTransactionManagement
 @EnableEurekaClient
 @MapperScan("com.fulln.me.dao")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.fulln.me"})
 public class ServiceApplication {
 
 	public static void main(String[] args) {
