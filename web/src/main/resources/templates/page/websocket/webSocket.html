@@ -55,7 +55,7 @@
             if (NotEmpty(msg.data) && msg.data !== "连接成功") {
                 let content = JSON.parse(msg.data);
                 $("#msgtext").html();
-                let html = buildHtml(content);
+                let html = buildHtml(content.list);
                 $("#msgtext").append(
                     html
                 );

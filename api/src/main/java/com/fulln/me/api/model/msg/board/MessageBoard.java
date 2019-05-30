@@ -2,6 +2,7 @@ package com.fulln.me.api.model.msg.board;
 
 import com.fulln.me.api.common.annotation.MongoField;
 import com.fulln.me.api.common.entity.BaseEntity;
+import com.fulln.me.api.common.enums.mongo.QueryType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +21,7 @@ public class MessageBoard extends BaseEntity implements Serializable {
 
     @MongoField( attribute = "_id")
     private Integer messageId;
+    @MongoField(type = QueryType.LIKE)
     private String messageContent;
     @MongoField
     private Long createTime;
