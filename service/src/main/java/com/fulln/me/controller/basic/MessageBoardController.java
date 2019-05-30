@@ -32,7 +32,7 @@ public class MessageBoardController {
         return messageBoardService.insertOrUpdate(board);
     }
 
-    @GetMapping("/findByCondition")
+    @PostMapping("/findByCondition")
     public GlobalResult findByCondition(@RequestBody MessageBoard board){
         return messageBoardService.findByCondition(board);
     }

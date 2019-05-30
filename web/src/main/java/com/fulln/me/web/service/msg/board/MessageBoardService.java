@@ -3,7 +3,6 @@ package com.fulln.me.web.service.msg.board;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.msg.board.MessageBoard;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +22,6 @@ public interface MessageBoardService {
     @PostMapping("/msg/board/add")
     GlobalResult insert(@RequestBody MessageBoard info);
 
-    @GetMapping("/msg/board/findByCondition")
-    GlobalResult findByCondition(MessageBoard board);
+    @PostMapping("/msg/board/findByCondition")
+    GlobalResult findByCondition(@RequestBody MessageBoard board);
 }

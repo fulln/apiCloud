@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -46,8 +45,7 @@ public class MongoHelper {
     public <T> PageResult<T> pageQuery(T t, Integer pageSize,
                                        Integer pageNum) {
         Query query = buildBaseQuery(t);
-
-        return pageQuery(query, getEntityClass(), Function.identity(), pageSize, pageNum, null);
+        return pageQuery(query, getEntityClass(t), Function.identity(), pageSize, pageNum, null);
     }
 
     /**
@@ -97,7 +95,7 @@ public class MongoHelper {
 
         final List<T> entityList = mongoTemplate
                 .find(query.addCriteria(criteria)
-                                .with(new Sort(Lists.newArrayList(new Order(Sort.Direction.ASC, ID)))),
+                                .with(new Sort(Lists.newArrayList(new Order(Sort.Direction.DESC, ID)))),
                         entityClass);
 
         final PageResult<R> pageResult = new PageResult<>();
@@ -150,14 +148,15 @@ public class MongoHelper {
      */
     public <T> void deleteByCondition(T t) {
         Query query = buildBaseQuery(t);
-        mongoTemplate.remove(query, getEntityClass());
+        mongoTemplate.remove(query, getEntityClass(t));
     }
 
     /**
      * 通过条件查询更新数据
      */
-    public void update(Query query, Update update) {
-        mongoTemplate.updateMulti(query, update, this.getEntityClass());
+    public <T> void update(T t, Update update) {
+        Query query = buildBaseQuery(t);
+        mongoTemplate.updateMulti(query, update, this.getEntityClass(t));
     }
 
     /**
@@ -173,29 +172,30 @@ public class MongoHelper {
 
     public <T> List<T> findByCondition(T t) {
         Query query = buildBaseQuery(t);
-        return mongoTemplate.find(query, getEntityClass());
+        return mongoTemplate.find(query, getEntityClass(t));
     }
 
     /**
      * 通过一定的条件查询一个实体
      */
-    public <T> T findOne(Query query) {
-        return mongoTemplate.findOne(query, getEntityClass());
+    public <T> T findOne(T t) {
+        Query query = buildBaseQuery(t);
+        return mongoTemplate.findOne(query, getEntityClass(t));
     }
 
 
     /**
      * 通过ID获取记录
      */
-    public <T> T get(String id) {
-        return mongoTemplate.findById(id, this.getEntityClass());
+    public <T> T get(String id, Class<T> tClass) {
+        return mongoTemplate.findById(id, tClass);
     }
 
     /**
      * 通过ID获取记录,并且指定了集合名(表的意思)
      */
-    public <T> T get(String id, String collectionName) {
-        return mongoTemplate.findById(id, this.getEntityClass(), collectionName);
+    public <T> T get(String id, String collectionName, Class<T> tClass) {
+        return mongoTemplate.findById(id, tClass, collectionName);
     }
 
     /**
@@ -234,7 +234,7 @@ public class MongoHelper {
         Update update = new Update();
 
         Field[] fields = t.getClass().getDeclaredFields();
-        for (Field field : fields) {
+        Arrays.stream(fields).forEach(field -> {
             field.setAccessible(true);
             try {
                 Object value = field.get(t);
@@ -244,13 +244,14 @@ public class MongoHelper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        });
         return update;
     }
 
     @SuppressWarnings("unchecked")
-    public <T> Class<T> getEntityClass() {
-        return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+    public <T> Class<T> getEntityClass(T t) {
+        return (Class<T>) t.getClass();
     }
+
 
 }

@@ -85,7 +85,11 @@ public enum GlobalEnums implements EnumsConfig {
 
     public GlobalResult results(Object... value) {
         GlobalResult re = results();
-        re.setDatas(value);
+        if(value.length== 1){
+            re.setDatas(value[0]);
+        }else{
+            re.setDatas(value);
+        }
         return re;
     }
 

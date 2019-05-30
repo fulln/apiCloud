@@ -4,8 +4,6 @@ import com.fulln.me.api.common.MongoDb.MongoHelper;
 import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.model.msg.board.MessageBoard;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,9 +30,7 @@ public class MessageBoardDao {
     }
 
     public PageResult<MessageBoard> findIntersective(MessageBoard messageBoard) {
-        Criteria criteriaDefinition = Criteria.where("duration").is(messageBoard.getCreateBy());
-        Query query = new Query(criteriaDefinition);
-        return mongoHelper.pageQuery(query, MessageBoard.class, messageBoard.getPageSize(), messageBoard.getPageNo());
+        return  mongoHelper.pageQuery(messageBoard, messageBoard.getPageSize(), messageBoard.getPageNo());
     }
 
 }

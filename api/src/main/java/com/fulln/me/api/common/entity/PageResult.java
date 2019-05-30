@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * mongoDb分页
+ *
  * @param <T>
  */
 @Data
@@ -17,7 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PageResult<T> {
-    public static  final long NONE = 0;
+    public static final long NONE = 0;
+    public static final Integer PAGE_SIZE = 10;
+    public static final Integer PAGE_NO = 0;
 
     @ApiModelProperty("页码，从1开始")
     private Integer pageNum;

@@ -35,7 +35,7 @@ public class MessageBoardServiceImpl implements IMessageBoardService {
      */
     @Override
     public GlobalResult findAll() {
-        List<MessageBoard> boards = messageBoardDao.findAll(MessageBoard.class);
+        List<MessageBoard> boards = messageBoardDao.findAll();
         if (CollectionUtils.isEmpty(boards)) {
             return GlobalEnums.QUERY_EMPTY.results();
         }
@@ -61,6 +61,11 @@ public class MessageBoardServiceImpl implements IMessageBoardService {
         }
     }
 
+    /**
+     * 分页查询
+     * @param messageBoard
+     * @return
+     */
     @Override
     public GlobalResult findByCondition(MessageBoard messageBoard) {
         try {

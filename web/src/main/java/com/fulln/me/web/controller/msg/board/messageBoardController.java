@@ -1,6 +1,7 @@
 package com.fulln.me.web.controller.msg.board;
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
@@ -47,9 +48,10 @@ public class messageBoardController extends BaseController {
         try {
             GlobalResult result = messageBoarService.insert(board);
             if (result.getCode() > 0) {
-                GlobalResult  allResult =  findAll();
+                board.setPageSize(PageResult.PAGE_SIZE);
+                board.setPageNo(PageResult.PAGE_NO);
+                GlobalResult  allResult =  findByCondition(board);
                 if(allResult.getCode()>0){
-
                     WebSocketServer.sendInfo(GsonUtil.gsonString(allResult.getDatas()),null);
                 }
             }
