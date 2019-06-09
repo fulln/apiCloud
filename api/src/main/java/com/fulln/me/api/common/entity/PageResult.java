@@ -20,7 +20,7 @@ import java.util.List;
 public class PageResult<T> {
     public static final long NONE = 0;
     public static final Integer PAGE_SIZE = 10;
-    public static final Integer PAGE_NO = 0;
+    public static final Integer PAGE_NO = 1;
 
     @ApiModelProperty("页码，从1开始")
     private Integer pageNum;

@@ -154,9 +154,8 @@ public class MongoHelper {
     /**
      * 通过条件查询更新数据
      */
-    public <T> void update(T t, Update update) {
-        Query query = buildBaseQuery(t);
-        mongoTemplate.updateMulti(query, update, this.getEntityClass(t));
+    public <T> void update(Query query, Update update,Class<T> tClass) {
+        mongoTemplate.updateMulti(query, update, tClass);
     }
 
     /**
@@ -166,7 +165,7 @@ public class MongoHelper {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Update update = buildBaseUpdate(t);
-        update(query, update);
+        update(query, update,t.getClass());
     }
 
 

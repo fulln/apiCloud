@@ -51,7 +51,19 @@ public enum QueryType {
             }  
             return new Criteria();  
         }  
-    };  
+    },
+    GT {
+        @Override
+        public Criteria buildCriteria(MongoField queryFieldAnnotation, Field field, Object value) {
+            if (check(queryFieldAnnotation, field, value)) {
+                String queryField = getQueryFieldName(queryFieldAnnotation, field);
+                return Criteria.where(queryField).gt(value.toString());
+            }
+            return new Criteria();
+        }
+    };
+
+
   
     private static boolean check(MongoField queryField, Field field, Object value) {
         return !(queryField == null || field == null || value == null);  

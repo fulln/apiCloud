@@ -2,6 +2,7 @@ package com.fulln.me.dao.msg.board;
 
 import com.fulln.me.api.common.MongoDb.MongoHelper;
 import com.fulln.me.api.common.entity.PageResult;
+import com.fulln.me.api.common.utils.SnowflakeUtils;
 import com.fulln.me.api.model.msg.board.MessageBoard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,7 @@ public class MessageBoardDao {
     }
 
     public void add(MessageBoard messageBoard) {
+        messageBoard.setMessageId(new SnowflakeUtils(1L,127001L).nextId());
         mongoHelper.add(messageBoard);
     }
 

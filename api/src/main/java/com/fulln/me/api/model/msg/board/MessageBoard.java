@@ -19,8 +19,8 @@ import java.io.Serializable;
 @Data
 public class MessageBoard extends BaseEntity implements Serializable {
 
-    @MongoField( attribute = "_id")
-    private Integer messageId;
+
+    private Long messageId;
     @MongoField(type = QueryType.LIKE)
     private String messageContent;
     @MongoField
@@ -29,5 +29,6 @@ public class MessageBoard extends BaseEntity implements Serializable {
     @MongoField
     private String createBy;
     private String updateBy;
-
+    @MongoField
+    private Integer isDelete;
 }

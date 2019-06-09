@@ -2,9 +2,9 @@ package com.fulln.me.web.config.shiro;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.fulln.me.api.common.utils.FileUtil;
 import com.fulln.me.api.model.system.SysPermission;
 import com.fulln.me.web.config.constant.NonBlockingUrlConfig;
-import com.fulln.me.web.config.constant.RedisPropConfig;
 import com.fulln.me.web.service.system.ISysPermissionService;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -26,9 +26,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.Filter;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: fulln
@@ -44,9 +42,6 @@ public class ShiroConfig {
 
     @Autowired
     private NonBlockingUrlConfig urlConfig;
-
-    @Autowired
-    private RedisPropConfig redisPropConfig;
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -217,7 +212,7 @@ public class ShiroConfig {
      * 开启shiro aop注解支持.
      * 使用代理方式;所以需要开启代码支持;
      *
-     * @param SecurityManager
+     * @param securityManager
      * @return
      */
     @Bean
@@ -236,27 +231,27 @@ public class ShiroConfig {
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         //通过config配置进行值获取
-        redisManager.setHost(redisPropConfig.getHost());
-        redisManager.setPassword(redisPropConfig.getPassword());
-        redisManager.setPort(redisPropConfig.getPort());
-        redisManager.setTimeout(redisPropConfig.getTimeout());
+//        redisManager.setHost(redisPropConfig.getHost());
+//        redisManager.setPassword(redisPropConfig.getPassword());
+//        redisManager.setPort(redisPropConfig.getPort());
+//        redisManager.setTimeout(redisPropConfig.getTimeout());
         redisManager.setExpire(18000);
 
 
-//        Properties props = FileUtil.getProps("application-dev.yml");
-//
-//        //propertise的配置
-//        redisManager.setHost(props.getProperty("spring.redis.host"));
-//        redisManager.setPort(Integer.parseInt(Objects.requireNonNull(props.getProperty("spring.redis.port"))));
-//        // 配置缓存过期时间
-//        redisManager.setExpire(18000);
-//        redisManager.setTimeout(Integer.parseInt(Objects.requireNonNull(FileUtil.getProperty("spring.redis.timeout"))));
-//        String pass = props.getProperty("spring.redis.password");
+        Properties props = FileUtil.getProps("application-dev.yml");
+
+        //propertise的配置
+        redisManager.setHost(props.getProperty("spring.redis.host"));
+        redisManager.setPort(Integer.parseInt(Objects.requireNonNull(props.getProperty("spring.redis.port"))));
+        // 配置缓存过期时间
+        redisManager.setExpire(18000);
+        redisManager.setTimeout(Integer.parseInt(Objects.requireNonNull(FileUtil.getProperty("spring.redis.timeout"))));
+        String pass = props.getProperty("spring.redis.password");
 
 
-//        if (!StringUtils.isEmpty(pass)) {
-//            redisManager.setPassword(pass);
-//        }
+        if (!StringUtils.isEmpty(pass)) {
+            redisManager.setPassword(pass);
+        }
         return redisManager;
     }
 
