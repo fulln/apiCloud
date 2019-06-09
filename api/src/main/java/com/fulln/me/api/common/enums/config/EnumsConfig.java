@@ -33,21 +33,21 @@ public interface EnumsConfig {
 
     @JsonValue
     default String getData() {
-        Field field = ReflectionUtils.findField(this.getClass(), DEFAULT_DATA_NAME);
-        if (field == null){
-            return null;
-        }
-        try {
-            field.setAccessible(true);
-            return field.get(this).toString();
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        return getField(DEFAULT_DATA_NAME);
     }
 
     @JsonValue
     default String getMessage() {
-        Field field = ReflectionUtils.findField(this.getClass(), DEFAULT_MESSAGE_NAME);
+        return getField(DEFAULT_MESSAGE_NAME);
+    }
+
+    /**
+     * 获取指定字段
+     * @param defaultMessageName
+     * @return
+     */
+    default String getField(String defaultMessageName) {
+        Field field = ReflectionUtils.findField(this.getClass(), defaultMessageName);
         if (field == null){
             return null;
         }

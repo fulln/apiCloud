@@ -1,8 +1,7 @@
-package com.fulln.me.config.i18n;
+package com.fulln.me.api.common.i18n;
 
 
 import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.i18n.LanguageFieldService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +25,7 @@ public class EnumClassInner {
     public void postConstruct() {
         LanguageFieldService languageFieldService = new LanguageFieldService();
         languageFieldService.setMessageSources(messageSources);
-        for ( GlobalEnums messages : EnumSet.allOf( GlobalEnums.class)) {
+        for (GlobalEnums messages : EnumSet.allOf(GlobalEnums.class)) {
             messages.setFieldService(languageFieldService);
         }
     }
