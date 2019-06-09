@@ -14,10 +14,11 @@
     </div>
 </div>
 <div class="row clearfix">
-    <div class="col-md-10 col-md-offset-1" id="msgtext">
+    <div class="col-md-10 col-md-offset-1">
         <blockquote class="layui-elem-quote layui-quote-nm">
             想说些什么?
         </blockquote>
+        <div id="msgtext" style="text-align:left"></div>
     </div>
     <div class="col-md-10 col-md-offset-1">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -39,9 +40,10 @@
     if (IsEmpty(WebSocket)) {
         console.log("您的浏览器不支持WebSocket");
     } else {
+        let name = $("#currentUser b").text();
         console.log("您的浏览器支持WebSocket");
-
-        socket = new WebSocket("ws://localhost:8082/web/websocket/1");
+        let url ="ws://"+window.location.host+"/web/websocket/" +name+createUniqueId(1);
+        socket = new WebSocket(url);
         //打开事件
         socket.onopen = function () {
             console.log("Socket 已打开");
@@ -52,17 +54,9 @@
         socket.onmessage = function (msg) {
             console.log(msg.data);
             if (NotEmpty(msg.data) && msg.data !== "连接成功") {
-                let content = JSON.parse(msg.data)[0];
-                let html = '';
-                for (let i = 0; i < content.length; i++) {
-                    html += "<blockquote class=\"layui-elem-quote layui-quote-nm\">";
-                    html += '<legend>'+content[i].createBy+'</legend>';
-                    html += ' : ';
-                    html += '<div class="layui-field-box">' +
-                        content[i].messageContent+
-                        '</div>';
-                    html += '</blockquote>';
-                }
+                let content = JSON.parse(msg.data);
+                $("#msgtext").html();
+                let html = buildHtml(content.list);
                 $("#msgtext").append(
                     html
                 );
@@ -78,7 +72,19 @@
             alert("Socket发生了错误");
 
         }
-        socket.send("1234");
+    }
+
+    function buildHtml(content) {
+        let html = '';
+        for (let i = 0; i < content.length; i++) {
+            html += "<blockquote class=\"layui-elem-quote layui-quote-nm \">";
+            html += '<legend>' + content[i].createBy + '</legend>';
+            html += '<div class="layui-field-box">' +
+                content[i].messageContent +
+                '</div>';
+            html += '</blockquote>';
+        }
+        return html
     }
 
     function submitMd() {
@@ -101,8 +107,20 @@
         })
 
     }
-    function initMessage() {
 
+    function initMessage() {
+        let params = {}
+        params.pageSize = 10
+        params.pageNo = 1
+        requestBack("GET", "message/find", params, function (data) {
+            //移除md编辑
+            console.log(data);
+
+            let html = buildHtml(data.datas.list);
+            $("#msgtext").append(
+                html
+            );
+        });
 
         $("#msgtext").append();
     }

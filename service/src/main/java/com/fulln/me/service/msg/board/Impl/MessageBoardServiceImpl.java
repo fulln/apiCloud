@@ -1,6 +1,7 @@
 package com.fulln.me.service.msg.board.Impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
@@ -29,11 +30,12 @@ public class MessageBoardServiceImpl implements IMessageBoardService {
 
     /**
      * 查询所有的留言消息
+     *
      * @return
      */
     @Override
     public GlobalResult findAll() {
-        List<MessageBoard> boards = messageBoardDao.findAll(MessageBoard.class);
+        List<MessageBoard> boards = messageBoardDao.findAll();
         if (CollectionUtils.isEmpty(boards)) {
             return GlobalEnums.QUERY_EMPTY.results();
         }
@@ -56,6 +58,24 @@ public class MessageBoardServiceImpl implements IMessageBoardService {
         } catch (Exception e) {
             log.error("mongoDb 插入异常", e);
             return GlobalEnums.INSERT_ERROR.results("MongoDb插入异常");
+        }
+    }
+
+    /**
+     * 分页查询
+     * @param messageBoard
+     * @return
+     */
+    @Override
+    public GlobalResult findByCondition(MessageBoard messageBoard) {
+        try {
+            PageResult<MessageBoard> result = messageBoardDao.findIntersective(messageBoard);
+            if (result.getTotal() == PageResult.NONE) {
+                return GlobalEnums.QUERY_EMPTY.results();
+            }
+            return GlobalEnums.QUERY_SUCCESS.results(result);
+        } catch (Exception e) {
+            return GlobalEnums.QUERY_FAIL.results();
         }
     }
 }

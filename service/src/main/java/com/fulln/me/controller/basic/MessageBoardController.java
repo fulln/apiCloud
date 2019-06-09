@@ -32,6 +32,10 @@ public class MessageBoardController {
         return messageBoardService.insertOrUpdate(board);
     }
 
+    @PostMapping("/findByCondition")
+    public GlobalResult findByCondition(@RequestBody MessageBoard board){
+        return messageBoardService.findByCondition(board);
+    }
 
 
 }

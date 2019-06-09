@@ -22,4 +22,6 @@ public interface MessageBoardService {
     @PostMapping("/msg/board/add")
     GlobalResult insert(@RequestBody MessageBoard info);
 
+    @PostMapping("/msg/board/findByCondition")
+    GlobalResult findByCondition(@RequestBody MessageBoard board);
 }

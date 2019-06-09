@@ -2,6 +2,31 @@
 function keyUpValue(obj) {
     return obj.value.replace(/[^\=\:\-\a-\z\A-\Z0-9\u4E00-\u9FA5\.\s]/g, '');
 }
+// 生成随机id
+function createUniqueId(n) {
+    let random = function() { // 生成10-12位不等的字符串
+        return Number(Math.random().toString().substr(2)).toString(36); // 转换成十六进制
+    }
+    let arr = [];
+    function createId() {
+        let num = random();
+        let _bool = false;
+        arr.forEach(v => {
+            if(v === num) _bool = true;
+        });
+        if(_bool) {
+            createId();
+        }else {
+            arr.push(num);
+        }
+    }
+    let i = 0;
+    while(i < n) {
+        createId();
+        i++;
+    }
+    return arr;
+}
 
 // 提示框
 function alertInfo(header, message, btns, methods, method2) {

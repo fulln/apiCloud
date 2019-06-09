@@ -1,6 +1,7 @@
 package com.fulln.me.web.controller.msg.board;
 
 import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
@@ -10,6 +11,7 @@ import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,9 +48,10 @@ public class messageBoardController extends BaseController {
         try {
             GlobalResult result = messageBoarService.insert(board);
             if (result.getCode() > 0) {
-                GlobalResult  allResult =  findAll();
+                board.setPageSize(PageResult.PAGE_SIZE);
+                board.setPageNo(PageResult.PAGE_NO);
+                GlobalResult  allResult =  findByCondition(board);
                 if(allResult.getCode()>0){
-
                     WebSocketServer.sendInfo(GsonUtil.gsonString(allResult.getDatas()),null);
                 }
             }
@@ -56,6 +59,12 @@ public class messageBoardController extends BaseController {
         } catch (IOException e) {
             return GlobalEnums.SYS_ERROR.results();
         }
+    }
+
+    @GetMapping("/find")
+    public GlobalResult findByCondition(MessageBoard board){
+        return messageBoarService.findByCondition(board);
+
     }
 
 }

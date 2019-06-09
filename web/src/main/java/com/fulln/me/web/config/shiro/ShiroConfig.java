@@ -212,7 +212,7 @@ public class ShiroConfig {
      * 开启shiro aop注解支持.
      * 使用代理方式;所以需要开启代码支持;
      *
-     * @param SecurityManager
+     * @param securityManager
      * @return
      */
     @Bean
@@ -230,6 +230,14 @@ public class ShiroConfig {
      */
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
+        //通过config配置进行值获取
+//        redisManager.setHost(redisPropConfig.getHost());
+//        redisManager.setPassword(redisPropConfig.getPassword());
+//        redisManager.setPort(redisPropConfig.getPort());
+//        redisManager.setTimeout(redisPropConfig.getTimeout());
+        redisManager.setExpire(18000);
+
+
         Properties props = FileUtil.getProps("application-dev.yml");
 
         //propertise的配置
