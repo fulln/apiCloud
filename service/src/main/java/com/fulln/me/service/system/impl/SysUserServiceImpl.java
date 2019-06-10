@@ -3,6 +3,8 @@ package com.fulln.me.service.system.impl;
 
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.exception.ServiceException;
+import com.fulln.me.api.common.utils.CheckParamsUtil;
 import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.dao.system.SysUserDao;
 import com.fulln.me.service.system.ISysUserService;
@@ -36,6 +38,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public SysUserBasic selectByUsername(String name) {
         try {
+
             SysUserBasic userBasic = new SysUserBasic();
             userBasic.setUserName(name);
             return userDao.selectOne(userBasic);
@@ -54,7 +57,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public boolean updateLoginFail(String name, int count) {
-        return userDao.updateLoginFail(name,count)>0;
+        return userDao.updateLoginFail(name, count) > 0;
     }
 
     /**
@@ -71,6 +74,26 @@ public class SysUserServiceImpl implements ISysUserService {
         } catch (Exception e) {
             log.error("根据用户名更新", e);
             return GlobalEnums.UPDATE_ERROR.results();
+        }
+    }
+
+    @Override
+    public GlobalResult add(SysUserBasic sysUserBasic) {
+        try {
+            CheckParamsUtil.checkNull("用户",sysUserBasic);
+            CheckParamsUtil.checkNull("用户邮箱",sysUserBasic.getEmail());
+            CheckParamsUtil.checkNull("用户手机",sysUserBasic.getMobile());
+            int insert = userDao.insert(sysUserBasic);
+            if (insert > 0) {
+                return GlobalEnums.INSERT_SUCCESS.results();
+            } else {
+                return GlobalEnums.INSERT_ERROR.results();
+            }
+        }catch (ServiceException e){
+            return GlobalEnums.EMPTY_PARAMETER.results(e.getMessage());
+        }catch (Exception e) {
+            log.error("新增用户", e);
+            return GlobalEnums.INSERT_ERROR.results();
         }
     }
 }

@@ -9,7 +9,7 @@ package com.fulln.me.api.common.exception;
  * @Date: 2018/10/19 0019-17:28
  */
 @SuppressWarnings("serial")
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
 
     public ServiceException() {
 

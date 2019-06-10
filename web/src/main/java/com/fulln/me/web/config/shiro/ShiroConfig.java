@@ -43,6 +43,9 @@ public class ShiroConfig {
     @Autowired
     private NonBlockingUrlConfig urlConfig;
 
+//    @Autowired
+//    private RedisPropConfig redisPropConfig;
+
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
@@ -228,6 +231,7 @@ public class ShiroConfig {
      *
      * @return
      */
+    @Bean
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         //通过config配置进行值获取
@@ -235,8 +239,7 @@ public class ShiroConfig {
 //        redisManager.setPassword(redisPropConfig.getPassword());
 //        redisManager.setPort(redisPropConfig.getPort());
 //        redisManager.setTimeout(redisPropConfig.getTimeout());
-        redisManager.setExpire(18000);
-
+//        redisManager.setExpire(18000);
 
         Properties props = FileUtil.getProps("application-dev.yml");
 

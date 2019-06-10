@@ -63,7 +63,7 @@ public class AspectScan extends BaseController {
 
     }
 
-    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..))")
+    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..)) ")
     public void viewcontrollerHandle() {
 
     }

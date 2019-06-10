@@ -9,6 +9,7 @@ com:
                 nonBlockingUrl:
                     # 获取图片验证码
                     - /code
+                    - /registered
                     # 首页
                     - /
                     # 项目性能监控模块

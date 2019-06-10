@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -39,7 +40,6 @@ public class ViewController {
     @Resource
     private ISysPermissionService sysPermissionService;
 
-
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
@@ -63,6 +63,10 @@ public class ViewController {
         return "websocket/webSocket";
     }
 
+    @GetMapping("/registered")
+    public String registered() {
+        return "regist";
+    }
 
 
 

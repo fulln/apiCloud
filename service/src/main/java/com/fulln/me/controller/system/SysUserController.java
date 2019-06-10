@@ -55,5 +55,8 @@ public class  SysUserController {
         return sysUserService.Update(currentUser);
     }
 
-
+    @PostMapping("/save")
+    public GlobalResult save(SysUserBasic sysUserBasic){
+        return  sysUserService.add(sysUserBasic);
+    }
 }

@@ -43,4 +43,12 @@ public interface  ISysUserService {
     @PostMapping("/user/update")
     GlobalResult Update( @RequestParam("currentUser") SysUserBasic currentUser);
 
+    /**
+     * 新增用户
+     * @param userBasic
+     * @return
+     */
+    @PostMapping("/user/")
+    GlobalResult saveUser(@RequestParam SysUserBasic userBasic);
+
 }

@@ -22,8 +22,8 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:if="${session.currentUser == null || session.currentUser == ''}">
-            <li class="nologin"><a  href="#" ><span class="glyphicon glyphicon-user"></span>&nbsp;<B th:text="#{system.regist}"></B></a></li>
-            <li class="nologin"><a  href="/login" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;<B th:text="#{system.login}"></B></a></li>
+            <li class="nologin"><a  href="/web/registered" ><span class="glyphicon glyphicon-user"></span>&nbsp;<B th:text="#{system.regist}"></B></a></li>
+            <li class="nologin"><a  href="/web/login" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;<B th:text="#{system.login}"></B></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:unless="${session.currentUser == null || session.currentUser == '' }">
             <li class="logined" > <a  href="#" id="currentUser" ><span class="glyphicon glyphicon-user login"></span>&nbsp;<B th:text="${session.currentUser.userName}"></B></a></li>

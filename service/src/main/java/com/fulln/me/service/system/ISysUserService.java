@@ -36,4 +36,5 @@ public interface ISysUserService {
     GlobalResult Update(SysUserBasic currentUser);
 
 
+    GlobalResult add(SysUserBasic sysUserBasic);
 }
