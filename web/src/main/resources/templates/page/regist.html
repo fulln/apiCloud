@@ -11,7 +11,7 @@
 <div class="row clearfix">
     <div class="col-md-12 column">
         <div th:include="common/head"></div>
-        <form class="layui-form" th:action="/" method="post">
+        <form class="layui-form" action="">
             <div class="layui-form-item layui-col-md6 layui-col-md-offset2">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline form-length350">
@@ -58,7 +58,7 @@
             </div>
             <div class="layui-form-item layui-col-md4 layui-col-md-offset1">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="formRegist">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -68,9 +68,16 @@
 <div th:replace="common/script::js"></div>
 
 <script type="text/javascript">
-    $().ready(function () {
-
+    $(function () {
+        layCommon.varidator('formRegist','',function (data) {
+                requestBack("POST","registered/save",data.field,function (data) {
+                    alertNoTitle("注册成功!",function (data) {
+                        window.location.href= 'web';
+                    })
+                })
+        });
     });
+
 </script>
 </body>
 </html>

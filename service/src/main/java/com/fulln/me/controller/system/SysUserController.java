@@ -4,10 +4,7 @@ package com.fulln.me.controller.system;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.service.system.ISysUserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -51,12 +48,12 @@ public class  SysUserController {
      * @return
      */
     @PostMapping("/update")
-    public GlobalResult Update(SysUserBasic currentUser){
+    public GlobalResult Update(@RequestBody SysUserBasic currentUser){
         return sysUserService.Update(currentUser);
     }
 
     @PostMapping("/save")
-    public GlobalResult save(SysUserBasic sysUserBasic){
+    public GlobalResult save(@RequestBody SysUserBasic sysUserBasic){
         return  sysUserService.add(sysUserBasic);
     }
 }

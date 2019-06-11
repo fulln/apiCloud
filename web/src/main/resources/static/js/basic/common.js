@@ -428,9 +428,15 @@ let layCommon = function () {
     };
 
     function layformVerify(obj, params, methods) {
-        layform.verify(params);
+        if(NotEmpty(params)){
+            layform.verify(params);
+        }
         layform.on('submit(' + obj + ')', function (data) {
-            return methods(data);
+            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            methods(data);
+            return false;
         })
     }
     
@@ -462,6 +468,7 @@ let layCommon = function () {
             return initDate(obj, obj2)
         },
         varidator: function (obj, params, method) {
+
             return layformVerify(obj, params, method)
         },
         formInit: function(obj,param){

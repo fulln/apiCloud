@@ -3,10 +3,13 @@ package com.fulln.me.web.controller.system.user;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysUserBasic;
 import com.fulln.me.web.service.system.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * @author fulln
@@ -15,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @description 用户控制层
  * @date 2019/6/10 23:14
  **/
-@RestController
-@RequestMapping("/user")
-public class SysUserController {
+@Controller
+@RequestMapping("/registered")
+public class RegisteredController {
 
-    @Autowired
+    @Resource
     private ISysUserService sysUserService;
 
-    @GetMapping("/save")
+    @GetMapping
+    public String registered() {
+        return "regist";
+    }
+
+    @PostMapping("/save")
+    @ResponseBody
     public GlobalResult saveUser(SysUserBasic userBasic){
         return sysUserService.saveUser(userBasic);
     }

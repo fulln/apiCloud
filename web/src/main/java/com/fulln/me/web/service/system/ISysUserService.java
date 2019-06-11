@@ -6,6 +6,7 @@ import com.fulln.me.api.model.system.SysUserBasic;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -41,14 +42,14 @@ public interface  ISysUserService {
      * @return
      */
     @PostMapping("/user/update")
-    GlobalResult Update( @RequestParam("currentUser") SysUserBasic currentUser);
+    GlobalResult Update( @RequestBody SysUserBasic currentUser);
 
     /**
      * 新增用户
-     * @param userBasic
+     * @param sysUserBasic
      * @return
      */
-    @PostMapping("/user/")
-    GlobalResult saveUser(@RequestParam SysUserBasic userBasic);
+    @PostMapping("/user/save")
+    GlobalResult saveUser(@RequestBody SysUserBasic sysUserBasic);
 
 }
