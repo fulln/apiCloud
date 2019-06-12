@@ -1,7 +1,7 @@
 package com.fulln.me.web.controller.system.user;
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.service.system.ISysUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

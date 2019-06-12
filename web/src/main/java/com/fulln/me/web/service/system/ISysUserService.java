@@ -2,7 +2,7 @@ package com.fulln.me.web.service.system;
 
 
 import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

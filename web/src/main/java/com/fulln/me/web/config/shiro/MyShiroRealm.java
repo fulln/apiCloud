@@ -9,7 +9,7 @@ import com.fulln.me.api.common.utils.AesUtil;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.system.SysPermission;
 import com.fulln.me.api.model.system.SysRole;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.system.ISysPermissionService;

@@ -5,7 +5,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.exception.ServiceException;
 import com.fulln.me.api.common.utils.CheckParamsUtil;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.dao.system.SysUserDao;
 import com.fulln.me.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;

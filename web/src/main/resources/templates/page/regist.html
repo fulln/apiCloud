@@ -15,7 +15,7 @@
             <div class="layui-form-item layui-col-md6 layui-col-md-offset2">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline form-length350">
-                    <input type="text" name="username" lay-verify="required|username" placeholder="请输入用户名"
+                    <input type="text" name="userName" lay-verify="required|username" placeholder="请输入用户名"
                            autocomplete="off"
                            class="layui-input">
                 </div>
@@ -24,7 +24,7 @@
             <div class="layui-form-item layui-col-md4 layui-col-md-offset2">
                 <label class="layui-form-label">密码框</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="password" lay-verify="required|password" placeholder="请输入密码"
+                    <input type="password" name="userPass" lay-verify="required|password" placeholder="请输入密码"
                            autocomplete="off"
                            class="layui-input">
                 </div>
@@ -41,16 +41,24 @@
             <div class="layui-form-item layui-col-md4 layui-col-md-offset2">
                 <label class="layui-form-label">昵称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="nickname" lay-verify="required" placeholder="请输入昵称" autocomplete="off"
+                    <input type="text" name="nickName" lay-verify="required" placeholder="请输入昵称" autocomplete="off"
                            class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">*不多于30个字符</div>
+            </div>
+            <div class="layui-form-item layui-col-md4 layui-col-md-offset2">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off"
+                           class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">*邮箱</div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-col-md4 layui-col-md-offset2">
                     <label class="layui-form-label">头像</label>
                     <div class="layui-input-inline">
-                        <button type="button" class="layui-btn" id="test1">
+                        <button type="button" class="layui-btn" id="upload">
                             <i class="layui-icon">&#xe67c;</i>上传图片
                         </button>
                     </div>
@@ -72,7 +80,7 @@
         layCommon.varidator('formRegist','',function (data) {
                 requestBack("POST","registered/save",data.field,function (data) {
                     alertNoTitle("注册成功!",function (data) {
-                        window.location.href= 'web';
+                        window.location.href= '/web';
                     })
                 })
         });

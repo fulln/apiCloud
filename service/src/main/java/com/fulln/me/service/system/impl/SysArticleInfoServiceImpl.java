@@ -8,7 +8,7 @@ import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.LinuxSystemUtil;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import com.fulln.me.service.basic.IThreadStartService;

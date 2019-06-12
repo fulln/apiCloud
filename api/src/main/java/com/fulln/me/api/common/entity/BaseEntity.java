@@ -1,7 +1,6 @@
 package com.fulln.me.api.common.entity;
 
 
-import com.fulln.me.api.model.system.SysUserBasic;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,7 +19,7 @@ public class BaseEntity implements Serializable {
     private Integer pageNo;
     private String startTime;
     private String endTime;
-    private SysUserBasic userBasic;
+
     /**
      *   Mongodb的最后一个数值(分页使用)
      */

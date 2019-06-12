@@ -1,7 +1,7 @@
 package com.fulln.me.api.model.system.DTO;
 
 import com.fulln.me.api.common.entity.BaseEntity;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
 import lombok.AllArgsConstructor;
 import lombok.Data;

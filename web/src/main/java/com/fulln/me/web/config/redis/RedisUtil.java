@@ -1,7 +1,6 @@
 package com.fulln.me.web.config.redis;
 
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  * @Date : Created in  12:58  2019/1/19.
  */
 
-@Scope("prototype")
 @Service
 public class RedisUtil {
 

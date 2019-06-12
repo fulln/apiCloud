@@ -1,12 +1,15 @@
 package com.fulln.me.web.config.shiro;
 
 
+import com.fulln.me.api.common.constant.ConstantAll;
 import com.fulln.me.api.common.utils.AesUtil;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.MD5util;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.email.EmailEntity;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
+import com.fulln.me.web.service.basic.IMailService;
 import com.fulln.me.web.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +27,7 @@ import java.util.Map;
 
 @Slf4j
 public class AuthCredential extends SimpleCredentialsMatcher {
+
     /**
      * 将用户的明文进行加密
      */
@@ -43,12 +47,18 @@ public class AuthCredential extends SimpleCredentialsMatcher {
         boolean result = super.doCredentialsMatch(loginToken, info);
         if (!result) {
             Session session = SecurityUtils.getSubject().getSession();
+            Integer failCount = (Integer) redisUtil.get(ConstantAll.LOGIN_FAIL_COUNTS + sysUser.getUserId());
+            if(failCount == null){
+                redisUtil.set(ConstantAll.LOGIN_FAIL_COUNTS +sysUser.getUserId(),1,ConstantAll.REDIS_REMINE_TIME);
+                failCount= 0;
+            }
+            int loadNum = session.getAttribute("loadNum") == null ? failCount + 1 : getMaxFail(failCount, (Integer) session.getAttribute("loadNum")) + 1;
+            redisUtil.incr(ConstantAll.LOGIN_FAIL_COUNTS + sysUser.getUserId(),1);
 
-            int loadNum = session.getAttribute("loadNum") == null ? sysUser.getLoginFailCounts() + 1 : getMaxFail(sysUser.getLoginFailCounts(), (Integer) session.getAttribute("loadNum")) + 1;
-
-            sysUserService.updateLoginFail(sysUser.getUserName(), loadNum);
-
-            if (loadNum > 3) {
+            if (loadNum > 5) {
+                EmailEntity emailEntity = new EmailEntity();
+                emailEntity.setReceiver(sysUser.getEmail());
+                mailService.sendHtmlMail(emailEntity);
                 throw new ExcessiveAttemptsException();
             }
 
@@ -57,15 +67,15 @@ public class AuthCredential extends SimpleCredentialsMatcher {
             String redisKey = SimpleWebSessionManager.DEFAULT_TOKEN_KEY + sysUser.getUserId() + DateUtil.getNowDateStamp();
 
 
-//            //删除上一个账号登陆产生的session
-            if (redisUtil.hasKey(redisKey)) {
-                try {
-                    Map<Object, Object> defaultMap = redisUtil.hmget(redisKey);
-                    redisUtil.del(SimpleWebSessionManager.SHIRO_REDIS_SESSION + defaultMap.get("sessionId"));
-                } catch (Exception e) {
-                    log.error("删除上一个session失败!");
-                }
-            }
+            //删除上一个账号登陆产生的session
+//            if (redisUtil.hasKey(redisKey)) {
+//                try {
+//                    Map<Object, Object> defaultMap = redisUtil.hmget(redisKey);
+//                    redisUtil.del(SimpleWebSessionManager.SHIRO_REDIS_SESSION + defaultMap.get("sessionId"));
+//                } catch (Exception e) {
+//                    log.error("删除上一个session失败!");
+//                }
+//            }
 
             Session session = SecurityUtils.getSubject().getSession();
 
@@ -109,13 +119,21 @@ public class AuthCredential extends SimpleCredentialsMatcher {
     private ISysUserService sysUserService;
     private RedisUtil redisUtil;
     private DefaultHeadConfig headConfig;
-
-
+    private IMailService mailService;
 
     public ISysUserService getSysUserService() {
         return sysUserService;
     }
 
+
+    public IMailService getMailService() {
+        return mailService;
+    }
+
+    @Autowired
+    public void setMailService(IMailService mailService) {
+        this.mailService = mailService;
+    }
 
     @Autowired
     public void setSysUserService(ISysUserService sysUserService) {

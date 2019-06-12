@@ -2,7 +2,7 @@ package com.fulln.me.web.config.base.method;
 
 
 import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.config.intecepter.MyHandlerInterceptor;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.config.shiro.SimpleWebSessionManager;
