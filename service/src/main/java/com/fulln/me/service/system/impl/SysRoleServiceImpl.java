@@ -1,6 +1,9 @@
 package com.fulln.me.service.system.impl;
 
 
+import com.fulln.me.api.common.entity.GlobalResult;
+import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.utils.CheckParamsUtil;
 import com.fulln.me.api.model.system.SysRole;
 import com.fulln.me.dao.system.SysRoleDao;
 import com.fulln.me.service.system.ISysRoleService;
@@ -31,4 +34,20 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return sysRoleDao.selectByPrimaryKey(id);
     }
 
+    @Override
+    public GlobalResult findByUserId(Integer userId) {
+        try {
+            CheckParamsUtil.checkNull(userId+"","操作用户");
+            SysRole sysRole = sysRoleDao.findByUserId(userId);
+
+            if(sysRole == null){
+                return GlobalEnums.QUERY_EMPTY.results();
+            }
+            return GlobalEnums.QUERY_SUCCESS.results(sysRole);
+        }catch (Exception e){
+            log.error("查询用户权限出现异常", e);
+            return GlobalEnums.QUERY_FAIL.results();
+        }
+
+    }
 }

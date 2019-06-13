@@ -1,28 +1,53 @@
 package com.fulln.me.api.model.user;
 
-import com.fulln.me.api.common.annotation.MongoField;
 import lombok.Data;
 
-/**
- * @author fulln
- * @version 0.0.1
- * @program apiCloud
- * @description 用户角色关联表
- * @date 2019/6/12 22:55
- **/
-@Data
-public class SysUserRole {
+import java.io.Serializable;
 
-    @MongoField
-    private Long userId;
-    @MongoField
-    private String userName;
-    @MongoField
-    private Long roleId;
-    private Long createTime;
-    private Long updateTime;
-    private String createBy;
-    private String updateBy;
-    private Integer isDelete;
+
+/**
+ *
+ * @author fulln
+ * @date 2019-06-13
+ */
+@Data
+public class SysUserRole implements Serializable{
+
+	/**
+	 * id
+	 */
+  private Long id;
+	/**
+	 * 用户id
+	 */
+  private Long userId;
+	/**
+	 * 用户姓名
+	 */
+  private String userName;
+	/**
+	 * 权限id
+	 */
+  private Long roleId;
+	/**
+	 * 创建时间
+	 */
+  private Long createTime;
+	/**
+	 * 修改时间
+	 */
+  private Long updateTime;
+	/**
+	 * 创建人
+	 */
+  private String createBy;
+	/**
+	 * 更新人
+	 */
+  private String updateBy;
+	/**
+	 * 是否删除
+	 */
+  private Integer isDelete;
 
 }

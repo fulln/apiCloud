@@ -8,14 +8,17 @@ import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.LinuxSystemUtil;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.user.SysUserBasic;
+import com.fulln.me.api.model.system.SysRole;
 import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import com.fulln.me.service.basic.IThreadStartService;
 import com.fulln.me.service.system.ISysArticleInfoService;
+import com.fulln.me.service.system.ISysRoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,16 +52,28 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
     @Resource
     private IThreadStartService threadService;
 
+    @Autowired
+    private ISysRoleService roleService;
+
+
     @Override
     public GlobalResult findAll(SysArticleInfoDTO info, SysUserBasic user) {
         if (StringUtils.isEmpty(info.getPageNo()) && StringUtils.isEmpty(info.getPageSize())) {
             return GlobalEnums.QUERY_EMPTY.results();
         }
+        //查询当前的对应的角色
+
+        GlobalResult result = roleService.findByUserId(user.getUserId().intValue());
+        if (result.getCode() < 0) {
+            return result;
+        }
+        SysRole sysUserRole = (SysRole) result.getDatas();
         PageHelper.startPage(info.getPageNo(), info.getPageSize());
-        info.setCustNo(user.getCustNo());
+        info.setCustNo(sysUserRole.getRoleCode());
+
         List<SysArticleInfo> li = sysArticleInfoDao.findAll(info);
         PageInfo<SysArticleInfo> pageInfo = new PageInfo<>(li);
-        return  GlobalEnums.QUERY_SUCCESS.results(pageInfo);
+        return GlobalEnums.QUERY_SUCCESS.results(pageInfo);
     }
 
     @Override
@@ -89,13 +104,13 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
                 );
             }
         } else {
-            return  GlobalEnums.QUERY_EMPTY.results();
+            return GlobalEnums.QUERY_EMPTY.results();
         }
 
         if (list.size() == 0) {
-            return  GlobalEnums.READ_SUCCESS.results();
+            return GlobalEnums.READ_SUCCESS.results();
         } else {
-            return  GlobalEnums.READ_ERROR.results(list);
+            return GlobalEnums.READ_ERROR.results(list);
         }
 
     }
@@ -104,23 +119,31 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
     @Transactional(rollbackFor = Exception.class)
     public GlobalResult insertOne(SysArticleInfo info, SysUserBasic basic) {
         try {
+
+            GlobalResult result = roleService.findByUserId(basic.getUserId().intValue());
+            if (result.getCode() < 0) {
+                return result;
+            }
+            SysRole sysUserRole = (SysRole) result.getDatas();
+
+
             String paths = path + File.separator + info.getArticleFileName() + FileExtensionConfig.FILE_DOT + FileExtensionConfig.FILE_MD;
-            info.setCustNo(basic.getCustNo());
+            info.setCustNo(sysUserRole.getRoleCode());
             info.setCreateTime(DateUtil.getNowTimeStamp());
             info.setUpdateTime(DateUtil.getNowTimeStamp());
             info.setArticleFilePath(paths);
             if (info.getArticlePushStatus() == ArticleStatusEnums.PUSHED || info.getArticlePushStatus() == ArticleStatusEnums.SAVED) {
-                return  GlobalEnums.FILE_EXIST.results();
+                return GlobalEnums.FILE_EXIST.results();
             } else {
                 sysArticleInfoDao.insertSelective(info);
                 LinuxSystemUtil.runTask("docker exec -itd blog /bin/bash  hexo new " + info.getArticleFileName());
                 threadService.fileCreate(info.getArticleFilePath(), info.getArticleContent());
-                return  GlobalEnums.INSERT_SUCCESS.results();
+                return GlobalEnums.INSERT_SUCCESS.results();
             }
         } catch (Exception e) {
             log.error("文章插入异常", e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return  GlobalEnums.INSERT_ERROR.results();
+            return GlobalEnums.INSERT_ERROR.results();
         }
 
     }
@@ -135,25 +158,25 @@ public class SysArticleInfoServiceImpl implements ISysArticleInfoService {
             if (info.getArticlePushStatus() == ArticleStatusEnums.DELETED) {
                 log.error(paths);
                 LinuxSystemUtil.runTask("rm -rf  " + paths);
-                return  GlobalEnums.DELETE_SUCCESS.results();
+                return GlobalEnums.DELETE_SUCCESS.results();
             } else {
                 if (!StringUtils.isEmpty(info.getArticleContent())) {
                     File file = new File(paths);
                     if (file.exists()) {
                         threadService.fileCreate(file.getAbsolutePath(), info.getArticleContent());
                     } else {
-                        return  GlobalEnums.FILE_NOT_EXIST.results();
+                        return GlobalEnums.FILE_NOT_EXIST.results();
                     }
                 }
-                return  GlobalEnums.UPDATE_SUCCESS.results();
+                return GlobalEnums.UPDATE_SUCCESS.results();
             }
         } catch (Exception e) {
             log.error("文章更新异常", e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             if (info.getArticlePushStatus() == ArticleStatusEnums.DELETED) {
-                return  GlobalEnums.DELETE_ERROR.results();
+                return GlobalEnums.DELETE_ERROR.results();
             } else {
-                return  GlobalEnums.UPDATE_ERROR.results();
+                return GlobalEnums.UPDATE_ERROR.results();
             }
         }
     }

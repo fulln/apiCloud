@@ -1,5 +1,6 @@
 package com.fulln.me.service.system;
 
+import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.SysRole;
 
 /**
@@ -12,4 +13,8 @@ import com.fulln.me.api.model.system.SysRole;
 public interface ISysRoleService {
 
     SysRole findById(Integer id);
+
+
+    GlobalResult findByUserId(Integer userId);
+
 }

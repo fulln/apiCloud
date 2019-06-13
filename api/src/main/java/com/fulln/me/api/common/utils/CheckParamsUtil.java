@@ -1,8 +1,7 @@
 package com.fulln.me.api.common.utils;
 
 import com.fulln.me.api.common.exception.ServiceException;
-
-import java.util.Objects;
+import org.springframework.util.StringUtils;
 
 /**
  * @author fulln
@@ -14,12 +13,8 @@ import java.util.Objects;
 public class CheckParamsUtil {
 
     public static void checkNull(String paramsName,Object t){
-        if(Objects.isNull(t)){
+        if(StringUtils.isEmpty(paramsName)){
             throw new ServiceException(paramsName+" is Empty");
         }
     }
-
-
-
-
 }
