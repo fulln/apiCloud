@@ -3,7 +3,7 @@ package com.fulln.me.controller.system;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
 import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.service.system.ISysArticleInfoService;
 import org.springframework.web.bind.annotation.*;
 

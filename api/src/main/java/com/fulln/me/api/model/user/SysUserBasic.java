@@ -1,4 +1,4 @@
-package com.fulln.me.api.model.system;
+package com.fulln.me.api.model.user;
 
 
 import com.fulln.me.api.common.enums.UserStatEnums;
@@ -18,7 +18,7 @@ public class SysUserBasic implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long userId;
+  private Long userId;
   private String userName;
   private String userPass;
   private String nickName;
@@ -26,20 +26,16 @@ public class SysUserBasic implements Serializable {
   private String sex;
   @Enumerated
   private UserStatEnums stat;
-  private Long lastLoginDate;
-  private String lastLoginIp;
-  private String isDel;
-  private String isEmailConfirmed;
-  private String isPhoneConfirmed;
+  private Integer isEmailConfirmed;
+  private Integer isPhoneConfirmed;
   private String createBy;
   private Long createDate;
   private Long updateDate;
-  private Integer loginFailCounts;
   private String email;
   private String mobile;
-  private Integer roleId;
   private String userSalt;
-  private String custNo;
+  private Integer roleId;
+
   @Transient
   private String currentToken;
 

@@ -12,6 +12,7 @@ public enum ViewActiveEnmus implements OrdinaryConfig {
 
     PLAY,
     EDITOR,
-    SOCKET;
+    SOCKET,
+    REGISTERED;
 
 }

@@ -39,7 +39,6 @@ public class ViewController {
     @Resource
     private ISysPermissionService sysPermissionService;
 
-
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
@@ -62,7 +61,6 @@ public class ViewController {
     public String socket() {
         return "websocket/webSocket";
     }
-
 
 
 

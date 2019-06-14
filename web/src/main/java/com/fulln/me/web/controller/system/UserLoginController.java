@@ -1,13 +1,14 @@
 package com.fulln.me.web.controller.system;
 
 
+import com.fulln.me.api.common.constant.ConstantAll;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.exception.CustomerLockAccountException;
 import com.fulln.me.api.common.exception.DisableCustomerException;
 import com.fulln.me.api.common.utils.Captcha;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.log.LogLoginInfo;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.log.ILogLoginService;
@@ -104,8 +105,7 @@ public class UserLoginController extends BaseController {
             subject.login(tokens);
             if (subject.isAuthenticated()) {
                 SysUserBasic currentUser = getUser();
-                currentUser.setLastLoginIp(getIpAddress(request));
-                currentUser.setLoginFailCounts(0);
+                redisUtil.del(ConstantAll.LOGIN_FAIL_COUNTS+currentUser.getUserId());
                 sysUserService.Update(currentUser);
                 LogLoginInfo loginInfo = new LogLoginInfo();
                 loginInfo.setLogUserLoginIp(getIpAddress(request));

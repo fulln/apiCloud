@@ -10,7 +10,7 @@ import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.common.utils.RequestIpUtil;
 import com.fulln.me.api.common.utils.SpringContextsUtil;
 import com.fulln.me.api.model.log.LogOperationInfo;
-import com.fulln.me.api.model.system.SysUserBasic;
+import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import com.fulln.me.web.service.log.ILogOperationService;
@@ -63,7 +63,7 @@ public class AspectScan extends BaseController {
 
     }
 
-    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..))")
+    @Pointcut("@within(org.springframework.stereotype.Controller) && execution(* com.fulln.me.web.controller.guideview.*.*(..)) ")
     public void viewcontrollerHandle() {
 
     }

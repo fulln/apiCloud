@@ -10,7 +10,7 @@ spring:
             username: fulln
 eureka:
     instance:
-        hostname: 192.168.0.108
+        hostname: localhost
     client:
         fetch-registry: true
         register-with-eureka: true
