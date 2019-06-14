@@ -1,14 +1,19 @@
 package com.fulln.me.service.system.impl;
 
 
+import com.fulln.me.api.common.constant.ConstantAll;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.exception.ServiceException;
-import com.fulln.me.api.common.utils.CheckParamsUtil;
+import com.fulln.me.api.common.utils.*;
+import com.fulln.me.api.model.email.EmailEntity;
 import com.fulln.me.api.model.user.SysUserBasic;
+import com.fulln.me.config.redis.RedisUtil;
 import com.fulln.me.dao.system.SysUserDao;
+import com.fulln.me.service.basic.IThreadStartService;
 import com.fulln.me.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +34,11 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private SysUserDao userDao;
 
+    @Autowired
+    private IThreadStartService threadStartService;
+
+    @Autowired
+    private RedisUtil redisUtil;
     /**
      * 根据用户名查找用户
      *
@@ -77,17 +87,23 @@ public class SysUserServiceImpl implements ISysUserService {
         }
     }
 
+
+
     @Override
     public GlobalResult add(SysUserBasic sysUserBasic) {
         try {
-            CheckParamsUtil.checkNull("用户",sysUserBasic);
-            CheckParamsUtil.checkNull("用户邮箱",sysUserBasic.getEmail());
-            CheckParamsUtil.checkNull("用户手机",sysUserBasic.getMobile());
+            checkUserParams(sysUserBasic);
+            sysUserBasic.setCreateDate(DateUtil.getNowTimeStamp());
+            sysUserBasic.setUpdateDate(DateUtil.getNowTimeStamp());
+            sysUserBasic.setUserSalt(MD5util.getSalt());
+            sysUserBasic.setUserPass(MD5util.getMd5Hash(sysUserBasic.getUserPass(),sysUserBasic.getUserSalt()));
+            sysUserBasic.setRoleId(1);
+            sysUserBasic.setIsEmailConfirmed(1);
             int insert = userDao.insert(sysUserBasic);
             if (insert > 0) {
-                return GlobalEnums.INSERT_SUCCESS.results();
+                return GlobalEnums.EMAIL_SUCCESS.results();
             } else {
-                return GlobalEnums.INSERT_ERROR.results();
+                return GlobalEnums.EMAIL_FAIL.results();
             }
         }catch (ServiceException e){
             return GlobalEnums.EMPTY_PARAMETER.results(e.getMessage());
@@ -95,5 +111,48 @@ public class SysUserServiceImpl implements ISysUserService {
             log.error("新增用户", e);
             return GlobalEnums.INSERT_ERROR.results();
         }
+    }
+
+    private void checkUserParams(SysUserBasic sysUserBasic) {
+        CheckParamsUtil.checkNull("用户",sysUserBasic);
+        CheckParamsUtil.checkNull("用户邮箱",sysUserBasic.getEmail());
+        CheckParamsUtil.checkNull("用户手机",sysUserBasic.getMobile());
+        SysUserBasic userBasic = this.selectByUsername(sysUserBasic.getUserName());
+        if (userBasic != null) {
+            throw  new ServiceException("当前用户名已经被注册");
+        }
+    }
+
+    @Override
+    public GlobalResult emailCheckForRegister(SysUserBasic sysUserBasic) {
+        try {
+            checkUserParams(sysUserBasic);
+            EmailEntity emailEntity =  new EmailEntity();
+            emailEntity.setReceiver(sysUserBasic.getEmail());
+            emailEntity.setSubject(ConstantAll.EMAIL_FOR_REIGISIT_SUBJECT);
+            String registerCode = AesUtil.AESEncode(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER + sysUserBasic.getUserName());
+            emailEntity.setText(String.format("您正在fulln.me上注册用户,请点击以下链接确认是本人,此链接5分钟内有效,如果不是本人操作请忽略当前邮件</br></br>http://back.fulln.me/register/%s",registerCode));
+            threadStartService.sendEmail(emailEntity);
+            redisUtil.set(registerCode ,GsonUtil.gsonString(sysUserBasic),ConstantAll.REDIS_REGISITER_REMINE_TIME);
+            return GlobalEnums.EMAIL_SUCCESS.results();
+        }catch (ServiceException e){
+            return GlobalEnums.REGISTER_FAIL.results(e.getMessage());
+        }catch (Exception e) {
+            log.error("当前发送邮件出现异常",e);
+            return GlobalEnums.EMAIL_FAIL.results("当前发送邮件出现异常");
+        }
+    }
+
+    /**
+     * 邮件返回值之后获取当前的值进行校验
+     *
+     * @param registerCode
+     * @return
+     */
+    @Override
+    public GlobalResult checkRegistEmailBack(String registerCode) {
+        SysUserBasic sysUserBasic = GsonUtil.gsonToBean(redisUtil.get(registerCode).toString(), SysUserBasic.class);
+        add(sysUserBasic);
+        return GlobalEnums.REGISTER_SUCCESS.results();
     }
 }

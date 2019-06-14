@@ -59,7 +59,11 @@ public enum GlobalEnums implements EnumsConfig {
     ROLE_ACCOUNT_LOCKED(-10, "role.account.locked",""),
     ROLE_ACCOUNT_DELETE(-11, "role.account.delete",""),
     LOGIN_SUCCESS(1, "login.success",""),
-    LOGIN_FAIL(1, "login.success",""),
+    LOGIN_FAIL(-1, "login.fail",""),
+    EMAIL_SUCCESS(12,"email.send.success",""),
+    EMAIL_FAIL(-12,"email.send.error",""),
+    REGISTER_SUCCESS(13,"system.register.success",""),
+    REGISTER_FAIL(-13,"system.register.fail",""),
 
 
 

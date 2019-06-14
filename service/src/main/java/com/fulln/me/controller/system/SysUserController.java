@@ -54,6 +54,11 @@ public class  SysUserController {
 
     @PostMapping("/save")
     public GlobalResult save(@RequestBody SysUserBasic sysUserBasic){
-        return  sysUserService.add(sysUserBasic);
+        return  sysUserService.emailCheckForRegister(sysUserBasic);
+    }
+
+    @GetMapping("/check")
+    public GlobalResult  registerEmailBack(String registerCode){
+        return  sysUserService.checkRegistEmailBack(registerCode);
     }
 }

@@ -35,4 +35,7 @@ public class RegisteredController {
     public GlobalResult saveUser(SysUserBasic userBasic){
         return sysUserService.saveUser(userBasic);
     }
+
+
+
 }

@@ -52,4 +52,6 @@ public interface  ISysUserService {
     @PostMapping("/user/save")
     GlobalResult saveUser(@RequestBody SysUserBasic sysUserBasic);
 
+
+    GlobalResult  CheckUserByEmail();
 }

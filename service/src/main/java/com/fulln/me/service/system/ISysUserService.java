@@ -35,6 +35,23 @@ public interface ISysUserService {
      */
     GlobalResult Update(SysUserBasic currentUser);
 
-
+    /**
+     * 新增用户
+     * @param sysUserBasic
+     * @return
+     */
     GlobalResult add(SysUserBasic sysUserBasic);
+
+    /**
+     * 邮件注册校验当前邮件是本人邮件
+     * @param sysUserBasic
+     * @return
+     */
+    GlobalResult emailCheckForRegister(SysUserBasic sysUserBasic);
+
+    /**
+     * 邮件返回值之后获取当前的值进行校验
+     * @return
+     */
+    GlobalResult checkRegistEmailBack(String registerCode);
 }
