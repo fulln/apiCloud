@@ -4,10 +4,7 @@ import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.model.user.SysUserBasic;
 import com.fulln.me.web.service.system.ISysUserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -35,6 +32,13 @@ public class RegisteredController {
     public GlobalResult saveUser(SysUserBasic userBasic){
         return sysUserService.saveUser(userBasic);
     }
+
+    @PostMapping("/{registerCode}")
+    @ResponseBody
+    public GlobalResult confirmCOde(@PathVariable String registerCode){
+        return sysUserService.CheckUserByEmail(registerCode);
+    }
+
 
 
 

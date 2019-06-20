@@ -1,5 +1,5 @@
 logging:
-    path: CONSOLE,debug,FILE
+    path: logs/service
 management:
     endpoint:
         shutdown:
@@ -27,6 +27,20 @@ server:
     servlet:
         context-path: /service
 spring:
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: just4p1aygam3@gmail.com
+        password: qq1203943228
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    connectiontimeout: 5000
+                    timeout: 5000
+                    writetimeout: 5000
+                    starttls:
+                        enable: true
     jpa:
         show-sql: true
     messages:
