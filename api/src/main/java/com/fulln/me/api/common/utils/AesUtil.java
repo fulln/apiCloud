@@ -1,5 +1,6 @@
 package com.fulln.me.api.common.utils;
 
+import com.fulln.me.api.common.constant.ConstantAll;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -195,18 +196,21 @@ public class AesUtil {
         return base64Encode(aesEncryptToBytes(content, encryptKey));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String[] keys = {
                 "123456", "root"
         };
 
-        for (String key : keys) {
+//        for (String key : keys) {
+//
+//            String encryptString = AESEncode(key);
+//            System.out.println(encryptString);
+//
+//            String decryptString = AESDecode(encryptString);
+//            System.out.println(decryptString);
+//        }
 
-            String encryptString = AESEncode(key);
-            System.out.println(encryptString);
+        System.out.println(aesEncrypt(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER +"test1234", ConstantAll.EMAIL_FOR_REIGISIT_SEND_SALT));
 
-            String decryptString = AESDecode(encryptString);
-            System.out.println(decryptString);
-        }
     }
 }
