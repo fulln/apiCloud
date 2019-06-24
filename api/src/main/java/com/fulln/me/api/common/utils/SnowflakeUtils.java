@@ -63,4 +63,5 @@ public class SnowflakeUtils {
   protected long timeGen() {
     return System.currentTimeMillis();
   }
+
 }

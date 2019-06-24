@@ -47,24 +47,23 @@ public enum GlobalEnums implements EnumsConfig {
     DOWNLOAD_ERROR(-1015, "common.download.error", null),
     USER_HAS_NO_PERMISSION(-1016, "user.no.permission", null),
     USER_ALREADY_EXISTS(-1017, "login.message.accountExist", null),
-    USER_HAS_NO_LOGIN(-1, "user.no.login",""),
-    LOGIN_INPUT_CODE(-2, "login.input.code",""),
-    ERROR_INPUT_CODE(-3, "error.input.code",""),
-    ERROR_INPUT_PASS(-4, "error.input.pass",""),
-    LOGIN_MAX_FAIL(-5, "login.max.fail",""),
-    ERROR_ACCOUNT_LOCK(-6, "error.account.lock",""),
-    ERROR_ACCOUNT_DISPLAY(-7, "error.account.display",""),
-    ERROR_ACCOUNT_UNACTIVATED(-8, "error.account.unactivated",""),
-    LOGIN_UNKNOWN_ACCOUNT(-9, "login.unknown.account",""),
-    ROLE_ACCOUNT_LOCKED(-10, "role.account.locked",""),
-    ROLE_ACCOUNT_DELETE(-11, "role.account.delete",""),
-    LOGIN_SUCCESS(1, "login.success",""),
-    LOGIN_FAIL(-1, "login.fail",""),
-    EMAIL_SUCCESS(12,"email.send.success",""),
-    EMAIL_FAIL(-12,"email.send.error",""),
-    REGISTER_SUCCESS(13,"system.register.success",""),
-    REGISTER_FAIL(-13,"system.register.fail",""),
-
+    USER_HAS_NO_LOGIN(-1, "user.no.login", ""),
+    LOGIN_INPUT_CODE(-2, "login.input.code", ""),
+    ERROR_INPUT_CODE(-3, "error.input.code", ""),
+    ERROR_INPUT_PASS(-4, "error.input.pass", ""),
+    LOGIN_MAX_FAIL(-5, "login.max.fail", ""),
+    ERROR_ACCOUNT_LOCK(-6, "error.account.lock", ""),
+    ERROR_ACCOUNT_DISPLAY(-7, "error.account.display", ""),
+    ERROR_ACCOUNT_UNACTIVATED(-8, "error.account.unactivated", ""),
+    LOGIN_UNKNOWN_ACCOUNT(-9, "login.unknown.account", ""),
+    ROLE_ACCOUNT_LOCKED(-10, "role.account.locked", ""),
+    ROLE_ACCOUNT_DELETE(-11, "role.account.delete", ""),
+    LOGIN_SUCCESS(1, "login.success", ""),
+    LOGIN_FAIL(-1, "login.fail", ""),
+    EMAIL_SUCCESS(12, "email.send.success", ""),
+    EMAIL_FAIL(-12, "email.send.error", ""),
+    REGISTER_SUCCESS(13, "system.register.success", ""),
+    REGISTER_FAIL(-13, "system.register.fail", ""),
 
 
     ;
@@ -89,9 +88,12 @@ public enum GlobalEnums implements EnumsConfig {
 
     public GlobalResult results(Object... value) {
         GlobalResult re = results();
-        if(value.length== 1){
+        if (this.code < 0) {
+            re.setMessage(value[0].toString());
+        }
+        if (value.length == 1) {
             re.setDatas(value[0]);
-        }else{
+        } else {
             re.setDatas(value);
         }
         return re;

@@ -1,7 +1,7 @@
 package com.fulln.me.config.redis;
 
 
-import org.springframework.context.annotation.Scope;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @Date : Created in  12:58  2019/1/19.
  */
 
-@Scope("prototype")
+@Slf4j
 @Service
 public class RedisUtil {
 
@@ -42,7 +42,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取连接异常", e);
             return false;
         }
     }
@@ -63,11 +63,11 @@ public class RedisUtil {
      * @param key 键
      * @return true 存在 false不存在
      */
-    public boolean hasKey(String key) {
+    public Boolean hasKey(String key) {
         try {
             return redisTemplate.hasKey(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("获取连接异常", e);
             return false;
         }
     }

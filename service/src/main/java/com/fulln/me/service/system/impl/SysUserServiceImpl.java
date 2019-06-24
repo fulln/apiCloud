@@ -131,9 +131,11 @@ public class SysUserServiceImpl implements ISysUserService {
             emailEntity.setReceiver(sysUserBasic.getEmail());
             emailEntity.setSubject(ConstantAll.EMAIL_FOR_REIGISIT_SUBJECT);
             String registerCode = AesUtil.aesEncrypt(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER + sysUserBasic.getUserName(), ConstantAll.EMAIL_FOR_REIGISIT_SEND_SALT);
-            emailEntity.setText(String.format("您正在fulln.me上注册用户,请点击以下链接确认是本人,此链接5分钟内有效,如果不是本人操作请忽略当前邮件</br></br>http://back.fulln.me/register/%s", registerCode));
+            emailEntity.setText(String.format("您正在fulln.me上注册用户,请点击以下链接确认是本人,此链接5分钟内有效,如果不是本人操作请忽略当前邮件</br></br>http://localhost:8082/web/registered/%s", registerCode));
             threadStartService.sendEmail(emailEntity);
-            redisUtil.set(registerCode, GsonUtil.gsonString(sysUserBasic), ConstantAll.REDIS_REGISITER_REMINE_TIME);
+            if (!redisUtil.hasKey(registerCode)) {
+                redisUtil.set(registerCode, GsonUtil.gsonString(sysUserBasic), ConstantAll.REDIS_REGISITER_REMINE_TIME);
+            }
             return GlobalEnums.EMAIL_SUCCESS.results();
         } catch (ServiceException e) {
             return GlobalEnums.REGISTER_FAIL.results(e.getMessage());
@@ -152,8 +154,6 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public GlobalResult checkRegistEmailBack(String registerCode) {
         try {
-
-
             SysUserBasic sysUserBasic = GsonUtil.gsonToBean(redisUtil.get(registerCode).toString(), SysUserBasic.class);
             GlobalResult add = add(sysUserBasic);
             if (add.getCode() > 0) {

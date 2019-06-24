@@ -56,7 +56,7 @@ function alertInfo(header, message, btns, methods, method2) {
 }
 
 function alertNoTitle(message, methods) {
-    alertInfo("提示", message, ['ok'])
+    alertInfo("提示", message, ['ok'],methods)
 }
 
 function alertAuto(message) {

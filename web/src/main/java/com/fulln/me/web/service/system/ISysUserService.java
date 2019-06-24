@@ -58,6 +58,6 @@ public interface  ISysUserService {
      * @return
      */
     @GetMapping("/user/check")
-    GlobalResult  CheckUserByEmail(String registerCode);
+    GlobalResult  CheckUserByEmail(@RequestParam("registerCode") String registerCode);
 
 }
