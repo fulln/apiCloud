@@ -39,6 +39,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
     private RedisUtil redisUtil;
+
     /**
      * 根据用户名查找用户
      *
@@ -88,7 +89,6 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
 
-
     @Override
     public GlobalResult add(SysUserBasic sysUserBasic) {
         try {
@@ -96,7 +96,7 @@ public class SysUserServiceImpl implements ISysUserService {
             sysUserBasic.setCreateDate(DateUtil.getNowTimeStamp());
             sysUserBasic.setUpdateDate(DateUtil.getNowTimeStamp());
             sysUserBasic.setUserSalt(MD5util.getSalt());
-            sysUserBasic.setUserPass(MD5util.getMd5Hash(sysUserBasic.getUserPass(),sysUserBasic.getUserSalt()));
+            sysUserBasic.setUserPass(MD5util.getMd5Hash(sysUserBasic.getUserPass(), sysUserBasic.getUserSalt()));
             sysUserBasic.setRoleId(1);
             sysUserBasic.setIsEmailConfirmed(1);
             int insert = userDao.insert(sysUserBasic);
@@ -105,21 +105,21 @@ public class SysUserServiceImpl implements ISysUserService {
             } else {
                 return GlobalEnums.EMAIL_FAIL.results();
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return GlobalEnums.EMPTY_PARAMETER.results(e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("新增用户", e);
             return GlobalEnums.INSERT_ERROR.results();
         }
     }
 
     private void checkUserParams(SysUserBasic sysUserBasic) {
-        CheckParamsUtil.checkNull("用户",sysUserBasic);
-        CheckParamsUtil.checkNull("用户邮箱",sysUserBasic.getEmail());
-        CheckParamsUtil.checkNull("用户手机",sysUserBasic.getMobile());
+        CheckParamsUtil.checkNull("用户", sysUserBasic);
+        CheckParamsUtil.checkNull("用户邮箱", sysUserBasic.getEmail());
+        CheckParamsUtil.checkNull("用户手机", sysUserBasic.getMobile());
         SysUserBasic userBasic = this.selectByUsername(sysUserBasic.getUserName());
         if (userBasic != null) {
-            throw  new ServiceException("当前用户名已经被注册");
+            throw new ServiceException("当前用户名已经被注册");
         }
     }
 
@@ -127,18 +127,20 @@ public class SysUserServiceImpl implements ISysUserService {
     public GlobalResult emailCheckForRegister(SysUserBasic sysUserBasic) {
         try {
             checkUserParams(sysUserBasic);
-            EmailEntity emailEntity =  new EmailEntity();
+            EmailEntity emailEntity = new EmailEntity();
             emailEntity.setReceiver(sysUserBasic.getEmail());
             emailEntity.setSubject(ConstantAll.EMAIL_FOR_REIGISIT_SUBJECT);
-            String registerCode = AesUtil.AESEncode(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER + sysUserBasic.getUserName());
-            emailEntity.setText(String.format("您正在fulln.me上注册用户,请点击以下链接确认是本人,此链接5分钟内有效,如果不是本人操作请忽略当前邮件</br></br>http://back.fulln.me/register/%s",registerCode));
+            String registerCode = AesUtil.aesEncrypt(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER + sysUserBasic.getUserName(), ConstantAll.EMAIL_FOR_REIGISIT_SEND_SALT);
+            emailEntity.setText(String.format("您正在fulln.me上注册用户,请点击以下链接确认是本人,此链接5分钟内有效,如果不是本人操作请忽略当前邮件</br></br>http://localhost:8082/web/registered/%s", registerCode));
             threadStartService.sendEmail(emailEntity);
-            redisUtil.set(registerCode ,GsonUtil.gsonString(sysUserBasic),ConstantAll.REDIS_REGISITER_REMINE_TIME);
+            if (!redisUtil.hasKey(registerCode)) {
+                redisUtil.set(registerCode, GsonUtil.gsonString(sysUserBasic), ConstantAll.REDIS_REGISITER_REMINE_TIME);
+            }
             return GlobalEnums.EMAIL_SUCCESS.results();
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return GlobalEnums.REGISTER_FAIL.results(e.getMessage());
-        }catch (Exception e) {
-            log.error("当前发送邮件出现异常",e);
+        } catch (Exception e) {
+            log.error("当前发送邮件出现异常", e);
             return GlobalEnums.EMAIL_FAIL.results("当前发送邮件出现异常");
         }
     }
@@ -151,8 +153,16 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public GlobalResult checkRegistEmailBack(String registerCode) {
-        SysUserBasic sysUserBasic = GsonUtil.gsonToBean(redisUtil.get(registerCode).toString(), SysUserBasic.class);
-        add(sysUserBasic);
-        return GlobalEnums.REGISTER_SUCCESS.results();
+        try {
+            SysUserBasic sysUserBasic = GsonUtil.gsonToBean(redisUtil.get(registerCode).toString(), SysUserBasic.class);
+            GlobalResult add = add(sysUserBasic);
+            if (add.getCode() > 0) {
+                return GlobalEnums.REGISTER_SUCCESS.results();
+            } else {
+                return add;
+            }
+        } catch (Exception e) {
+            return GlobalEnums.REGISTER_FAIL.results();
+        }
     }
 }

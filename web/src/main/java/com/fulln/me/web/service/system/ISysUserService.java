@@ -52,6 +52,12 @@ public interface  ISysUserService {
     @PostMapping("/user/save")
     GlobalResult saveUser(@RequestBody SysUserBasic sysUserBasic);
 
+    /**
+     * 邮箱确认
+     * @param registerCode
+     * @return
+     */
+    @GetMapping("/user/check")
+    GlobalResult  CheckUserByEmail(@RequestParam("registerCode") String registerCode);
 
-    GlobalResult  CheckUserByEmail();
 }

@@ -79,8 +79,8 @@
     $(function () {
         layCommon.varidator('formRegist','',function (data) {
                 requestBack("POST","registered/save",data.field,function (data) {
-                    alertNoTitle("注册成功!",function (data) {
-                        window.location.href= '/web';
+                    alertNoTitle("邮件发送成功!请注意查收以完成注册",function (data) {
+                        window.location.href= '/web/';
                     })
                 })
         });

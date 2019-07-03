@@ -2,21 +2,20 @@ package com.fulln.me.service.basic.impl;
 
 
 import com.fulln.me.api.model.email.EmailEntity;
-import com.fulln.me.constant.MailConfig;
 import com.fulln.me.service.basic.IMailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.Date;
-import java.util.Properties;
 
 /**
  * @program: SpringCloud
@@ -28,11 +27,11 @@ import java.util.Properties;
 @Slf4j
 public class MailServiceImpl implements IMailService {
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
-    @Resource
-    private MailConfig mailConfig;
-
-    private static JavaMailSenderImpl sender;
+    @Value("${spring.mail.username}")
+    private String sender;
 
     /**
      * @Author: fulln
@@ -44,19 +43,17 @@ public class MailServiceImpl implements IMailService {
     @Override
     public void sendHtmlMail(EmailEntity email) {
 
-        if (sender == null) {
-            sender = getMailSender();
-        }
+
 
         // 建立邮件消息,发送简单邮件和html邮件的区别
-        MimeMessage mailMessage = sender.createMimeMessage();
+        MimeMessage mailMessage = javaMailSender.createMimeMessage();
         try {
             // 注意这里的boolean,等于真的时候才能嵌套图片，在构建MimeMessageHelper时候，所给定的值是true表示启用，
             // multipart模式 为true时发送附件 可以设置html格式
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "utf-8");
 
-            messageHelper.setFrom(mailConfig.getAccount());
 
+            messageHelper.setFrom(sender);
             // 设置收件人
             if (email.getReceiver() != null) {
                 String receiver = email.getReceiver();
@@ -108,33 +105,12 @@ public class MailServiceImpl implements IMailService {
             }
 
             // 发送邮件
-            sender.send(mailMessage);
+            javaMailSender.send(mailMessage);
         } catch (MessagingException e) {
             log.error("邮件发送", e);
         } catch (Exception e) {
             log.error("系统异常", e);
         }
     }
-
-
-    /**
-     * @Author: fulln
-     * @Description:初始化邮件发送者
-     * @param: []
-     * @return: org.springframework.mail.javamail.JavaMailSenderImpl
-     * @Date: 2018/7/6 0006-11:57
-     */
-    private JavaMailSenderImpl getMailSender() {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost(mailConfig.getHost());
-        javaMailSender.setUsername(mailConfig.getAccount());
-        javaMailSender.setPassword(mailConfig.getPassword());
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", mailConfig.getIsAuth());
-        properties.put("mail.smtp.timeout", mailConfig.getOutTime());
-        javaMailSender.setJavaMailProperties(properties);
-        return javaMailSender;
-    }
-
 
 }

@@ -28,5 +28,9 @@ public class ConstantAll {
      * 用户邮件发送计时
      */
     public static final String EMAIL_FOR_REIGISIT_RECIVE_USER = "email_for_reigisit_recive_user:";
+    /**
+     * 用户发送注册邮件的salt
+     */
+    public static final String EMAIL_FOR_REIGISIT_SEND_SALT = "email_for_reigisit_send_salt";
 
 }

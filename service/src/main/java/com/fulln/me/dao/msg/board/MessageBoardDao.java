@@ -27,7 +27,7 @@ public class MessageBoardDao {
     }
 
     public void add(MessageBoard messageBoard) {
-        messageBoard.setMessageId(new SnowflakeUtils(1L,127001L).nextId());
+        messageBoard.setMessageId(new SnowflakeUtils(1L,1L).nextId());
         mongoHelper.add(messageBoard);
     }
 
