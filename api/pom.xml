@@ -122,6 +122,10 @@
             <artifactId>poi</artifactId>
             <version>3.9</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -142,10 +146,39 @@
                             <!-- 项目启动类 -->
                             <mainClass></mainClass>
                         </manifest>
+                        <!--添加第三方jar依赖(可以单独指定jar包 可以指定文件地址)-->
+                        <manifestEntries>
+                            <!-- 这个地方千万不要加回车 -->
+                            <Class-Path>/opt/libs/</Class-Path>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
-
+            <!--使用外部lib包依赖-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--资源文件转码-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <!-- 使用assembly打包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
