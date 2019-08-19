@@ -40,6 +40,7 @@ import java.util.Map.Entry;
 public class httpUtil {
 
 
+
     private static final String USER_AGENT = "Mozilla/5.0";
 
     private static final String DEFAULT_HTTP_CHARSET = "UTF-8";

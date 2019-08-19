@@ -1,7 +1,6 @@
 server:
     port: 8001
 eureka:
-
     instance:
         prefer-ip-address: true
         hostname: localhost
@@ -9,7 +8,7 @@ eureka:
         fetch-registry: false
         register-with-eureka: false
         serviceUrl:
-            defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8002/eureka/
+            defaultZone: http://fulln:fulln@eureka-slave:8002/eureka/
 spring:
     application:
         name: eurekaMaster

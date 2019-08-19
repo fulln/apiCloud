@@ -7,7 +7,7 @@ eureka:
         fetch-registry: true
         register-with-eureka: true
         serviceUrl:
-             defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8002/eureka/, http://fulln:fulln@${eureka.instance.hostname}:8001/eureka/
+             defaultZone: http://fulln:fulln@eureka-slave:8002/eureka/, http://fulln:fulln@eureka-master:8001/eureka/
 spring:
     security:
         user:
@@ -23,3 +23,4 @@ spring:
                     search-paths: springCloud/config
                     password:
                     username:
+
