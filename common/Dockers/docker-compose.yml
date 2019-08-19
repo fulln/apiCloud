@@ -17,7 +17,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "1k"
+        max-size: "1M"
         max-file: "3"
     ports:
       - 8002:8002
@@ -37,5 +37,8 @@ services:
       options:
         max-size: "1M"
         max-file: "3"
+    depends_on:
+      - eureka
+      - eureka-slaver
 networks:
   net-spring-db:
