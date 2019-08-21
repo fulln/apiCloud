@@ -1,10 +1,10 @@
 version: '3'
 services:
-  eureka:
+  eureka-master:
     build:
       context: ../
       dockerfile: eureka/Dockerfile
-    container_name: eurekaMaster
+    container_name: eureka-master
     networks:
       - net-spring-db
     ports:
@@ -13,7 +13,7 @@ services:
     build:
       context: ../
       dockerfile: eurekaSlave/Dockerfile
-    container_name: eurekaSlave
+    container_name: eureka-slaver
     logging:
       driver: "json-file"
       options:
@@ -38,7 +38,7 @@ services:
         max-size: "1M"
         max-file: "3"
     depends_on:
-      - eureka
+      - eureka-master
       - eureka-slaver
 networks:
   net-spring-db:

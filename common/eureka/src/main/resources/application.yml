@@ -8,7 +8,7 @@ eureka:
         fetch-registry: false
         register-with-eureka: false
         serviceUrl:
-            defaultZone: http://fulln:fulln@eureka-slave:8002/eureka/
+            defaultZone: http://fulln:fulln@eureka-slaver:8002/eureka/
 spring:
     application:
         name: eurekaMaster
