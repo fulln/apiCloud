@@ -27,56 +27,6 @@ spring:
                     # 2， 直接复制ras的内容粘贴
                     uri: https://github.com/fulln/config/
                     search-paths: springCloud/config
-                    username: fulln
-                    private-key: -----BEGIN RSA PRIVATE KEY-----
-                        MIIJKAIBAAKCAgEArjwY4W1jQE0KCPpUon7ntkK5Df+bGtugAwH/ewQeqfScVZ6E
-                        kKmBZje0UINOm7+pJbib58F/RYWzCxMD8hpWtAcOSAzWnep1qmdc9wE/dmoZ2v7F
-                        YUYu8UZp/xBJQKpwVrdopS8jDD2/vmqrkS78U2hcqyo8FmV3pjHrlNwW1xPkHb9n
-                        pV58nzqZRO2gcGgFJnovVO0QzqQzWmQ2JYbv90iQ1LA1SEztzcwmnv9XXuSu/65F
-                        LNV9ow1+iHVc4zMh6mgxPoSX8s/Bp499Dke3gDWLAFP+5qct9vRJ7Xcl7zCsoWkx
-                        35V6XmJCZP600d8Bm+JBOijftLXNsu+dpo7840z1g7AhpaFGEnQjwYBHn1jcmvEO
-                        L2mAqzB7jWEnXfsobo67ZphiIe5CgrYMCZ/YJrjnEr7I6Gw89szjbeIi3wYOLFj3
-                        CWRAIxzBv0Ew+cTPiToHZnYK6h99zhb6fgL9m4vy7USBdI818/bO2i7K0d8HK9kq
-                        Jud1mVzmBdt0OBhsHqKL1Jyf55QCwqjsNPBVlYyyK4v3AloYzb5j8dcr6zMEmeGd
-                        +3gfm+CX0QpWhGRODo7apH9iojBwlB0NoJluBMds8TZcoyDXfE7ursN3b7xYrOMj
-                        6UauToTf/I2UvBCIpbg9lEaDjrUfUOqFM8Gqb7+qleHJ6k67iym5tK8hIk0CAwEA
-                        AQKCAgAbvKN1V5WiSeFcFoXcrHk0saCGEvfdKbNqZyoFql07Tx6IHskZwnJAFIQX
-                        ASBFeRhzUdU36rzZE3SyQZ+yLfE5jZn/bFPKJeX/b58ED2XL8w4Up9RCLQsSC9SZ
-                        7zzKF5f0phP5n+xjaX0Z0h9n6GPw3z9JXFrecd6/TVkkhHj6WkdJWQwl7knGi2yU
-                        5YNSAa04N+FLEsZHLyqhrCxWgwm2gw3TXg3Nabm9tk87poiBKcSWHWcTwRTUHTTU
-                        gmJ8JMq0Z0vXmQIbfGlmxFfzKwWSWnO7ZKPCkkCl/LO8IuieEFCbDYUMA97MIbZS
-                        H54nfunhp/4cRR9/xCVv4+dj+YVWYoXINFV7bDCBL3DL9BtUSaalpllpgBkgsfNd
-                        IfF1KjZ0kVW9bvBPwEEDIBlavyQF2JfwzJ9B1a8ibA9QJf4d6O5U6T4y+09ZbHYj
-                        /mH0dHRfJwXPvLRomzQdM6s1iyCUsOCPxxIOz52+iDrbmQDZhVpeTr6/SKtaA1ZN
-                        A0SCYbTGUxgSDWePp7706/52Y4KnKDpPG4JcJ9aJm3QRMV2KUHjMGAFi0Mqc+uv2
-                        0g9oED480Vj1yXFCE2UWV2vS+j7PNOG+ElQmO84tnty54hTyE/VpQwOH2e6DDTti
-                        B+uT0bOhNdk8ZAwRSO+gEZLMpeU5ornBuVVu+EdKFjcx5pkngQKCAQEA55EJrBBm
-                        HsbFV+XEbd+4hMXZ9ZBQWFX8W6Ym4j6TYapicKNijBhWP2YYZociJv7otS/L5Rv3
-                        DMzYkPh8NmAT/gwfySIdUzdMRD9HqPQaAeb8J1LCxtgdOrtEFMLHUjVFJJCpSi4x
-                        qJhuHDjcn5gbh5bxNtZgiyxPzCQ2VTTh5FUbNv4oqtnJ2iiVYFzZtBpK8dCCqcLz
-                        ZFIk+lam13NLCuNCCznxW/t7xqskZZYMu9lHJOTjGcKAezpZ8LB1T2DKhE7t3Tjl
-                        04Wjy1WynjqHeACef08rfXrHnquqNvzvL6WRwi3dkrz8+Uwc1RmySkn9ohylsUnB
-                        cCkPyjsASgD5oQKCAQEAwJ5w4pTTA0vpEnoFr9sxnoyyxnbuUR7irWA1BUMpE79l
-                        ai1YODd5Rayn6+8hhATSOwdbi9ENBy1fmOWdQR1D7S68W+6hx2nw1etaml+yYaVa
-                        OL1bKc8SfdT08tKQk1WhCSdPciVhCnm+VwGRNH8VsHzfyxt15Eg9c5lKZPYy8BFr
-                        BVIEcItSnxEZmwVr6+UM2NPJq5JEJw4NcYpLuXPH+xnk9SYpBdm7tIMlErkzhqLV
-                        m1W+Mnz7MUUBW0BHVX3Lbwpooyn1TDreQT1X8e8k2jtRPooA3DV9iD1SCU8zPf70
-                        azFMt71Pe3cdL27WX6bt1bk2HoLA0Ba0p9+skpehLQKCAQBvb3qKFPIvyVPacrXO
-                        ciTnsBatd59Sgz6IFDMOGTLvgwEQV2/rHyMSK11+qXUj8vOljbS/Mm/29vUY/ps3
-                        x5CXZto8/m/CRhArn5AqnB2P4MpjWg5lhka6preijgFBbGUzrXHqQsSe74u9hReW
-                        rapB27+EtjGLh+12vc5vvp0eNl58Xl7PqTLcCz+nOceCRkzehYr7itd55ZXp6p0r
-                        fU4VlTuJD3841pLADkfboxPJqkv0Uzl+gf02T+RMUX6Cjn+moB0TonfnDJ7AESN9
-                        xYi/lPyxIzY4kkdR8iZdg+bOtQypt0yzesL6bUhKvKzx1x15T/PklyvBf+EbXr1K
-                        36FBAoIBAQCfTSo9KipOCqTrBAHaC+VApEpiew/kBTAhhXS0MnQxgdRk+LWCYNaq
-                        Of3y0aWdYsNf0Fj1DGLC8dKjSBtDM+nuqf1b5sLjgomM0gXvsH995Fv2mxxfOoOn
-                        j805Wc36HBJ/2IQK+kEEgeVaXdByYzxT5yLK/p4Eu34fMcLmNvuvsigZkVhcn80o
-                        AuNzYwt7X8a9OIMMo3478pJJub+g09GrqSHDYdkBnq5vvxqVHpgvnFIfEs2nQdgZ
-                        SmGxzzpvyQbLggdCEjxt3C3eNNacH1USK4aou0e014RHfbdwPZE6j7YjRPWW7Dlk
-                        +gEoLnmbSBpg7LmGiErgjjbAs+ssnbzNAoIBADcK1cGTJnm1625QrfqEMDI7wR30
-                        9p6vFI6DWUH+BR6Kfw/e78RS3Wm+Ty7KCbe4J1oYK5TLu3ufa2PRd1awLLoEX4bE
-                        JTSUZe3SwTzV63FeNgcDohtclvdkmYR8b5SFYJU5DJr/YyjO35yRdLksJ75Kg6Af
-                        UOdeNy79chaPZpAp38HxG7wU239cLwBmkKGeY5Txj8DLLmZkho0TjYtE/8F8tCz3
-                        ny4Vk5gLJyQkOZqLH3BZKrG6MfxgV9v/n69Y5YH/8gReX4sAyk3OlDCfIu+ITx3j
-                        dsQ/1XtWb2HCXoisdFvecLcj6fRZVy+o2gGKvKyACee7YTCvBLZ3d5Yf2FU=
-                        -----END RSA PRIVATE KEY-----
+                    password:
+                    username:
 
