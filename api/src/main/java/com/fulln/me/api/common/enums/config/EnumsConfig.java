@@ -17,6 +17,12 @@ public interface EnumsConfig {
     String DEFAULT_DATA_NAME = "datas";
     String DEFAULT_MESSAGE_NAME = "message";
 
+    /**
+     * 获取code
+     * @author fulln
+     * @date  00:52 2019-08-22
+     * @return java.lang.Integer
+     **/
     default Integer getCode() {
         Field field = ReflectionUtils.findField(this.getClass(), DEFAULT_CODE_NAME);
         if (field == null){

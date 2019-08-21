@@ -1,6 +1,7 @@
 package com.fulln.me.web.controller.system;
 
 
+import com.fulln.me.api.common.annotation.CurrentUser;
 import com.fulln.me.api.common.constant.ConstantAll;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.exception.CustomerLockAccountException;
@@ -9,7 +10,6 @@ import com.fulln.me.api.common.utils.Captcha;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.model.log.LogLoginInfo;
 import com.fulln.me.api.model.user.SysUserBasic;
-import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.log.ILogLoginService;
 import com.fulln.me.web.service.system.ISysUserService;
@@ -43,7 +43,7 @@ import static com.fulln.me.api.common.utils.RequestIpUtil.getIpAddress;
  **/
 @Controller
 @Slf4j
-public class UserLoginController extends BaseController {
+public class UserLoginController {
 
     @Resource
     private RedisUtil redisUtil;
@@ -60,7 +60,7 @@ public class UserLoginController extends BaseController {
     }
 
     @PostMapping("/login")
-    public String loginIn(String userName, String password, HttpServletRequest request, Model model, HttpSession session, String token) {
+    public String loginIn(String userName, String password, HttpServletRequest request, Model model, HttpSession session, String token, @CurrentUser SysUserBasic userBasic) {
         Subject subject = SecurityUtils.getSubject();
         String reqVerifyCode = WebUtils.getCleanParam(request, "code");
         //  判断是不是获取token进行的登陆
@@ -76,7 +76,7 @@ public class UserLoginController extends BaseController {
                 }
             } else {
                 //判断token中代表的用户有没有登陆
-                if (getUser() == null) {
+                if (userBasic == null) {
                     model.addAttribute("message", GlobalEnums.USER_HAS_NO_LOGIN.results().getMessage());
                     return "login";
                 } else {
@@ -104,14 +104,13 @@ public class UserLoginController extends BaseController {
         try {
             subject.login(tokens);
             if (subject.isAuthenticated()) {
-                SysUserBasic currentUser = getUser();
-                redisUtil.del(ConstantAll.LOGIN_FAIL_COUNTS+currentUser.getUserId());
-                sysUserService.Update(currentUser);
+                redisUtil.del(ConstantAll.LOGIN_FAIL_COUNTS+userBasic.getUserId());
+                sysUserService.Update(userBasic);
                 LogLoginInfo loginInfo = new LogLoginInfo();
                 loginInfo.setLogUserLoginIp(getIpAddress(request));
                 loginInfo.setLogUserLoginTime(DateUtil.getNowTimeStamp());
-                loginInfo.setLogUserName(currentUser.getUserName());
-                loginInfo.setRoleId(currentUser.getRoleId());
+                loginInfo.setLogUserName(userBasic.getUserName());
+                loginInfo.setRoleId(userBasic.getRoleId());
                 logLoginService.insert(loginInfo);
                 session.setAttribute("userLogId",loginInfo.getLogId());
                 model.addAttribute("loadNum", 0);

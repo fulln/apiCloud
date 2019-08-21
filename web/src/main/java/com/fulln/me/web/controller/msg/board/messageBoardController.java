@@ -5,7 +5,6 @@ import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.model.msg.board.MessageBoard;
-import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.config.websocket.WebSocketServer;
 import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;
@@ -30,7 +29,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/message")
 @Api(tags = "留言板api")
-public class messageBoardController extends BaseController {
+public class messageBoardController {
 
     @Resource
     private MessageBoardService messageBoarService;

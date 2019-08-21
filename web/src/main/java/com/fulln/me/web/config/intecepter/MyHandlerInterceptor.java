@@ -40,13 +40,8 @@ public class MyHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private NonBlockingUrlConfig nonBlockingUrlConfig;
 
-    private HttpServletRequest thisRequest;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-
-        setThisRequest(request);
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "*");
@@ -65,7 +60,6 @@ public class MyHandlerInterceptor implements HandlerInterceptor {
                 && !matchStringByIndexOf(url, nonBlockingUrlConfig.getSuccessUrl()) && !nonBlockingUrlConfig.getLogoutUrl().contains(url)
                 && !nonBlockingUrlConfig.getUnauthorizedUrl().contains(url)
         ) {
-
             String token = request.getHeader("token");
             String userName = request.getHeader("userName");
             if (!StringUtils.isEmpty(token) && !StringUtils.isEmpty(userName)) {
@@ -110,13 +104,6 @@ public class MyHandlerInterceptor implements HandlerInterceptor {
 
     }
 
-    public HttpServletRequest getThisRequest() {
-        return thisRequest;
-    }
-
-    public void setThisRequest(HttpServletRequest thisRequest) {
-        this.thisRequest = thisRequest;
-    }
 
     /**
      * url匹配

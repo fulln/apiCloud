@@ -1,17 +1,14 @@
 package com.fulln.me.web.config.aop;
 
 
-import com.fulln.me.api.common.annotation.UserMessage;
 import com.fulln.me.api.common.entity.GlobalResult;
 import com.fulln.me.api.common.enums.GlobalEnums;
 import com.fulln.me.api.common.enums.view.ViewActiveEnmus;
 import com.fulln.me.api.common.utils.DateUtil;
 import com.fulln.me.api.common.utils.GsonUtil;
 import com.fulln.me.api.common.utils.RequestIpUtil;
-import com.fulln.me.api.common.utils.SpringContextsUtil;
 import com.fulln.me.api.model.log.LogOperationInfo;
 import com.fulln.me.api.model.user.SysUserBasic;
-import com.fulln.me.web.config.base.method.BaseController;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import com.fulln.me.web.service.log.ILogOperationService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,20 +16,21 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.*;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -43,7 +41,7 @@ import java.util.*;
 @Aspect
 @Component
 @Slf4j
-public class AspectScan extends BaseController {
+public class AspectScan{
 
     @Resource
     private ILogOperationService operationService;
@@ -68,10 +66,6 @@ public class AspectScan extends BaseController {
 
     }
 
-    @Pointcut("@annotation(com.fulln.me.api.common.annotation.UserMessage)")
-    public void getUserInfoHandle() {
-
-    }
 
     /**
      * 日志访问记录  用户操作据记录表
@@ -93,6 +87,7 @@ public class AspectScan extends BaseController {
         //获取请求的request
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
 
+        SysUserBasic currentUser = (SysUserBasic)request.getAttribute("currentUser");
         LogOperationInfo operationInfo = new LogOperationInfo();
 
         Map<String, String> map = new HashMap<>();
@@ -111,8 +106,8 @@ public class AspectScan extends BaseController {
         operationInfo.setOperationUrl(request.getRequestURL().toString());
         operationInfo.setOperationDate(DateUtil.getNowTimeStamp());
         operationInfo.setRequestHead(headMaps);
-        if (getUser() != null) {
-            operationInfo.setOperationUser(getUser().getUserName());
+        if (currentUser != null) {
+            operationInfo.setOperationUser(currentUser.getUserName());
         } else if (request.getHeader("userName") != null) {
             operationInfo.setOperationUser(request.getHeader("userName"));
         } else {
@@ -179,55 +174,5 @@ public class AspectScan extends BaseController {
             return getfaultResult("系统异常！");
         }
     }*/
-
-    /**
-     * 注解添加用户信息到公共实体类中
-     *
-     * @param joinPoint
-     */
-    @Before("getUserInfoHandle()")
-    public void insertUserInfo(JoinPoint joinPoint) {
-        // 参数值
-        Object[] args = joinPoint.getArgs();
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-
-        if (method != null) {
-            UserMessage annotation = method.getAnnotation(UserMessage.class);
-            try {
-                Method userMethod = method.getDeclaringClass().getSuperclass().getDeclaredMethod(annotation.methodName());
-                userMethod.setAccessible(true);
-                SysUserBasic userBasic = (SysUserBasic) userMethod.invoke(SpringContextsUtil.getBean(method.getDeclaringClass()));
-
-                Parameter[] parameters = method.getParameters();
-                Arrays.stream(parameters)
-                        .filter(parameter -> {
-                            if (StringUtils.isEmpty(annotation.value())) {
-                                return parameters[0].equals(parameter);
-                            } else {
-                                return parameter.getName().equals(annotation.value());
-                            }
-                        })
-                        .forEach(param -> {
-                            try {
-                                Class<?> superclass = param.getType().getSuperclass();
-                                Method setUserBasic = superclass.getDeclaredMethod("setUserBasic", SysUserBasic.class);
-                                if (StringUtils.isEmpty(annotation.value())) {
-                                    setUserBasic.invoke(args[0], userBasic);
-                                }else{
-                                    int i = Arrays.binarySearch(parameters, param);
-                                    setUserBasic.invoke(args[i], userBasic);
-                                }
-                            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                                log.error("插入用户信息失败", e);
-                            }
-                        });
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                log.error("查询用户信息失败", e);
-            }
-        }
-    }
-
 
 }

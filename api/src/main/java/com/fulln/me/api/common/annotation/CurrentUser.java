@@ -11,8 +11,8 @@ import java.lang.annotation.*;
  **/
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface UserMessage {
+@Target(ElementType.PARAMETER)
+public @interface CurrentUser {
 
     /**
      * this value can focus on which params you want to added to
