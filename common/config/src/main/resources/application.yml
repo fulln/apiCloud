@@ -1,13 +1,11 @@
 server:
     port: 7000
 eureka:
-    instance:
-        hostname: localhost
     client:
         fetch-registry: true
         register-with-eureka: true
         serviceUrl:
-             defaultZone: http://fulln:fulln@eureka-slaver:8002/eureka/, http://fulln:fulln@eureka-master:8001/eureka/
+             defaultZone: http://fulln:fulln@localhost:8002/eureka/, http://fulln:fulln@eureka-master:8001/eureka/
 spring:
     security:
         user:
@@ -19,13 +17,14 @@ spring:
         config:
             server:
                 git:
-                    # 要是这边使用的公共的仓库  直接使用uri就行，username和password可以不用写
+                    # 要是这边使用的公共的仓库  直接使用uri就行，username和password必须写！
                     # 要是使用的私人仓库  需要写username 和 password
                     # 要是私人仓库使用了2级密码  需要private-key，这里有2种方式处理
                     # 1， cat ssh的key文件  如 cat /.ssh/ras.key
                     # 当然，文件要通过volume的形式同步到container里面，然后再使用cat 命令去读取文件
                     # 2， 直接复制ras的内容粘贴
-                    uri: https://github.com/fulln/config/
+                    # 参考 https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server
+                    uri: git@github.com:fulln/config.git
                     search-paths: springCloud/config
                     password:
                     username:
