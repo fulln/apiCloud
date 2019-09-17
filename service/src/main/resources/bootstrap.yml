@@ -5,7 +5,7 @@ spring:
         config:
             label: master
             profile: dev
-            uri: http://${eureka.instance.hostname}:7000
+            uri: http://${eureka.instance.hostname}:7001
             password: fulln
             username: fulln
 eureka:

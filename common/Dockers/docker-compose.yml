@@ -27,9 +27,11 @@ services:
     build:
       context: ../
       dockerfile: config/Dockerfile
-    container_name: config
+    container_name: config_local
+    volumes:
+      - /Users/fulln/IdeaProjects/apiCloud/common/config/src/main/resources/config:/opt/config
     ports:
-      - 7000:7000
+      - 7001:7000
     networks:
       - net-spring-db
     logging:
