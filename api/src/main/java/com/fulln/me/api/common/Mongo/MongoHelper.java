@@ -1,4 +1,4 @@
-package com.fulln.me.api.common.MongoDb;
+package com.fulln.me.api.common.Mongo;
 
 import com.fulln.me.api.common.annotation.MongoField;
 import com.fulln.me.api.common.entity.PageResult;
@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,6 +23,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Conditional(MongoCondition.class)
 @Component
 public class MongoHelper {
 

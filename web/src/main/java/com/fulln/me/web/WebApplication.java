@@ -1,6 +1,6 @@
 package com.fulln.me.web;
 
-import com.fulln.me.api.common.MongoDb.MongoHelper;
+import com.fulln.me.api.common.Mongo.MongoHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;

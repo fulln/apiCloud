@@ -1,6 +1,6 @@
 package com.fulln.me.dao.msg.board;
 
-import com.fulln.me.api.common.MongoDb.MongoHelper;
+import com.fulln.me.api.common.Mongo.MongoHelper;
 import com.fulln.me.api.common.entity.PageResult;
 import com.fulln.me.api.common.utils.SnowflakeUtils;
 import com.fulln.me.api.model.msg.board.MessageBoard;
