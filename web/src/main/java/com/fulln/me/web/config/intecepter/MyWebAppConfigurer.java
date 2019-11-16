@@ -3,9 +3,7 @@ package com.fulln.me.web.config.intecepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 /**
  * @AUthor: fulln
@@ -13,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Date : Created in  21:49  2018/11/25.
  */
 @Configuration
+@EnableWebMvc
 public class MyWebAppConfigurer
         implements WebMvcConfigurer {
 
@@ -39,6 +38,15 @@ public class MyWebAppConfigurer
     }
 
     /**
+     * 默认所有静态资源的访问
+     * @param configurer
+     */
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
+    /**
      * @return void
      * @Author fulln
      * @Description 前端转后端枚举
@@ -51,7 +59,10 @@ public class MyWebAppConfigurer
     }
 
 
-
+    /**
+     * 拦截器
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor).addPathPatterns("/**");
