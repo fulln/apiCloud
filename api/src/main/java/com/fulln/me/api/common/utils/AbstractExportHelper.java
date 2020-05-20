@@ -39,21 +39,53 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	 */
 	private static int defaultInterval = 2;
 	/**
-	 * 为并行查询做准备
+	 * 为查询做准备
 	 */
 	public List<ExportPageInfo> pageInfoList = new ArrayList<>();
 	/**
 	 * 传入的基本参数
 	 */
-	volatile ExportTotalInfo totalInfo = setQueryTotalInfo();
+	ExportTotalInfo totalInfo = setQueryTotalInfo();
 	/**
 	 * 需要使用原型复制
 	 */
-	volatile T obj;
+	T obj;
 	/**
 	 * 传入的class
 	 */
-	volatile Class<T> clazz = getTClass();
+	Class<T> clazz = getTClass();
+	/**
+	 * 默认的导出大小限制
+	 */
+	private int defaultExportListSize =5000;
+	/**
+	 * 查询出来的结果
+	 */
+	private List parallelList= new ArrayList();
+	/**
+	 * info的初始化
+	 *
+	 * @return
+	 */
+	public abstract ExportTotalInfo setQueryTotalInfo();
+
+
+	/**
+	 * 自定义查询
+	 *
+	 * @param t 泛型参数
+	 * @return
+	 */
+	public abstract List doQuery(T t);
+
+	/**
+	 * 获取parallelList的值进行excel的填充
+	 */
+	protected void getExportDataListToExcelList(){
+		//在这个地方去获取parallelList的值进行excel的填充
+		//需要分页的时候
+		throw new RuntimeException("请根据分页获取的结果进行excel的填充");
+	}
 
 	/**
 	 * 参数的初始化
@@ -68,21 +100,6 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		//初始化所有时间
 		handleJobs(totalInfo);
 	}
-
-	/**
-	 * info的初始化
-	 *
-	 * @return
-	 */
-	public abstract ExportTotalInfo setQueryTotalInfo();
-
-	/**
-	 * 自定义查询
-	 *
-	 * @param t 泛型参数
-	 * @return
-	 */
-	public abstract List doQuery(T t);
 
 	private void checkPageParams(T t){
 		//只是hibernate旗下的 ,和hibernate框架没有关系
@@ -171,17 +188,17 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	}
 
 	/**
-	 * 可以重写这个方法使用流加载避免oom
+	 * 使用分页可以流加载避免oom
 	 *
 	 * @return
 	 */
-	public List defaultQueryProcess() {
+	public List startQueryProcess() {
 		// 并行去查询得到结果
 		if (CollectionUtils.isEmpty(pageInfoList)) {
 			throw new RuntimeException("cannot get any pageInfo from data");
 		}
 		return pageInfoList
-				.parallelStream()
+				.stream()
 				.map(this::getCurrentDateList)
 				.filter(list -> !CollectionUtils.isEmpty(list))
 				.flatMap(Collection::stream)
@@ -195,13 +212,19 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	 * @return
 	 */
 	public List getCurrentDateList(ExportPageInfo pages) {
-		List parallelList = new ArrayList();
+
 		List currentList = new ArrayList();
 		if (totalInfo.getPageable()) {
 			do {
 				try {
 					currentList = new ArrayList();
 					currentList = doQuery(getPrototypeObj(obj, pages));
+					//判断要是达到了默认的size大小，就开始写入到excel里面
+					if(parallelList.size()> defaultExportListSize){
+						getExportDataListToExcelList();
+						//清空
+						parallelList.clear();
+					}
 					parallelList.addAll(currentList);
 					pages.setPageNo(pages.getPageNo() + 1);
 				} catch (Exception e) {
@@ -214,6 +237,7 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		}
 		return parallelList;
 	}
+
 
 
 	/**
