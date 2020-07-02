@@ -47,6 +47,7 @@ public enum GlobalEnums implements EnumsConfig {
     DOWNLOAD_ERROR(-1015, "common.download.error", null),
     USER_HAS_NO_PERMISSION(-1016, "user.no.permission", null),
     USER_ALREADY_EXISTS(-1017, "login.message.accountExist", null),
+    PARAMETER_EXCEPTION(-1018, "common.empty", null),
     USER_HAS_NO_LOGIN(-1, "user.no.login", ""),
     LOGIN_INPUT_CODE(-2, "login.input.code", ""),
     ERROR_INPUT_CODE(-3, "error.input.code", ""),
@@ -86,13 +87,13 @@ public enum GlobalEnums implements EnumsConfig {
         this.datas = datas;
     }
 
-    public GlobalResult results(Object... value) {
+    public GlobalResult results(Object value0,Object... value) {
         GlobalResult re = results();
         if (this.code < 0) {
-            re.setMessage(value[0].toString());
+            re.setMessage(value0.toString());
         }
         if (value.length == 1) {
-            re.setDatas(value[0]);
+            re.setDatas(value0);
         } else {
             re.setDatas(value);
         }

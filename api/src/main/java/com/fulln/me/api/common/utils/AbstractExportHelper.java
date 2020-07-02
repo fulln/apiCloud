@@ -1,15 +1,15 @@
 package com.fulln.me.api.common.utils;
 
-import com.alibaba.fastjson.JSON;
+import com.fulln.me.api.common.enums.GlobalEnums;
+import com.fulln.me.api.common.exception.ServiceException;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.HibernateValidator;
-import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -102,14 +102,15 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	}
 
 	private void checkPageParams(T t){
-		//只是hibernate旗下的 ,和hibernate框架没有关系
-		HibernateValidatorConfiguration configuration = Validation.byProvider(HibernateValidator.class).configure();
 		// fastFail
-		ValidatorFactory factory = configuration.failFast(true).buildValidatorFactory();
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
 		Validator validator = factory.getValidator();
 
-		validator.validate(totalInfo);
+		Set<ConstraintViolation<ExportTotalInfo>> validate = validator.validate(totalInfo);
+		if (validate.stream().findAny().isPresent()) {
+			throw ServiceException.custom(GlobalEnums.EMPTY_PARAMETER);
+		}
 	}
 
 
@@ -124,8 +125,8 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	 * @return
 	 */
 	public T getPrototypeObj(T t, ExportPageInfo info) {
-		String s = JSON.toJSONString(t);
-		T o = JSON.parseObject(s, clazz);
+		String s = GsonUtil.gsonString(t);
+		T o = GsonUtil.gsonToBean(s, clazz);
 		//开始时间
 		Field startField = ReflectionUtils.findField(clazz, totalInfo.getStartTimeFiled(), String.class);
 		if (!Objects.isNull(startField)) {

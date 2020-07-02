@@ -3,6 +3,10 @@
  */
 package com.fulln.me.api.common.exception;
 
+import com.fulln.me.api.common.enums.GlobalEnums;
+
+import java.text.MessageFormat;
+
 /**
  * @Author: fulln
  * @Description: service异常
@@ -10,6 +14,8 @@ package com.fulln.me.api.common.exception;
  */
 @SuppressWarnings("serial")
 public class ServiceException extends RuntimeException {
+
+    private static final String EXCEPTION_CONTEXT = "[custom-service]:exception code is [{0}],the description is {1}";
 
     public ServiceException() {
 
@@ -37,4 +43,15 @@ public class ServiceException extends RuntimeException {
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public static ServiceException custom(GlobalEnums enums){
+        String message = MessageFormat.format(EXCEPTION_CONTEXT,enums.code,enums.message);
+        return new ServiceException(message);
+    }
+
+    public static ServiceException custom(GlobalEnums enums,String msg){
+        String message = MessageFormat.format(EXCEPTION_CONTEXT,enums.code,msg);
+        return new ServiceException(message);
+    }
+
 }

@@ -9,13 +9,13 @@ import lombok.Data;
  * @Date: Created in 2018/5/2 0002
  */
 @Data
-public class GlobalResult {
+public class GlobalResult<T> {
 
     private String message;
 
     private Integer code;
 
-    private Object datas;
+    private T datas;
 
 
 }

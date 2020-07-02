@@ -17,10 +17,8 @@ public class GsonUtil {
     private static Gson gson;
 
 
-    private GsonUtil() {
-        if (gson == null) {
-            gson = new Gson();
-        }
+    static {
+        gson = new Gson();
     }
 
     /**
@@ -30,9 +28,6 @@ public class GsonUtil {
      * @return
      */
     public static String gsonString(Object object) {
-        if (gson == null) {
-            new GsonUtil();
-        }
         return gson.toJson(object);
     }
 
@@ -44,12 +39,7 @@ public class GsonUtil {
      * @return
      */
     public static <T> T gsonToBean(String gsonString, Class<T> cls) {
-        T t = null;
-        if (gson == null) {
-            new GsonUtil();
-        }
-        t = gson.fromJson(gsonString, cls);
-        return t;
+        return gson.fromJson(gsonString, cls);
     }
 
     /**
@@ -60,13 +50,8 @@ public class GsonUtil {
      * @return
      */
     public static <T> List<T> gsonToList(String gsonString, Class<T> cls) {
-        List<T> list = null;
-        if (gson == null) {
-            new GsonUtil();
-        }
-        list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
+        return gson.fromJson(gsonString, new TypeToken<List<T>>() {
         }.getType());
-        return list;
     }
 
     /**
@@ -76,16 +61,9 @@ public class GsonUtil {
      * @return
      */
     public static <T> List<Map<String, T>> gsonToListMaps(String gsonString) {
-        List<Map<String, T>> list = null;
-        if (gson == null) {
-            new GsonUtil();
-        }
-
-        list = gson.fromJson(gsonString,
+        return gson.fromJson(gsonString,
                 new TypeToken<List<Map<String, T>>>() {
                 }.getType());
-
-        return list;
     }
 
     /**
@@ -95,14 +73,9 @@ public class GsonUtil {
      * @return
      */
     public static <T> Map<String, T> gsonToMaps(String gsonString) {
-        Map<String, T> map = null;
-        if (gson == null) {
-            new GsonUtil();
-        }
-        map = gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
-        }.getType());
 
-        return map;
+        return gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
+        }.getType());
     }
 
 
