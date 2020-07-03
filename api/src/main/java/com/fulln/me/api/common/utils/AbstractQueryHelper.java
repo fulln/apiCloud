@@ -13,7 +13,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -21,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,16 +28,17 @@ import java.util.stream.IntStream;
 
 /**
  * @author fulln
- * @description 用时间分区进行下载，尽量避免深翻页的问题
+ * @description 指定字段(如 id,时间)分区进行查询，尽量避免深翻页的问题
+ *
  * @date Created in  19:22  2020-05-12.
  */
 @Slf4j
 @Data
-public abstract class AbstractExportHelper<T extends Serializable> {
+public abstract class AbstractQueryHelper<T extends Serializable> {
 	/**
-	 * 查询的间隔天数
+	 * 默认查询的时间间隔
 	 */
-	private static int defaultInterval = 2;
+	public static Integer DEFAULT_DATE_INTERVAL = 2;
 	/**
 	 * 为查询做准备
 	 */
@@ -57,11 +58,12 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	/**
 	 * 默认的导出大小限制
 	 */
-	private int defaultExportListSize =5000;
+	private int defaultExportListSize = 5000;
 	/**
 	 * 查询出来的结果
 	 */
-	private List parallelList= new ArrayList();
+	private List parallelList = new ArrayList();
+
 	/**
 	 * info的初始化
 	 *
@@ -79,21 +81,12 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	public abstract List doQuery(T t);
 
 	/**
-	 * 获取parallelList的值进行excel的填充
-	 */
-	protected void getExportDataListToExcelList(){
-		//在这个地方去获取parallelList的值进行excel的填充
-		//需要分页的时候
-		throw new RuntimeException("请根据分页获取的结果进行excel的填充");
-	}
-
-	/**
 	 * 参数的初始化
 	 *
 	 * @param t 需要进行查询的参数
 	 * @return
 	 */
-	public AbstractExportHelper(T t) {
+	public AbstractQueryHelper(T t) {
 		//参数检查
 		checkPageParams(t);
 		obj = t;
@@ -101,7 +94,16 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		handleJobs(totalInfo);
 	}
 
-	private void checkPageParams(T t){
+	/**
+	 * 获取parallelList的值进行excel的填充
+	 */
+	protected void getExportDataListToExcelList() {
+		//在这个地方去获取parallelList的值进行excel的填充
+		//需要分页的时候
+		throw new RuntimeException("请根据分页获取的结果进行excel的填充");
+	}
+
+	private void checkPageParams(T t) {
 		// fastFail
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
@@ -127,6 +129,35 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	public T getPrototypeObj(T t, ExportPageInfo info) {
 		String s = GsonUtil.gsonString(t);
 		T o = GsonUtil.gsonToBean(s, clazz);
+
+		//单页参数
+		Field pageSize = ReflectionUtils.findField(clazz, totalInfo.getPageSizeFiled(), Integer.class);
+		if (!Objects.isNull(pageSize)) {
+			pageSize.setAccessible(true);
+			ReflectionUtils.setField(pageSize, o, info.getPageSize());
+		} else {
+			throw new RuntimeException("不能获取到对应设置的字段");
+		}
+
+		//id
+		if (info.getId() != null) {
+			Field idField = ReflectionUtils.findField(clazz, totalInfo.getIdFiled(), Long.class);
+			if (!Objects.isNull(idField)) {
+				idField.setAccessible(true);
+				ReflectionUtils.setField(idField, o, info.getId());
+			} else {
+				idField = ReflectionUtils.findField(clazz, totalInfo.getIdFiled(), Integer.class);
+				if (!Objects.isNull(idField)) {
+					idField.setAccessible(true);
+					ReflectionUtils.setField(idField, o, info.getId().intValue());
+				} else {
+					throw new RuntimeException("不能获取到对应设置的字段");
+				}
+			}
+			return o;
+		}
+
+
 		//开始时间
 		Field startField = ReflectionUtils.findField(clazz, totalInfo.getStartTimeFiled(), String.class);
 		if (!Objects.isNull(startField)) {
@@ -156,13 +187,16 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 			}
 		}
 		//页码参数
-		Field pageNoField = ReflectionUtils.findField(clazz, totalInfo.getPageNoFiled(), Integer.class);
-		if (!Objects.isNull(pageNoField)) {
-			pageNoField.setAccessible(true);
-			ReflectionUtils.setField(pageNoField, o, info.getPageNo());
-		} else {
-			throw new RuntimeException("不能获取到对应的字段");
+		if (totalInfo.pageable) {
+			Field pageNoField = ReflectionUtils.findField(clazz, totalInfo.getPageNoFiled(), Integer.class);
+			if (!Objects.isNull(pageNoField)) {
+				pageNoField.setAccessible(true);
+				ReflectionUtils.setField(pageNoField, o, info.getPageNo());
+			} else {
+				throw new RuntimeException("不能获取到对应的字段");
+			}
 		}
+
 
 		return o;
 	}
@@ -172,18 +206,25 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 	 * 初始化流程
 	 */
 	private void handleJobs(ExportTotalInfo info) {
+		//0. 首先判断传入的是id还是时间
+		if (info.getId() != null) {
+			ExportPageInfo pageInfo = new ExportPageInfo();
+			pageInfo.setId(info.getId());
+			pageInfoList.add(pageInfo);
+			return;
+		}
 		//1.得到初始化的时间间隔
 		LocalDateTime startDateTime = SimpleDateUtils.changeDate(info.getTotalStartTime());
 		LocalDateTime endDateTime = SimpleDateUtils.changeDate(info.getTotalEndTime());
 		int timeInterval = (int) ChronoUnit.DAYS.between(startDateTime, endDateTime);
 		//2.得到所有的开始，结束的参数
-		int cycleSize = (timeInterval + (timeInterval & 1)) / defaultInterval;
+		int cycleSize = (timeInterval + (timeInterval & 1)) / DEFAULT_DATE_INTERVAL;
 		//3.从开始时间到结束时间内的所有以分割时间进行分隔的时间参数
 		//  精确到毫秒级别
 		IntStream.range(0, cycleSize).forEach(i -> {
 			ExportPageInfo pageInfo = new ExportPageInfo();
-			pageInfo.setStartDate(i * defaultInterval == 0 ? info.getTotalStartTime() : SimpleDateUtils.addDayStart(info.getTotalStartTime(), i * defaultInterval));
-			pageInfo.setEndDate((i * defaultInterval + 2) < timeInterval ? SimpleDateUtils.addDayEnd(info.getTotalStartTime(), i * defaultInterval + 2) : info.totalEndTime);
+			pageInfo.setStartDate(i * DEFAULT_DATE_INTERVAL == 0 ? info.getTotalStartTime() : SimpleDateUtils.addDayStart(info.getTotalStartTime(), i * DEFAULT_DATE_INTERVAL));
+			pageInfo.setEndDate((i * DEFAULT_DATE_INTERVAL + 2) < timeInterval ? SimpleDateUtils.addDayEnd(info.getTotalStartTime(), i * DEFAULT_DATE_INTERVAL + 2) : info.totalEndTime);
 			pageInfoList.add(pageInfo);
 		});
 	}
@@ -218,16 +259,20 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		if (totalInfo.getPageable()) {
 			do {
 				try {
-					currentList = new ArrayList();
+					currentList.clear();
 					currentList = doQuery(getPrototypeObj(obj, pages));
 					//判断要是达到了默认的size大小，就开始写入到excel里面
-					if(parallelList.size()> defaultExportListSize){
+					if (parallelList.size() > defaultExportListSize) {
 						getExportDataListToExcelList();
 						//清空
 						parallelList.clear();
 					}
 					parallelList.addAll(currentList);
-					pages.setPageNo(pages.getPageNo() + 1);
+					if (pages.getId() != null) {
+						pages.setId(pages.getId() + pages.getPageSize());
+					} else {
+						pages.setPageNo(pages.getPageNo() + 1);
+					}
 				} catch (Exception e) {
 					log.error("query happened exception ", e);
 				}
@@ -238,7 +283,6 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		}
 		return parallelList;
 	}
-
 
 
 	/**
@@ -282,30 +326,22 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		}
 
 		private static Date addDayEnd(Date date, int num) {
-			Calendar calendar = addDay(date, num);
-			calendar.set(Calendar.MILLISECOND, 499);
-			return calendar.getTime();
-		}
-
-
-		private static Calendar addDay(Date date, int num) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			calendar.add(Calendar.DATE, num);
-			return calendar;
+			LocalDateTime dateTime = changeDate(date);
+			LocalDateTime dateTime1 = dateTime.plusDays(num).with(ChronoField.MILLI_OF_SECOND, 499);
+			return Date.from(dateTime1.atZone(ZoneId.systemDefault()).toInstant());
 		}
 
 		private static Date addDayStart(Date date, int num) {
-			Calendar calendar = addDay(date, num);
-			calendar.set(Calendar.MILLISECOND, 500);
-			return calendar.getTime();
+			LocalDateTime dateTime = changeDate(date);
+			LocalDateTime dateTime1 = dateTime.plusDays(num).with(ChronoField.MILLI_OF_SECOND, 500);
+			return Date.from(dateTime1.atZone(ZoneId.systemDefault()).toInstant());
 		}
 
 	}
 
 	/**
 	 * @author fulln
-	 * @description 导出的详细信息
+	 * @description 导出的详细信息，只在内部使用
 	 * @date Created in  10:29  2020-05-15.
 	 */
 	@Getter
@@ -327,11 +363,15 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		 * 结束时间
 		 */
 		private Date endDate;
+		/**
+		 * id 开始标志
+		 */
+		private Long id;
 	}
 
 	/**
 	 * @author fulln
-	 * @description 导出的基本信息
+	 * @description 导出的基本信息 对外部使用
 	 * @date Created in  10:30  2020-05-15.
 	 */
 	@Getter
@@ -340,23 +380,27 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		/**
 		 * 总开始时间字段名称
 		 */
-		@NotNull
 		private String startTimeFiled;
 		/**
 		 * 总结束时间字段名称
 		 */
-		@NotNull
 		private String endTimeFiled;
+		/**
+		 * id字段名称
+		 */
+		private String idFiled;
 		/**
 		 * 总开始时间
 		 */
-		@NotNull
 		private Date totalStartTime;
 		/**
 		 * 总结束时间
 		 */
-		@NotNull
 		private Date totalEndTime;
+		/**
+		 * id 标志
+		 */
+		private Long id;
 		/**
 		 * 是否要分页
 		 */
@@ -370,9 +414,48 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 		 */
 		private String pageNoFiled = "pageNo";
 
-		/** 最初开始时间
+		/**
+		 * id 字段
+		 *
+		 * @param id 传入的id
+		 */
+		public void setId(Integer id) {
+			if (id == null) {
+				throw new RuntimeException("id 不能为空");
+			}
+			this.id = Long.valueOf(id);
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getStartTimeFiled() {
+			if (Objects.isNull(startTimeFiled)) {
+				startTimeFiled = "startTime";
+			}
+			return startTimeFiled;
+		}
+
+		public String getEndTimeFiled() {
+			if (Objects.isNull(endTimeFiled)) {
+				endTimeFiled = "endTime";
+			}
+			return endTimeFiled;
+		}
+
+		public String getIdFiled() {
+			if (Objects.isNull(idFiled)) {
+				idFiled = "id";
+			}
+			return idFiled;
+		}
+
+		/**
+		 * 最初开始时间
+		 *
 		 * @param totalStartTime 传入的开始时间
-		 * @param formats 时间格式
+		 * @param formats        时间格式
 		 */
 		public void setTotalStartTime(String totalStartTime, String... formats) {
 			if (formats.length == 1) {
@@ -386,12 +469,14 @@ public abstract class AbstractExportHelper<T extends Serializable> {
 			this.totalStartTime = totalStartTime;
 		}
 
-		/** 最初结束时间
+		/**
+		 * 最初结束时间
+		 *
 		 * @param totalEndTime 传入的开始时间
-		 * @param formats 时间格式
+		 * @param formats      时间格式
 		 */
 		public void setTotalEndTime(String totalEndTime, String... formats) {
-			if (formats.length ==1) {
+			if (formats.length == 1) {
 				this.totalEndTime = SimpleDateUtils.parseDate(totalEndTime, formats[0]);
 			} else {
 				this.totalEndTime = SimpleDateUtils.parseDate(totalEndTime);
