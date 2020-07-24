@@ -1,7 +1,5 @@
 package com.fulln.me.api.common.utils;
 
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.exception.ServiceException;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +36,11 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 	/**
 	 * 默认查询的时间间隔
 	 */
-	public static Integer DEFAULT_DATE_INTERVAL = 2;
+	private Integer defaultDateInterval =2;
+	/**
+	 * 当前查询的总条数
+	 */
+	private Integer totalCount = 0;
 	/**
 	 * 为查询做准备
 	 */
@@ -58,7 +60,7 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 	/**
 	 * 默认的导出大小限制
 	 */
-	private int defaultExportListSize = 5000;
+	private int defaultExportListSize = 2000;
 	/**
 	 * 查询出来的结果
 	 */
@@ -66,10 +68,12 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 
 	/**
 	 * info的初始化
-	 *
+	 * 参数的初始化
 	 * @return
 	 */
-	public abstract ExportTotalInfo setQueryTotalInfo();
+	public  ExportTotalInfo setQueryTotalInfo(){
+		return  new ExportTotalInfo();
+	};
 
 
 	/**
@@ -80,6 +84,12 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 	 */
 	public abstract List doQuery(T t);
 
+	/**
+	 * 设置查询的总条数
+	 */
+	public void setTotalCount(Integer total){
+		this.totalCount = total;
+	}
 	/**
 	 * 参数的初始化
 	 *
@@ -96,11 +106,12 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 
 	/**
 	 * 获取parallelList的值进行excel的填充
+	 * @param parallelList
 	 */
-	protected void getExportDataListToExcelList() {
+	protected void getExportDataListToExcelList(List parallelList) {
 		//在这个地方去获取parallelList的值进行excel的填充
 		//需要分页的时候
-		throw new RuntimeException("请根据分页获取的结果进行excel的填充");
+		throw new RuntimeException("请重写该方法以根据分页获取的结果进行excel的填充");
 	}
 
 	private void checkPageParams(T t) {
@@ -111,11 +122,12 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 
 		Set<ConstraintViolation<ExportTotalInfo>> validate = validator.validate(totalInfo);
 		if (validate.stream().findAny().isPresent()) {
-			throw ServiceException.custom(GlobalEnums.EMPTY_PARAMETER);
+			throw new IllegalArgumentException("参数异常");
 		}
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private Class<T> getTClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
@@ -218,13 +230,13 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 		LocalDateTime endDateTime = SimpleDateUtils.changeDate(info.getTotalEndTime());
 		int timeInterval = (int) ChronoUnit.DAYS.between(startDateTime, endDateTime);
 		//2.得到所有的开始，结束的参数
-		int cycleSize = (timeInterval + (timeInterval & 1)) / DEFAULT_DATE_INTERVAL;
+		int cycleSize = (timeInterval + (timeInterval & 1)) / getDefaultDateInterval();
 		//3.从开始时间到结束时间内的所有以分割时间进行分隔的时间参数
 		//  精确到毫秒级别
 		IntStream.range(0, cycleSize).forEach(i -> {
 			ExportPageInfo pageInfo = new ExportPageInfo();
-			pageInfo.setStartDate(i * DEFAULT_DATE_INTERVAL == 0 ? info.getTotalStartTime() : SimpleDateUtils.addDayStart(info.getTotalStartTime(), i * DEFAULT_DATE_INTERVAL));
-			pageInfo.setEndDate((i * DEFAULT_DATE_INTERVAL + 2) < timeInterval ? SimpleDateUtils.addDayEnd(info.getTotalStartTime(), i * DEFAULT_DATE_INTERVAL + 2) : info.totalEndTime);
+			pageInfo.setStartDate(i * getDefaultDateInterval() == 0 ? info.getTotalStartTime() : SimpleDateUtils.addDayStart(info.getTotalStartTime(), i * getDefaultDateInterval()));
+			pageInfo.setEndDate((i * getDefaultDateInterval() + 2) < timeInterval ? SimpleDateUtils.addDayEnd(info.getTotalStartTime(), i * getDefaultDateInterval() + 2) : info.totalEndTime);
 			pageInfoList.add(pageInfo);
 		});
 	}
@@ -239,12 +251,14 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 		if (CollectionUtils.isEmpty(pageInfoList)) {
 			throw new RuntimeException("cannot get any pageInfo from data");
 		}
-		return pageInfoList
+		List collect = pageInfoList
 				.stream()
 				.map(this::getCurrentDateList)
 				.filter(list -> !CollectionUtils.isEmpty(list))
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
+		setTotalCount(collect.size());
+		return collect;
 	}
 
 	/**
@@ -262,8 +276,9 @@ public abstract class AbstractQueryHelper<T extends Serializable> {
 					currentList.clear();
 					currentList = doQuery(getPrototypeObj(obj, pages));
 					//判断要是达到了默认的size大小，就开始写入到excel里面
-					if (parallelList.size() > defaultExportListSize) {
-						getExportDataListToExcelList();
+					if (parallelList.size() > getDefaultExportListSize()) {
+						getExportDataListToExcelList(parallelList);
+						setTotalCount(getTotalCount()+parallelList.size());
 						//清空
 						parallelList.clear();
 					}
