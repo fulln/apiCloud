@@ -201,15 +201,6 @@ public class AesUtil {
                 "123456", "root"
         };
 
-//        for (String key : keys) {
-//
-//            String encryptString = AESEncode(key);
-//            System.out.println(encryptString);
-//
-//            String decryptString = AESDecode(encryptString);
-//            System.out.println(decryptString);
-//        }
-
         System.out.println(aesEncrypt(ConstantAll.EMAIL_FOR_REIGISIT_RECIVE_USER +"test1234", ConstantAll.EMAIL_FOR_REIGISIT_SEND_SALT));
 
     }

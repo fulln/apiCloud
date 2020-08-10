@@ -1,11 +1,11 @@
 server:
-    port: 7001
+    port: 7000
 eureka:
     client:
         fetch-registry: true
         register-with-eureka: true
         serviceUrl:
-             defaultZone: http://fulln:fulln@localhost:8002/eureka/, http://fulln:fulln@localhost:8001/eureka/
+             defaultZone: http://fulln:fulln@eureka-master:8001/eureka/, http://fulln:fulln@eureka-slaver:8002/eureka/
 spring:
     profiles:
         #本地化配置必须开启这个配置
@@ -15,7 +15,7 @@ spring:
             name: fulln
             password: fulln
     application:
-        name: configServer
+        name: config
     cloud:
         config:
             server:

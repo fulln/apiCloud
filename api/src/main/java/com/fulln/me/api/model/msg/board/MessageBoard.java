@@ -31,4 +31,9 @@ public class MessageBoard extends BaseEntity implements Serializable {
     private String updateBy;
     @MongoField
     private Integer isDelete;
+
+    @MongoField(attribute = "createTime",type = QueryType.GTE)
+    private Long startTime;
+    @MongoField(attribute = "createTime",type = QueryType.LTE)
+    private Long endTime;
 }

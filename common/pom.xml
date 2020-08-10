@@ -17,10 +17,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.fulln.me</groupId>
-    <artifactId>com.fulln.me.api.common</artifactId>
+    <groupId>me.fulln</groupId>
+    <artifactId>common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>com.fulln.me.api.common</name>
+    <name>common</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

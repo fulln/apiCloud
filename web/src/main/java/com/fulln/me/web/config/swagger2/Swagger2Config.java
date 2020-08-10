@@ -2,6 +2,7 @@ package com.fulln.me.web.config.swagger2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -16,12 +17,12 @@ import springfox.documentation.spring.web.plugins.Docket;
  * @description 在线文档配置类
  * @date 2019-01-07 10:15
  **/
+@Profile("dev")
 @Configuration
 public class Swagger2Config {
 
     @Bean
     public Docket createRestApi() {
-
         return new Docket(DocumentationType.SWAGGER_2).groupName("系统接口").apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .select().apis(RequestHandlerSelectors.basePackage("com.fulln.me.web.controller"))

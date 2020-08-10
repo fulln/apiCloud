@@ -1,0 +1,18 @@
+spring:
+    application:
+        name: tuc
+    cloud:
+        config:
+            label: master
+            profile: dev
+            uri: http://${eureka.instance.hostname}:7000
+            password: fulln
+            username: fulln
+eureka:
+    instance:
+        hostname: localhost
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        serviceUrl:
+            defaultZone: http://fulln:fulln@${eureka.instance.hostname}:8002/eureka/,http://fulln:fulln@${eureka.instance.hostname}:8001/eureka/

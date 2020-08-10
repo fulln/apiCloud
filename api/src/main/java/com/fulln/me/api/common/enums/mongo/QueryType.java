@@ -13,7 +13,8 @@ import java.util.List;
  * 目前有支持三种类型：<br/> 
  * 1. equals：相等 
  * 2. like:mongodb的like查询 
- * 3. in:用于列表的in类型查询 
+ * 3. in:用于列表的in类型查询
+ * 4. between
  * </p> 
  * 
  * @author: <a href="mailto:chuanli@sohu-inc.com">chuanli</a> 
@@ -22,11 +23,11 @@ public enum QueryType {
     EQUALS {  
         @Override  
         public Criteria buildCriteria(MongoField queryFieldAnnotation, Field field, Object value) {
-            if (check(queryFieldAnnotation, field, value)) {  
-                String queryField = getQueryFieldName(queryFieldAnnotation, field);  
-                return Criteria.where(queryField).is(value.toString());  
-            }  
-            return new Criteria();  
+            if (check(queryFieldAnnotation, field, value)) {
+                String queryField = getQueryFieldName(queryFieldAnnotation, field);
+                return Criteria.where(queryField).is(value.toString());
+            }
+            return new Criteria();
         }  
     },  
     LIKE {  
@@ -61,7 +62,40 @@ public enum QueryType {
             }
             return new Criteria();
         }
-    };
+    },
+    GTE {
+        @Override
+        public Criteria buildCriteria(MongoField queryFieldAnnotation, Field field, Object value) {
+            if (check(queryFieldAnnotation, field, value)) {
+                String queryField = getQueryFieldName(queryFieldAnnotation, field);
+                return Criteria.where(queryField).gte(value.toString());
+            }
+            return new Criteria();
+        }
+    },
+    LT{
+        @Override
+        public Criteria buildCriteria(MongoField queryFieldAnnotation, Field field, Object value) {
+            if (check(queryFieldAnnotation, field, value)) {
+                String queryField = getQueryFieldName(queryFieldAnnotation, field);
+                return Criteria.where(queryField).lt(value.toString());
+            }
+            return new Criteria();
+        }
+    },
+    LTE{
+        @Override
+        public Criteria buildCriteria(MongoField queryFieldAnnotation, Field field, Object value) {
+            if (check(queryFieldAnnotation, field, value)) {
+                String queryField = getQueryFieldName(queryFieldAnnotation, field);
+                return Criteria.where(queryField).lte(value.toString());
+            }
+            return new Criteria();
+        }
+    }
+
+
+    ;
 
 
   
@@ -84,5 +118,5 @@ public enum QueryType {
             queryFieldValue = field.getName();  
         }  
         return queryFieldValue;  
-    }  
-}  
+    }
+}

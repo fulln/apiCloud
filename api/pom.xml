@@ -8,7 +8,7 @@
         <version>2.1.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.fulln.me</groupId>
+    <groupId>fulln.me</groupId>
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api</name>
@@ -130,6 +130,10 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -203,8 +207,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
             <!-- 打包发布时，跳过单元测试 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

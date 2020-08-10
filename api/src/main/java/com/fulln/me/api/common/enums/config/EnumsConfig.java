@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 public interface EnumsConfig {
 
     String DEFAULT_CODE_NAME = "code";
-    String DEFAULT_DATA_NAME = "datas";
+    String DEFAULT_DATA_NAME = "data";
     String DEFAULT_MESSAGE_NAME = "message";
 
     /**

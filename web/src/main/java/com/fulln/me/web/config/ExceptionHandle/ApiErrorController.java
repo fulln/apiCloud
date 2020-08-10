@@ -39,9 +39,6 @@ public class ApiErrorController {
     public GlobalResult handleMyException(HttpServletRequest request, Exception e) {
         log.error("未捕捉的系统异常:", e);
         try {
-            /*
-             *FileUtil.getProperty("spring.profile.active");
-             */
             String platform =System.getProperty("spring.profile.active");
             if (!StringUtils.isEmpty(platform) && "pro".equals(platform)) {
                 EmailEntity emailEntity = new EmailEntity();

@@ -17,8 +17,8 @@ public class BaseEntity implements Serializable {
 
     private Integer pageSize;
     private Integer pageNo;
-    private String startTime;
-    private String endTime;
+//    private String startTime;
+//    private String endTime;
 
     /**
      *   Mongodb的最后一个数值(分页使用)

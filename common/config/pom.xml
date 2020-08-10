@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>com.fulln.me.api.common</artifactId>
-        <groupId>com.fulln.me</groupId>
+        <groupId>me.fulln</groupId>
+        <artifactId>api.common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <name>config</name>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>config</artifactId>
 

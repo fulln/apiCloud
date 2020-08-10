@@ -34,7 +34,7 @@ public class SysUserRoleServiceImpl implements ISysUserRoleService {
     @Override
     public GlobalResult findById(SysUserRole user) {
         try {
-            CheckParamsUtil.checkNull(user.getUserId()+"","操作用户");
+            CheckParamsUtil.checkParam(user);
             SysUserRole sysUserRole = sysUserRoleDao.selectById(user);
             if(sysUserRole == null){
                 return GlobalEnums.QUERY_EMPTY.results();

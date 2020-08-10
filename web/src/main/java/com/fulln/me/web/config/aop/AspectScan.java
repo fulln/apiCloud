@@ -160,19 +160,5 @@ public class AspectScan{
         return result;
     }
 
-    //AfterThrowing异常发生后能执行的方法  但是他并不能阻止异常的抛出或者catch  系统异常记录表
-    /*@AfterThrowing(pointcut = "gethandle()", throwing = "e")
-    public GlobalResult AfterThrows(JoinPoint jp, Throwable e) {
-        log.error("ExceptionHandler : ", e);
-        if (e instanceof IllegalArgumentException) {
-            return getfaultResult(e.getMessage());
-        } else if (e instanceof NullPointerException) {
-            return getfaultResult(e.getMessage());
-        } else if (e instanceof BadSqlGrammarException) {
-            return getfaultResult("内部错误！请联系管理员！");
-        } else {
-            return getfaultResult("系统异常！");
-        }
-    }*/
 
 }
