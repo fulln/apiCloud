@@ -1,8 +1,8 @@
 package com.fulln.me.config.handle;
 
 
-import com.fulln.me.api.common.enums.config.CloumsEnumsConfig;
-import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
+import me.fulln.base.common.enums.config.CloumsEnumsConfig;
+import me.fulln.base.model.system.cloums.ArticleStatusEnums;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;

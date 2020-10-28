@@ -1,8 +1,8 @@
 package com.fulln.me.thread;
 
 
-import com.fulln.me.api.common.threadconfig.AbstractThreadRunFactory;
-import com.fulln.me.api.common.utils.FileUtil;
+import me.fulln.base.common.threadconfig.AbstractThreadRunFactory;
+import me.fulln.base.common.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;

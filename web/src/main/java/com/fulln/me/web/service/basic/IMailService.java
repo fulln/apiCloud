@@ -1,7 +1,7 @@
 package com.fulln.me.web.service.basic;
 
 
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.model.email.EmailEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

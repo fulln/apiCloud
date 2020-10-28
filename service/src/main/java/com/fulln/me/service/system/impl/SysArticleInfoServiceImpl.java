@@ -1,16 +1,16 @@
 package com.fulln.me.service.system.impl;
 
 
-import com.fulln.me.api.common.constant.FileExtensionConfig;
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.common.utils.LinuxSystemUtil;
-import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
-import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.system.SysRole;
-import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.constant.FileExtensionConfig;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.common.utils.LinuxSystemUtil;
+import me.fulln.base.model.system.DTO.SysArticleInfoDTO;
+import me.fulln.base.model.system.SysArticleInfo;
+import me.fulln.base.model.system.SysRole;
+import me.fulln.base.model.system.cloums.ArticleStatusEnums;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import com.fulln.me.service.basic.IThreadStartService;
 import com.fulln.me.service.system.ISysArticleInfoService;

@@ -1,7 +1,7 @@
 package com.fulln.me.web.service.msg.board;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.msg.board.MessageBoard;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.msg.board.MessageBoard;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

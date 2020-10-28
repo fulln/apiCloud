@@ -1,8 +1,8 @@
 package com.fulln.me.service.basic;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.email.EmailEntity;
 
 import java.io.File;
 

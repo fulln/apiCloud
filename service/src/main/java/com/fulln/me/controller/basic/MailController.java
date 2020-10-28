@@ -1,7 +1,7 @@
 package com.fulln.me.controller.basic;
 
 
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.model.email.EmailEntity;
 import com.fulln.me.service.basic.IMailService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

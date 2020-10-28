@@ -1,8 +1,8 @@
 package com.fulln.me.web.service.system;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.system.SysRolePermission;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.system.SysRolePermission;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 

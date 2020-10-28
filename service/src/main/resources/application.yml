@@ -15,7 +15,7 @@ mybatis:
         map-underscore-to-camel-case: true
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     mapper-locations: classpath:mapper/*/*Mapper.xml
-    type-aliases-package: com.fulln.me.api.model
+    type-aliases-package: me.fulln.base.model
     type-handlers-package: com.fulln.me.config.handle
 pagehelper:
     helperDialect: mysql

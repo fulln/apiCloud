@@ -1,15 +1,15 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.common.enums.RoleStatusEnums;
-import com.fulln.me.api.common.enums.UserStatEnums;
-import com.fulln.me.api.common.exception.CustomerLockAccountException;
-import com.fulln.me.api.common.exception.DisableCustomerException;
-import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.model.system.SysPermission;
-import com.fulln.me.api.model.system.SysRole;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.enums.RoleStatusEnums;
+import me.fulln.base.common.enums.UserStatEnums;
+import me.fulln.base.common.exception.CustomerLockAccountException;
+import me.fulln.base.common.exception.DisableCustomerException;
+import me.fulln.base.common.utils.AesUtil;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.model.system.SysPermission;
+import me.fulln.base.model.system.SysRole;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.system.ISysPermissionService;

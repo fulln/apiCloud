@@ -1,8 +1,8 @@
 package com.fulln.me.service.log.impl;
 
 
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.model.log.LogOperationInfo;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.model.log.LogOperationInfo;
 import com.fulln.me.dao.log.LogOperationDao;
 import com.fulln.me.service.log.ILogOperationService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.fulln.me.web.service.basic;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
+import me.fulln.base.common.entity.GlobalResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

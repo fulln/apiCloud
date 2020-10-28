@@ -1,8 +1,12 @@
 package me.fulln.tuc.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.tuc.model.user.SysUserBasic;
+import me.fulln.tuc.tucapi.user.ISysUserService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @program: api
@@ -15,46 +19,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class SysUserController {
 
-//    @Resource
-//    public ISysUserService sysUserService;
-//    /**
-//     * 根据用户名查找用户
-//     * @param name
-//     * @return
-//     */
-//    @GetMapping("/findByName")
-//    public SysUserBasic selectByUsername(String name){
-//        return  sysUserService.selectByUsername(name);
-//    }
-//
-//    /**
-//     * 根据名称更新
-//     * @param name
-//     * @param count
-//     * @return
-//     */
-//    @PostMapping("/updateLoginFail")
-//    public Boolean updateLoginFail(String name, int count){
-//         return sysUserService.updateLoginFail(name,count);
-//    }
-//
-//    /**
-//     * 更新
-//     * @param currentUser
-//     * @return
-//     */
-//    @PostMapping("/update")
-//    public GlobalResult Update(@RequestBody SysUserBasic currentUser){
-//        return sysUserService.Update(currentUser);
-//    }
-//
-//    @PostMapping("/save")
-//    public GlobalResult save(@RequestBody SysUserBasic sysUserBasic){
-//        return  sysUserService.emailCheckForRegister(sysUserBasic);
-//    }
-//
-//    @GetMapping("/check")
-//    public GlobalResult  registerEmailBack(String registerCode){
-//        return  sysUserService.checkRegistEmailBack(registerCode);
-//    }
+    @Resource
+    public ISysUserService sysUserService;
+    /**
+     * 根据用户名查找用户
+     * @param name
+     * @return
+     */
+    @GetMapping("/findByName")
+    public SysUserBasic selectByUsername(String name){
+        return  sysUserService.selectByUsername(name);
+    }
+
+    /**
+     * 更新
+     * @param currentUser
+     * @return
+     */
+    @PostMapping("/update")
+    public GlobalResult Update(@RequestBody SysUserBasic currentUser){
+        return sysUserService.Update(currentUser);
+    }
+
+    @PostMapping("/save")
+    public GlobalResult save(@RequestBody SysUserBasic sysUserBasic){
+        return  sysUserService.saveUser(sysUserBasic);
+    }
+
+    @GetMapping("/check")
+    public GlobalResult  registerEmailBack(String registerCode){
+        return  sysUserService.checkUserByEmail(registerCode);
+    }
 }

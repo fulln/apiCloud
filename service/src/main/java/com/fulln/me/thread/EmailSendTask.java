@@ -1,7 +1,7 @@
 package com.fulln.me.thread;
 
-import com.fulln.me.api.common.threadconfig.AbstractThreadRunFactory;
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.common.threadconfig.AbstractThreadRunFactory;
+import me.fulln.base.model.email.EmailEntity;
 import com.fulln.me.service.basic.IMailService;
 
 

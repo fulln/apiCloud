@@ -1,10 +1,10 @@
 package com.fulln.me.web.config.ExceptionHandle;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.utils.LinuxSystemUtil;
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.utils.LinuxSystemUtil;
+import me.fulln.base.model.email.EmailEntity;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

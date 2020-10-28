@@ -1,12 +1,12 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.common.constant.ConstantAll;
-import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.common.utils.MD5util;
-import com.fulln.me.api.model.email.EmailEntity;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.constant.ConstantAll;
+import me.fulln.base.common.utils.AesUtil;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.common.utils.MD5util;
+import me.fulln.base.model.email.EmailEntity;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.basic.IMailService;

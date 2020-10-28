@@ -1,15 +1,15 @@
 package com.fulln.me.web.controller.system;
 
 
-import com.fulln.me.api.common.annotation.CurrentUser;
-import com.fulln.me.api.common.constant.ConstantAll;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.exception.CustomerLockAccountException;
-import com.fulln.me.api.common.exception.DisableCustomerException;
-import com.fulln.me.api.common.utils.Captcha;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.model.log.LogLoginInfo;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.annotation.CurrentUser;
+import me.fulln.base.common.constant.ConstantAll;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.exception.CustomerLockAccountException;
+import me.fulln.base.common.exception.DisableCustomerException;
+import me.fulln.base.common.utils.Captcha;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.model.log.LogLoginInfo;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.service.log.ILogLoginService;
 import com.fulln.me.web.service.system.ISysUserService;
@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.fulln.me.api.common.utils.RequestIpUtil.getIpAddress;
+import static me.fulln.base.common.utils.RequestIpUtil.getIpAddress;
 
 
 /**

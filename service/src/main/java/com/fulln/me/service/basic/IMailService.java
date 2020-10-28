@@ -1,7 +1,7 @@
 package com.fulln.me.service.basic;
 
 
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.model.email.EmailEntity;
 
 /**
  * @program: springcloud

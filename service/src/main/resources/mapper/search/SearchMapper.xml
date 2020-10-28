@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fulln.me.dao.search.SearchDao">
 
-    <insert id="insertAll" parameterType="com.fulln.me.api.model.search.UserTorrents">
+    <insert id="insertAll" parameterType="UserTorrents">
         INSERT INTO user_torrents (torrent_data, torrent_type, create_by, update_by, create_time, update_time) values
         <foreach collection="list" item="li" separator=",">
             (

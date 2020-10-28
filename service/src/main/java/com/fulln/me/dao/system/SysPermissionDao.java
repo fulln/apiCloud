@@ -1,7 +1,7 @@
 package com.fulln.me.dao.system;
 
 
-import com.fulln.me.api.model.system.SysPermission;
+import me.fulln.base.model.system.SysPermission;
 import com.fulln.me.config.basic.MyMapper;
 
 import java.util.List;

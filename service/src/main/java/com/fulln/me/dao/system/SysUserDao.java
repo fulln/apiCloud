@@ -1,7 +1,7 @@
 package com.fulln.me.dao.system;
 
 
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.config.basic.MyMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;

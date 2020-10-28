@@ -1,9 +1,9 @@
 package com.fulln.me.service.log.impl;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.model.log.LogLoginInfo;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.model.log.LogLoginInfo;
 import com.fulln.me.dao.log.LogLoginDao;
 import com.fulln.me.service.log.ILogLoginService;
 import lombok.extern.slf4j.Slf4j;

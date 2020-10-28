@@ -1,7 +1,7 @@
 package com.fulln.me.dao.log;
 
 
-import com.fulln.me.api.model.log.LogOperationInfo;
+import me.fulln.base.model.log.LogOperationInfo;
 import com.fulln.me.config.basic.MyMapper;
 
 /**

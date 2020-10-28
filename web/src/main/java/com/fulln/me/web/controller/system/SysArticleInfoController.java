@@ -1,12 +1,12 @@
 package com.fulln.me.web.controller.system;
 
 
-import com.fulln.me.api.common.annotation.CurrentUser;
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
-import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.system.cloums.ArticleStatusEnums;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.annotation.CurrentUser;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.system.DTO.SysArticleInfoDTO;
+import me.fulln.base.model.system.SysArticleInfo;
+import me.fulln.base.model.system.cloums.ArticleStatusEnums;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.service.system.ISysArticleInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

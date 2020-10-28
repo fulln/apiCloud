@@ -1,8 +1,8 @@
 package com.fulln.me.web.config.resolver;
 
-import com.fulln.me.api.common.annotation.CurrentUser;
-import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.annotation.CurrentUser;
+import me.fulln.base.common.utils.AesUtil;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.config.redis.RedisUtil;
 import com.fulln.me.web.config.shiro.SimpleWebSessionManager;
 import com.fulln.me.web.service.system.ISysUserService;

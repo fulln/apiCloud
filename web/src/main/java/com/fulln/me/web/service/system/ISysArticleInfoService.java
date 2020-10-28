@@ -1,9 +1,9 @@
 package com.fulln.me.web.service.system;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
-import com.fulln.me.api.model.system.SysArticleInfo;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.system.DTO.SysArticleInfoDTO;
+import me.fulln.base.model.system.SysArticleInfo;
+import me.fulln.base.model.user.SysUserBasic;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

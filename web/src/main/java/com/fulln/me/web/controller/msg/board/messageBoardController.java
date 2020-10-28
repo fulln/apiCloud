@@ -1,10 +1,10 @@
 package com.fulln.me.web.controller.msg.board;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.entity.PageResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.utils.GsonUtil;
-import com.fulln.me.api.model.msg.board.MessageBoard;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.entity.PageResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.utils.GsonUtil;
+import me.fulln.base.model.msg.board.MessageBoard;
 import com.fulln.me.web.config.websocket.WebSocketServer;
 import com.fulln.me.web.service.msg.board.MessageBoardService;
 import io.swagger.annotations.Api;

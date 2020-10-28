@@ -1,8 +1,8 @@
 package com.fulln.me.web.controller.system;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
 import com.fulln.me.web.config.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

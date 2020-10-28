@@ -1,7 +1,7 @@
 package com.fulln.me.controller.basic;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
+import me.fulln.base.common.entity.GlobalResult;
 import com.fulln.me.service.basic.CodeValidationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

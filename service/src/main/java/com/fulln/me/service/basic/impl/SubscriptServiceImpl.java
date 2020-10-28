@@ -1,8 +1,8 @@
 package com.fulln.me.service.basic.impl;
 
 
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.enums.downloads.SourceDownloadEnums;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.enums.downloads.SourceDownloadEnums;
 import com.fulln.me.service.basic.ISubscriptService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;

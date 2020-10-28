@@ -1,7 +1,7 @@
 package com.fulln.me.service.search;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
+import me.fulln.base.common.entity.GlobalResult;
 
 /**
  * @AUthor: fulln

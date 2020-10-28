@@ -59,7 +59,7 @@
         where id = #{id}
     </update>
 
-    <select id="findAll" resultType="com.fulln.me.api.model.system.SysArticleInfo">
+    <select id="findAll" resultType="SysArticleInfo">
         SELECT * FROM
         sys_article_info sai
         <where>

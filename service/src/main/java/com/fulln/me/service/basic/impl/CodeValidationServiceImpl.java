@@ -1,10 +1,10 @@
 package com.fulln.me.service.basic.impl;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.enums.QueryHttpsEnums;
-import com.fulln.me.api.common.utils.httpUtil;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.enums.QueryHttpsEnums;
+import me.fulln.base.common.utils.httpUtil;
 import com.fulln.me.service.basic.CodeValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

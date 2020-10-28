@@ -1,7 +1,7 @@
 package com.fulln.me.service.log;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.log.LogLoginInfo;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.log.LogLoginInfo;
 
 /**
  * @author fulln

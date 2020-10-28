@@ -1,7 +1,7 @@
 package com.fulln.me.dao.es;
 
 
-import com.fulln.me.api.model.system.DTO.SysPermissionDTO;
+import me.fulln.base.model.system.DTO.SysPermissionDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

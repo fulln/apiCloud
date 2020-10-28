@@ -2,9 +2,9 @@ package com.fulln.me.service.basic.impl;
 
 
 import base.BaseTest;
-import com.fulln.me.api.common.constant.ConstantAll;
-import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.common.constant.ConstantAll;
+import me.fulln.base.common.utils.AesUtil;
+import me.fulln.base.model.email.EmailEntity;
 import com.fulln.me.service.basic.IMailService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

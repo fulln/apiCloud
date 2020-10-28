@@ -1,7 +1,7 @@
 package com.fulln.me.web.config.intecepter;
 
 
-import com.fulln.me.api.common.enums.config.CloumsEnumsConfig;
+import me.fulln.base.common.enums.config.CloumsEnumsConfig;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 import org.springframework.stereotype.Component;

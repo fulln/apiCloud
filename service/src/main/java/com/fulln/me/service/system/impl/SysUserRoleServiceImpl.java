@@ -1,9 +1,9 @@
 package com.fulln.me.service.system.impl;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.utils.CheckParamsUtil;
-import com.fulln.me.api.model.user.SysUserRole;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.utils.CheckParamsUtil;
+import me.fulln.base.model.user.SysUserRole;
 import com.fulln.me.dao.user.SysUserRoleDao;
 import com.fulln.me.service.system.ISysUserRoleService;
 import lombok.extern.slf4j.Slf4j;

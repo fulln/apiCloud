@@ -1,7 +1,7 @@
 package com.fulln.me.web.controller.system.user;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
 package com.fulln.me.service.basic.impl;
 
 
-import com.fulln.me.api.model.email.EmailEntity;
+import me.fulln.base.model.email.EmailEntity;
 import com.fulln.me.service.basic.IMailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

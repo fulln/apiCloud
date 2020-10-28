@@ -1,7 +1,7 @@
 package com.fulln.me.dao.system;
 
 
-import com.fulln.me.api.model.system.SysRolePermission;
+
 import com.fulln.me.config.basic.MyMapper;
 
 /**

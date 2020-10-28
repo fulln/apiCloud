@@ -3,10 +3,11 @@ package com.fulln.me.config.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Slf4j
-@Service
+@Component
 public class RedisUtil {
 
     @Resource
@@ -45,6 +46,17 @@ public class RedisUtil {
             log.error("获取连接异常", e);
             return false;
         }
+    }
+
+    /**
+     * 分布式锁
+     * @param key
+     * @param value
+     * @param time
+     * @return
+     */
+    public Boolean setNx(String key,String value,long time){
+        return redisTemplate.opsForValue().setIfAbsent(key,value, Duration.ofSeconds(time));
     }
 
     /**

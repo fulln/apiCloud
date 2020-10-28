@@ -1,8 +1,8 @@
 package com.fulln.me.dao.system;
 
 
-import com.fulln.me.api.model.system.DTO.SysArticleInfoDTO;
-import com.fulln.me.api.model.system.SysArticleInfo;
+import me.fulln.base.model.system.DTO.SysArticleInfoDTO;
+import me.fulln.base.model.system.SysArticleInfo;
 import com.fulln.me.config.basic.MyMapper;
 import org.apache.ibatis.annotations.Select;
 

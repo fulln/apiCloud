@@ -1,10 +1,10 @@
 package com.fulln.me.web.controller.guideview;
 
 
-import com.fulln.me.api.common.enums.RegixEnums;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.model.system.SysPermission;
-import com.fulln.me.api.model.system.SysRolePermission;
+import me.fulln.base.common.enums.RegixEnums;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.model.system.SysPermission;
+import me.fulln.base.model.system.SysRolePermission;
 import com.fulln.me.web.service.system.ISysPermissionService;
 import com.fulln.me.web.service.system.ISysRolePermissionService;
 import io.swagger.annotations.ApiOperation;

@@ -1,7 +1,7 @@
 package com.fulln.me.controller.basic;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.model.msg.board.MessageBoard;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.model.msg.board.MessageBoard;
 import com.fulln.me.service.msg.board.IMessageBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.fulln.me.dao.msg.board;
 
-import com.fulln.me.api.common.Mongo.MongoHelper;
-import com.fulln.me.api.common.entity.PageResult;
-import com.fulln.me.api.common.utils.SnowflakeUtils;
-import com.fulln.me.api.model.msg.board.MessageBoard;
+import me.fulln.base.common.Mongo.MongoHelper;
+import me.fulln.base.common.entity.PageResult;
+import me.fulln.base.common.utils.SnowflakeUtils;
+import me.fulln.base.model.msg.board.MessageBoard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

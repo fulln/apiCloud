@@ -1,7 +1,7 @@
 package com.fulln.me.dao.search;
 
 
-import com.fulln.me.api.model.search.UserTorrents;
+import me.fulln.base.model.search.UserTorrents;
 import com.fulln.me.config.basic.MyMapper;
 import org.apache.ibatis.annotations.Select;
 

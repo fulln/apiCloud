@@ -1,11 +1,11 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.utils.AesUtil;
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.common.utils.GsonUtil;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.utils.AesUtil;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.common.utils.GsonUtil;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;

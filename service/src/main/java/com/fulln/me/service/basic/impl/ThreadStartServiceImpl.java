@@ -1,18 +1,11 @@
 package com.fulln.me.service.basic.impl;
 
-
-import com.fulln.me.api.common.constant.ThreadPoolNameConfig;
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.ThreadCountsEnums;
-import com.fulln.me.api.common.threadconfig.AbstractThreadRunFactory;
-import com.fulln.me.api.common.threadconfig.AbstractThreadStartFactory;
-import com.fulln.me.api.common.threadconfig.NamedThreadFactory;
-import com.fulln.me.api.model.email.EmailEntity;
 import com.fulln.me.dao.system.SysArticleInfoDao;
 import com.fulln.me.service.basic.IMailService;
 import com.fulln.me.service.basic.IThreadStartService;
 import com.fulln.me.service.search.SearchService;
 import com.fulln.me.thread.*;
+import io.micrometer.core.instrument.util.NamedThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static com.fulln.me.api.common.threadconfig.ThreadQueue.getTaskList;
+import static me.fulln.base.common.threadconfig.ThreadQueue.getTaskList;
 
 
 /**

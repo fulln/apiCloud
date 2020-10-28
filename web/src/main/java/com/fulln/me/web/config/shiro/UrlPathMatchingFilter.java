@@ -1,8 +1,8 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.model.system.SysPermission;
-import com.fulln.me.api.model.user.SysUserBasic;
+import me.fulln.base.model.system.SysPermission;
+import me.fulln.base.model.user.SysUserBasic;
 import com.fulln.me.web.service.system.ISysPermissionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;

@@ -3,11 +3,11 @@
 <mapper namespace="com.fulln.me.dao.system.SysPermissionDao">
 
 
-    <select id="queryAll" resultType="com.fulln.me.api.model.system.SysPermission">
+    <select id="queryAll" resultType="SysPermission">
       select  s.* from  sys_permission s where s.permission_state=1
     </select>
 
-    <select id="findByRole" resultType="com.fulln.me.api.model.system.SysPermission">
+    <select id="findByRole" resultType="SysPermission">
       select  sp.*
       from  sys_permission sp
       inner join sys_role_permission srp on

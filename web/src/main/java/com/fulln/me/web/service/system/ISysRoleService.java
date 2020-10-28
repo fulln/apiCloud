@@ -1,6 +1,6 @@
 package com.fulln.me.web.service.system;
 
-import com.fulln.me.api.model.system.SysRole;
+import me.fulln.base.model.system.SysRole;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

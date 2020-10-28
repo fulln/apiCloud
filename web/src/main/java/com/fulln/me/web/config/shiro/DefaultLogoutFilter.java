@@ -1,8 +1,8 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.common.utils.DateUtil;
-import com.fulln.me.api.model.log.LogLoginInfo;
+import me.fulln.base.common.utils.DateUtil;
+import me.fulln.base.model.log.LogLoginInfo;
 import com.fulln.me.web.service.log.ILogLoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;

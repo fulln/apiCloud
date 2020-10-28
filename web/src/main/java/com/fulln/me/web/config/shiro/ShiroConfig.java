@@ -2,8 +2,8 @@ package com.fulln.me.web.config.shiro;
 
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.fulln.me.api.common.utils.FileUtil;
-import com.fulln.me.api.model.system.SysPermission;
+import me.fulln.base.common.utils.FileUtil;
+import me.fulln.base.model.system.SysPermission;
 import com.fulln.me.web.config.constant.NonBlockingUrlConfig;
 import com.fulln.me.web.service.system.ISysPermissionService;
 import org.apache.shiro.codec.Base64;

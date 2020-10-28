@@ -1,10 +1,10 @@
 package com.fulln.me.service.search.impl;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.common.enums.pythonEnums;
-import com.fulln.me.api.model.search.UserTorrents;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.common.enums.pythonEnums;
+import me.fulln.base.model.search.UserTorrents;
 import com.fulln.me.dao.search.SearchDao;
 import com.fulln.me.service.search.SearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static com.fulln.me.api.common.utils.DateUtil.getNowTimeStamp;
-import static com.fulln.me.api.common.utils.PythonRun.usePython;
+import static me.fulln.base.common.utils.DateUtil.getNowTimeStamp;
+import static me.fulln.base.common.utils.PythonRun.usePython;
 
 
 /**

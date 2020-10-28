@@ -1,7 +1,7 @@
 package com.fulln.me.web.config.shiro;
 
 
-import com.fulln.me.api.common.utils.AesUtil;
+import me.fulln.base.common.utils.AesUtil;
 import com.fulln.me.web.config.constant.DefaultHeadConfig;
 import com.fulln.me.web.config.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;

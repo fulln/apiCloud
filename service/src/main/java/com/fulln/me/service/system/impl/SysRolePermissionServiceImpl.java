@@ -1,8 +1,8 @@
 package com.fulln.me.service.system.impl;
 
-import com.fulln.me.api.common.entity.GlobalResult;
-import com.fulln.me.api.common.enums.GlobalEnums;
-import com.fulln.me.api.model.system.SysRolePermission;
+import me.fulln.base.common.entity.GlobalResult;
+import me.fulln.base.common.enums.GlobalEnums;
+import me.fulln.base.model.system.SysRolePermission;
 import com.fulln.me.dao.system.SysRolePermissionDao;
 import com.fulln.me.service.system.ISysRolePermissionService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.fulln.me.web.service.log;
 
 
-import com.fulln.me.api.model.log.LogOperationInfo;
+import me.fulln.base.model.log.LogOperationInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 

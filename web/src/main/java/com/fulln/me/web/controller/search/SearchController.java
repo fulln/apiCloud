@@ -1,7 +1,7 @@
 package com.fulln.me.web.controller.search;
 
 
-import com.fulln.me.api.common.entity.GlobalResult;
+import me.fulln.base.common.entity.GlobalResult;
 import com.fulln.me.web.service.basic.IThreadStartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

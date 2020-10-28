@@ -1,6 +1,6 @@
 package com.fulln.me.dao.user;
 
-import com.fulln.me.api.model.user.SysUserRole;
+import me.fulln.base.model.user.SysUserRole;
 import com.fulln.me.config.basic.MyMapper;
 import org.springframework.stereotype.Repository;
 
